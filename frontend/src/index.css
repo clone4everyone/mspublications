@@ -1,0 +1,109 @@
+@tailwind utilities;
+@tailwind base;
+@tailwind components;
+
+@layer base {
+  body {
+ 
+  }
+}
+
+@layer components {
+  /* Outlook-style scrollbar */
+  .outlook-scrollbar::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .outlook-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .outlook-scrollbar::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 6px;
+  }
+
+  .outlook-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+
+  /* Outlook-style hover effects */
+  .outlook-hover {
+    @apply transition-colors duration-150;
+  }
+
+  .outlook-hover:hover {
+    @apply bg-outlook-lightBlue;
+  }
+
+  /* Status badges */
+  .status-badge {
+    @apply px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .status-pending {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .status-approved {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .status-rejected {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .status-review {
+    @apply bg-blue-100 text-blue-800;
+  }
+
+  .status-scheduled {
+    @apply bg-purple-100 text-purple-800;
+  }
+
+  .status-published {
+    @apply bg-indigo-100 text-indigo-800;
+  }
+}
+.poppins-text {
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes cloud-slow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(500px);
+  }
+}
+
+@keyframes cloud-medium {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(500px);
+  }
+}
+
+@keyframes cloud-fast {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(500px);
+  }
+}
+
+.animate-cloud-slow {
+  animation: cloud-slow 25s linear infinite;
+}
+
+.animate-cloud-medium {
+  animation: cloud-medium 18s linear infinite;
+}
+
+.animate-cloud-fast {
+  animation: cloud-fast 12s linear infinite;
+}

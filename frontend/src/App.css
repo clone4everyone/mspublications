@@ -1,0 +1,42 @@
+.poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes cloud-slow {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(500px);
+  }
+}
+
+@keyframes cloud-medium {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(500px);
+  }
+}
+
+@keyframes cloud-fast {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(500px);
+  }
+}
+
+.animate-cloud-slow {
+  animation: cloud-slow 25s linear infinite;
+}
+
+.animate-cloud-medium {
+  animation: cloud-medium 18s linear infinite;
+}
+
+.animate-cloud-fast {
+  animation: cloud-fast 12s linear infinite;
+}
