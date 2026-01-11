@@ -214,7 +214,7 @@ const videoRef = useRef(null);
         </div>
 
         {/* Dedication Section */}
-        <div className='w-full min-h-[400px] lg:h-[441px] relative overflow-hidden rounded-2xl lg:rounded-none max-[1880px]:bg-[#FAFAFA]'>
+    <div className='w-full min-h-[400px] lg:h-[441px] relative overflow-hidden rounded-2xl lg:rounded-none max-[1880px]:bg-[#FAFAFA]'>
           <div className='relative z-50 px-6 sm:px-8 md:px-10 lg:px-[50px] py-8 sm:py-10 md:py-12 lg:py-[50px] bg-transparent w-full flex flex-col items-start gap-6 md:gap-8'>
             <p className='text-[#1946DA] text-xl sm:text-2xl md:text-[32px] leading-tight md:leading-[159%] font-[600] font-sans'>IJPPI is dedicated to</p>
             <div className='flex flex-col gap-3 md:gap-4'>
@@ -248,7 +248,7 @@ const videoRef = useRef(null);
         </div>
 
         {/* Scope of Journal */}
-        <div className='w-full'>
+        <div className='w-full overflow-hidden'>
           <div className='w-full flex flex-col lg:flex-row gap-6 lg:gap-9'>
             {/* Left Card */}
             <div 
@@ -277,7 +277,7 @@ const videoRef = useRef(null);
             {/* Right Content */}
             <div 
               ref={reviewRightRef}
-              className={`bg-[#FAFAFAAF] p-6 sm:p-8 lg:p-10 w-full flex flex-col gap-6 lg:gap-8 rounded-[20px] lg:rounded-none transition-all duration-1000 ease-out ${
+              className={`relative bg-[#FAFAFAAF] p-6 sm:p-8 lg:p-10 w-full flex flex-col gap-6 lg:gap-8 rounded-[20px] lg:rounded-none transition-all duration-1000 ease-out ${
                 reviewRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
               }`}
             >
@@ -299,6 +299,12 @@ const videoRef = useRef(null);
                   />
                 ))}
               </div>
+
+ <div className='w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] lg:w-[222px] lg:h-[201px] bg-[#D9D9D94D] absolute -top-[20px] sm:-top-[30px] lg:-top-[40px] -right-[30px] sm:-right-[45px] lg:-right-[60px] rounded-full'></div>
+          
+          <div className='w-[100px] h-[100px] sm:w-[140px] sm:h-[140px] lg:w-[193px] lg:h-[193px] bg-[#D9D9D94D] absolute top-[30px] sm:top-[45px] lg:top-[60px] right-[30px] sm:right-[45px] lg:right-[60px] rounded-full'></div>
+          
+          <div className='w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] lg:w-[146px] lg:h-[146px] bg-[#D9D9D94D] absolute top-[10px] sm:top-[15px] lg:top-[20px] right-[35%] sm:right-[40%] lg:right-[45%] rounded-full'></div>
             </div>
           </div>
         </div>

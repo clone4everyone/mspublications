@@ -83,7 +83,7 @@ export  function AboutPage() {
       <div className="px-4 sm:px-6 lg:px-16 xl:px-[101px] py-8 sm:py-12 lg:py-16 xl:py-[101px] bg-[#f0f0ff]">
         
         {/* About Journal Section */}
-        <div ref={journalRef} className='w-full bg-transparent flex flex-col lg:flex-row justify-between gap-6 lg:gap-8 mb-8 lg:mb-[29px] px-4 lg:px-0'>
+        <div ref={journalRef} className='w-full bg-transparent flex flex-col lg:flex-row justify-between gap-6 lg:gap-8 mb-8 lg:mb-[69px] px-4 lg:px-0'>
           <div className={`w-full lg:w-[694px] aspect-[694/463] rounded-tr-[30px] lg:rounded-tr-[60px] rounded-bl-[30px] lg:rounded-bl-[60px] overflow-hidden relative transition-all duration-1000 delay-100 ${
             journalVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
           }`}>
@@ -97,7 +97,7 @@ export  function AboutPage() {
             </div>
           </div>
 
-          <div className={`flex flex-col items-start w-full lg:w-[925px] justify-between gap-4 lg:gap-0 transition-all duration-1000 delay-300 ${
+          <div className={`flex flex-col items-start w-full lg:w-[925px]  justify-evenly lg:gap-0 transition-all duration-1000 delay-300 ${
             journalVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
           }`}>
             <p className='font-[600] text-[28px] sm:text-[36px] lg:text-[42px] leading-[40px] sm:leading-[56px] lg:leading-[72px] text-[#0257EE]'>
@@ -151,7 +151,7 @@ export  function AboutPage() {
             <img
               src="https://res.cloudinary.com/duhadnqmh/image/upload/v1768043547/96726d23ebbcffc0141ad05746e0abbdd392b6fb_qcrotj.png"
               alt="Scope of Journal"
-              className="w-full h-full object-cover rounded-[20px]"
+              className="w-full h-full object-fit rounded-[20px]"
             />
           </div>
         </div>
