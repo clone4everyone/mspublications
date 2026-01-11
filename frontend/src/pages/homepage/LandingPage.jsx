@@ -149,7 +149,7 @@ const videoRef = useRef(null);
   return (
     <div className="w-full overflow-x-hidden">
       {/* Hero Section */}
-      <div className="relative w-full min-h-screen overflow-hidden font-inria">
+      <div className="relative w-full h-[80vh] md:min-h-screen overflow-hidden font-inria">
         <video
           autoPlay
           loop
