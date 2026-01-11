@@ -24,7 +24,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, token } = useSelector((state) => state.auth);
 
   if (!token || !user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/IJPPI/login" replace />;
   }
 
   if (allowedRoles && !allowedRoles.includes(user.role)) {
@@ -38,17 +38,17 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 const DashboardRedirect = () => {
   const { user } = useSelector((state) => state.auth);
 
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/IJPPIlogin" replace />;
 
   switch (user.role) {
     case 'author':
-      return <Navigate to="/author/dashboard" replace />;
+      return <Navigate to="/IJPPI/author/dashboard" replace />;
     case 'editor':
-      return <Navigate to="/editor/dashboard" replace />;
+      return <Navigate to="/IJPPI/editor/dashboard" replace />;
     case 'reviewer':
-      return <Navigate to="/reviewer/dashboard" replace />;
+      return <Navigate to="/IJPPI/reviewer/dashboard" replace />;
     default:
-      return <Navigate to="/login" replace />;
+      return <Navigate to="/IJPPI/login" replace />;
   }
 };
 
@@ -58,15 +58,15 @@ function App() {
       <Router>
         <Routes>
           {/* Public Routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/verify-email/:token" element={<VerifyEmail />} /> {/* Add this route */}
+          <Route path="/IJPPI/login" element={<Login />} />
+          <Route path="/IJPPI/register" element={<Register />} />
+          <Route path="/IJPPI/verify-email/:token" element={<VerifyEmail />} /> {/* Add this route */}
           <Route path="/" element={<JournalHomepage />} /> 
-          <Route path="/J-PHARMA-001" element={<JournalDetail />} />
+          <Route path="/IJPPI" element={<JournalDetail />} />
 
           {/* Author Routes */}
           <Route
-            path="/author/dashboard"
+            path="/IJPPI/author/dashboard"
             element={
               <ProtectedRoute allowedRoles={['author']}>
                 <AuthorDashboard />
@@ -74,7 +74,7 @@ function App() {
             }
           />
           <Route
-            path="/author/new-submission"
+            path="/IJPPI/author/new-submission"
             element={
               <ProtectedRoute allowedRoles={['author']}>
                 <NewSubmission />
@@ -82,7 +82,7 @@ function App() {
             }
           />
           <Route
-            path="/author/edit-submission/:id"
+            path="/IJPPI/author/edit-submission/:id"
             element={
               <ProtectedRoute allowedRoles={['author']}>
                 <EditSubmission />
@@ -90,7 +90,7 @@ function App() {
             }
           />
           <Route
-            path="/submission/:id"
+            path="/IJPPI/submission/:id"
             element={
               <ProtectedRoute>
                 <SubmissionDetail />
@@ -100,7 +100,7 @@ function App() {
 
           {/* Editor Routes */}
           <Route 
-            path="/editor/reviewers" 
+            path="/IJPPI/editor/reviewers" 
             element={
               <ProtectedRoute allowedRoles={['editor']}>
                 <ReviewerManagementPage />
@@ -108,7 +108,7 @@ function App() {
             } 
           />
           <Route
-            path="/editor/journal/:journal"
+            path="/IJPPI/editor/journal/:journal"
             element={
               <ProtectedRoute allowedRoles={['editor']}>
                 <JournalView />
@@ -118,7 +118,7 @@ function App() {
 
           {/* Reviewer Routes */}
           <Route
-            path="/reviewer/journal/:journal"
+            path="/IJPPI/reviewer/journal/:journal"
             element={
               <ProtectedRoute allowedRoles={['reviewer']}>
                 <JournalView />

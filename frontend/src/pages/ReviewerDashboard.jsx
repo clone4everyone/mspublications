@@ -44,7 +44,7 @@ function ReviewerDashboard() {
   };
 
   const handleJournalClick = (journal) => {
-    navigate(`/reviewer/journal/${journal}`);
+    navigate(`/IJPPI/reviewer/journal/${journal}`);
   };
 
   // Filter to only show journals with assigned submissions
@@ -199,7 +199,7 @@ function ReviewerDashboard() {
                 onClick={() => {
                   const firstJournal = assignedJournals[0];
                   if (firstJournal) {
-                    navigate(`/reviewer/journal/${firstJournal.journal}?status=with_reviewer`);
+                    navigate(`/IJPPI/reviewer/journal/${firstJournal.journal}?status=with_reviewer`);
                   }
                 }}
                 className="flex items-center justify-center space-x-2 p-4 border-2 border-orange-200 rounded-lg hover:bg-orange-50 transition-colors"
@@ -212,7 +212,7 @@ function ReviewerDashboard() {
                 onClick={() => {
                   const firstJournal = assignedJournals[0];
                   if (firstJournal) {
-                    navigate(`/reviewer/journal/${firstJournal.journal}`);
+                    navigate(`/IJPPI/reviewer/journal/${firstJournal.journal}`);
                   }
                 }}
                 className="flex items-center justify-center space-x-2 p-4 border-2 border-green-200 rounded-lg hover:bg-green-50 transition-colors"

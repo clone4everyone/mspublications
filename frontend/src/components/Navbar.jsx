@@ -61,7 +61,7 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
 
   const handleDashboardClick = () => {
     if (user?.role) {
-      window.location.href = `/${user.role}/dashboard`;
+      window.location.href = `/IJPPI/${user.role}/dashboard`;
     }
   };
 
@@ -102,6 +102,21 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
           </div>
         ))}
       </div>
+<button
+  className="
+    bg-[#0257EE] text-white font-medium
+    rounded-full
+
+    h-[40px] px-[20px] text-[14px]
+    md:h-[42px] md:px-[24px] md:text-[15px]
+    lg:h-[44px] lg:w-[172px] lg:px-0 lg:text-[15px]
+    xl:h-[46px] xl:w-[181px] xl:text-[16px]
+
+    hover:bg-[#0146c4] transition-all duration-300
+  "
+>
+  Submit Article
+</button>
 
       <div className="hidden md:flex gap-3 sm:gap-5 items-center">
         {isAuthenticated ? (

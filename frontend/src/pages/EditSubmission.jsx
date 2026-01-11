@@ -74,7 +74,7 @@ function EditSubmission() {
 
     if (result.type === 'submissions/updateMetadata/fulfilled') {
       toast.success('Metadata updated successfully');
-      navigate(`/submission/${id}`);
+      navigate(`/IJPPI/submission/${id}`);
     }
   };
 
@@ -88,7 +88,7 @@ function EditSubmission() {
 
     if (result.type === 'submissions/updateDocument/fulfilled') {
       toast.success('Document updated successfully');
-      navigate(`/submission/${id}`);
+      navigate(`/IJPPI/submission/${id}`);
     }
   };
 
@@ -170,7 +170,7 @@ function EditSubmission() {
             <h2 className="text-2xl font-bold mb-4">Cannot Edit Submission</h2>
             <p className="mb-4">This submission cannot be edited at its current stage.</p>
             <button
-              onClick={() => navigate(`/submission/${id}`)}
+              onClick={() => navigate(`/IJPPI/submission/${id}`)}
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
             >
               Back to Submission
@@ -187,7 +187,7 @@ function EditSubmission() {
       <div className="bg-outlook-blue text-white p-4 shadow-md">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <button
-            onClick={() => navigate(`/submission/${id}`)}
+            onClick={() => navigate(`/IJPPI/submission/${id}`)}
             className="flex items-center space-x-2 hover:bg-white/10 px-3 py-2 rounded transition-colors"
           >
             <FaArrowLeft />

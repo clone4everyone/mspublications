@@ -70,14 +70,14 @@ function JournalView() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
+    navigate('/IJPPI/login');
   };
 
   const handleBack = () => {
     if (user.role === 'editor') {
-      navigate('/editor/dashboard');
+      navigate('/IJPPI/editor/dashboard');
     } else {
-      navigate('/reviewer/dashboard');
+      navigate('/IJPPI/reviewer/dashboard');
     }
   };
 
@@ -321,7 +321,7 @@ const getStatusCounts = () => {
                 </h2>
                 <button 
                   className='w-full flex items-center gap-3 px-5 py-3.5 rounded-lg transition-all duration-200 mb-2 text-base font-semibold hover:bg-gray-200' 
-                  onClick={() => navigate('/editor/reviewers')}
+                  onClick={() => navigate('/IJPPI/editor/reviewers')}
                 >
                   <FaUserAlt className="w-5 h-5" />
                   All Reviewers
@@ -373,7 +373,7 @@ const getStatusCounts = () => {
                   return (
                     <div
                       key={submission._id}
-                      onClick={() => navigate(`/submission/${submission._id}`)}
+                      onClick={() => navigate(`/IJPPI/submission/${submission._id}`)}
                       className="p-6 hover:bg-blue-50/50 cursor-pointer transition-all duration-200 border-l-4 border-transparent hover:border-[#0461F0]"
                     >
                       <div className="flex items-start justify-between mb-3">

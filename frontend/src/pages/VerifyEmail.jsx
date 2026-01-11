@@ -20,7 +20,7 @@ function VerifyEmail() {
           
           // Redirect to login after 3 seconds
           setTimeout(() => {
-            navigate('/login');
+            navigate('/IJPPI/login');
           }, 3000);
         }
       } catch (error) {
@@ -63,7 +63,7 @@ function VerifyEmail() {
               Redirecting to login page...
             </p>
             <Link
-              to="/login"
+              to="/IJPPI/login"
               className="inline-block px-6 py-3 bg-outlook-blue text-white rounded-lg hover:bg-outlook-darkBlue transition-colors"
             >
               Go to Login
@@ -82,13 +82,13 @@ function VerifyEmail() {
             </p>
             <div className="space-y-3">
               <Link
-                to="/register"
+                to="/IJPPI/register"
                 className="block w-full py-3 px-4 bg-outlook-blue text-white rounded-lg hover:bg-outlook-darkBlue transition-colors"
               >
                 Register Again
               </Link>
               <Link
-                to="/login"
+                to="/IJPPI/login"
                 className="block w-full py-3 px-4 border border-outlook-blue text-outlook-blue rounded-lg hover:bg-outlook-blue hover:text-white transition-colors"
               >
                 Back to Login

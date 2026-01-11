@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 const JournalHomepage = () => {
 const navigate=useNavigate();
 useEffect(()=>{
-navigate('/J-PHARMA-001')
+navigate('/IJPPI')
 },[])
 
   return (

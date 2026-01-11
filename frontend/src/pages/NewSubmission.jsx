@@ -190,7 +190,7 @@ function NewSubmission() {
       setCurrentStep(5);
       toast.success('Submission completed successfully!');
       setTimeout(() => {
-        navigate('/author/dashboard');
+        navigate('/IJPPI/author/dashboard');
       }, 3000);
     }
   };
@@ -305,7 +305,7 @@ function NewSubmission() {
       <div className="bg-outlook-blue text-white p-4 shadow-md">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <button
-            onClick={() => navigate('/author/dashboard')}
+            onClick={() => navigate('/IJPPI/author/dashboard')}
             className="flex items-center space-x-2 hover:bg-white/10 px-3 py-2 rounded transition-colors"
           >
             <FaArrowLeft />
@@ -957,7 +957,7 @@ function NewSubmission() {
                 You will be notified via email about the status of your submission.
               </p>
               <button
-                onClick={() => navigate('/author/dashboard')}
+                onClick={() => navigate('/IJPPI/author/dashboard')}
                 className="bg-outlook-blue hover:bg-outlook-darkBlue text-white px-8 py-3 rounded-lg font-medium transition-colors"
               >
                 Go to Dashboard

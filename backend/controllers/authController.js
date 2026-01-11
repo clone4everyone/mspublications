@@ -28,7 +28,7 @@ exports.register = async (req, res) => {
         await existingUser.save();
 
         // Create verification URL
-        const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
+        const verificationUrl = `${process.env.FRONTEND_URL}/IJPPI/verify-email/${verificationToken}`;
 
         // Send verification email
         const htmlContent = `

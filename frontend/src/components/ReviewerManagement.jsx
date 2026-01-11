@@ -163,7 +163,7 @@ function ReviewerManagement() {
   };
  const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
+    navigate('/IJPPI/login');
   };
  
   if (loading) {
@@ -216,7 +216,7 @@ function ReviewerManagement() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
          <div>
-          <h3 className=" flex gap-1 text-gray-500 items-center hover:text-gray-600 cursor-pointer" onClick={()=>navigate('/editor/journal/pharma')}><FaArrowLeft/><span className="text-xl font-bold text-gray-500 tracking-tight flex gap-1 items-center hover:text-gray-600 cursor-pointer" >Back To Dashboard</span></h3>
+          <h3 className=" flex gap-1 text-gray-500 items-center hover:text-gray-600 cursor-pointer" onClick={()=>navigate('/IJPPI/editor/journal/pharma')}><FaArrowLeft/><span className="text-xl font-bold text-gray-500 tracking-tight flex gap-1 items-center hover:text-gray-600 cursor-pointer" >Back To Dashboard</span></h3>
         </div>
         <div>
           <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Reviewer Management</h2>

@@ -107,7 +107,7 @@ const filteredReviewers = useMemo(() => {
                 className="group flex items-center space-x-2 bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
               >
                 <FaUndo className="w-4 h-4 group-hover:-rotate-180 transition-transform duration-300" />
-                <span>Send Back</span>
+                <span>Send Back to author</span>
               </button>
             </>
           )}
@@ -168,7 +168,7 @@ const filteredReviewers = useMemo(() => {
                 className="group flex items-center space-x-2 bg-orange-600 hover:bg-orange-700 text-white px-5 py-2.5 rounded-lg font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
               >
                 <FaUndo className="w-4 h-4 group-hover:-rotate-180 transition-transform duration-300" />
-                <span>Send Back</span>
+                <span>Send Back to editor</span>
               </button>
             </>
           )}

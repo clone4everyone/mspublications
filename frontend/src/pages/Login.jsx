@@ -29,11 +29,11 @@ function Login() {
     if (isSuccess || user) {
       // Redirect based on role
       if (user.role === 'author') {
-        navigate('/author/dashboard');
+        navigate('/IJPPI/author/dashboard');
       } else if (user.role === 'editor') {
-        navigate('/editor/journal/pharma');
+        navigate('/IJPPI/editor/journal/pharma');
       } else if (user.role === 'reviewer') {
-        navigate('/reviewer/journal/pharma');
+        navigate('/IJPPI/reviewer/journal/pharma');
       }
     }
 
@@ -148,7 +148,7 @@ function Login() {
                 <p className="text-xs sm:text-sm text-gray-600">
                   Don't have an account?{' '}
                   <Link
-                    to="/register"
+                    to="/IJPPI/register"
                     className="font-medium text-outlook-blue hover:text-outlook-darkBlue"
                   >
                     Register as Author

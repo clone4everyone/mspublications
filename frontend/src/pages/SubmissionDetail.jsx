@@ -95,16 +95,16 @@ function SubmissionDetail() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
+    navigate('/IJPPI/login');
   };
 
   const handleBack = () => {
     if (user.role === 'author') {
-      navigate('/author/dashboard');
+      navigate('/IJPPI/author/dashboard');
     } else if (user.role === 'editor') {
-      navigate(`/editor/journal/${currentSubmission?.journal}`);
+      navigate(`/IJPPI/editor/journal/${currentSubmission?.journal}`);
     } else {
-      navigate(`/reviewer/journal/${currentSubmission?.journal}`);
+      navigate(`/IJPPI/reviewer/journal/${currentSubmission?.journal}`);
     }
   };
 
@@ -365,7 +365,7 @@ function SubmissionDetail() {
             user={user}
             canEdit={canEdit}
             canShowActions={canShowActions()}
-            onEdit={() => navigate(`/author/edit-submission/${id}`)}
+            onEdit={() => navigate(`/IJPPI/author/edit-submission/${id}`)}
             onApprove={() => setShowActionModal('approve')}
             onReject={() => setShowActionModal('reject')}
             onSendBack={() => {

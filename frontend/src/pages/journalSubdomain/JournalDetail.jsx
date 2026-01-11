@@ -73,7 +73,7 @@ function JournalDetail() {
     dispatch(logout());
     setIsAuthenticated(false);
     setUser(null);
-    navigate('/login');
+    navigate('/IJPPI/login');
   };
 
   if (!journal) {

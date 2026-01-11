@@ -39,12 +39,12 @@ function EditorDashboard() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
+    navigate('/IJPPI/login');
     toast.success('Logged out successfully');
   };
 
   const handleJournalClick = (journal) => {
-    navigate(`/editor/journal/${journal}`);
+    navigate(`/IJPPI/editor/journal/${journal}`);
   };
 
   const getTotalStats = () => {
@@ -208,7 +208,7 @@ function EditorDashboard() {
               onClick={() => {
                 const firstJournalWithPending = journalStats.find(s => s.pending > 0);
                 if (firstJournalWithPending) {
-                  navigate(`/editor/journal/${firstJournalWithPending.journal}?status=pending`);
+                  navigate(`/IJPPI/editor/journal/${firstJournalWithPending.journal}?status=pending`);
                 }
               }}
               className="flex items-center justify-center space-x-2 p-4 border-2 border-yellow-200 rounded-lg hover:bg-yellow-50 transition-colors"
@@ -221,7 +221,7 @@ function EditorDashboard() {
               onClick={() => {
                 const firstJournalWithReviewer = journalStats.find(s => s.withReviewer > 0);
                 if (firstJournalWithReviewer) {
-                  navigate(`/editor/journal/${firstJournalWithReviewer.journal}?status=with_reviewer`);
+                  navigate(`/IJPPI/editor/journal/${firstJournalWithReviewer.journal}?status=with_reviewer`);
                 }
               }}
               className="flex items-center justify-center space-x-2 p-4 border-2 border-purple-200 rounded-lg hover:bg-purple-50 transition-colors"

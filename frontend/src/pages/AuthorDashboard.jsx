@@ -42,7 +42,7 @@ function AuthorDashboard() {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/login');
+    navigate('/IJPPI/login');
     toast.success('Logged out successfully');
   };
 
@@ -200,7 +200,7 @@ function AuthorDashboard() {
     // { icon: Home, label: 'Dashboard', active: true, onClick: () => {} },
     { icon: FileText, label: 'My Submissions',active:true, count: submissions.length, onClick: () => {} },
     // { icon: BookOpen, label: 'Browse Journals', onClick: () => navigate('/journals') },
-    { icon: Plus, label: 'New Submission', highlight: true, onClick: () => navigate('/author/new-submission') },
+    { icon: Plus, label: 'New Submission', highlight: true, onClick: () => navigate('/IJPPI/author/new-submission') },
   ];
 
   return (
@@ -215,7 +215,7 @@ function AuthorDashboard() {
           <div className="flex items-center justify-between">
             {sidebarOpen && (
               <button 
-                onClick={() => navigate('/J-PHARMA-001')}
+                onClick={() => navigate('/IJPPI')}
                 className="flex items-center space-x-3 group flex-col"
               >
                 <div className=" bg-gradient-to-br rounded-xl flex items-center justify-center  transition-all">
@@ -316,7 +316,7 @@ function AuthorDashboard() {
               </div>
               
               <button
-                onClick={() => navigate('/author/new-submission')}
+                onClick={() => navigate('/IJPPI/author/new-submission')}
                 className="group flex items-center space-x-2 bg-[#0461F0] text-white px-5 py-3 rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all"
               >
                 <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform " />
@@ -422,7 +422,7 @@ function AuthorDashboard() {
                     {searchTerm ? 'Try a different search term' : 'Start by creating your first submission'}
                   </p>
                   <button
-                    onClick={() => navigate('/author/new-submission')}
+                    onClick={() => navigate('/IJPPI/author/new-submission')}
                     className="flex items-center space-x-2 bg-gradient-to-r from-[#3b86f6] to-[#0461F0] text-white px-6 py-3 rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all"
                   >
                     <Plus className="w-5 h-5" />
@@ -438,7 +438,7 @@ function AuthorDashboard() {
                     return (
                       <div
                         key={submission._id}
-                        onClick={() => navigate(`/submission/${submission._id}`)}
+                        onClick={() => navigate(`/IJPPI/submission/${submission._id}`)}
                         className="group relative bg-white border-2 border-gray-200 hover:border-gray-300 rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-slide-in-left"
                         style={{ animationDelay: `${index * 50}ms` }}
                       >

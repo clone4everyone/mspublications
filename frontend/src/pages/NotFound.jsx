@@ -36,7 +36,7 @@ const NotFound = () => {
           </Link>
 
           <Link
-            to="/login"
+            to="/IJPPI/login"
             className="inline-flex items-center justify-center px-6 py-3 rounded-lg
                        border border-gray-300 text-gray-700 font-semibold
                        hover:bg-gray-100 transition-colors"

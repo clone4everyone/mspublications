@@ -68,7 +68,7 @@ useEffect(() => {
     }
 
     if (isSuccess || user) {
-      navigate('/author/dashboard');
+      navigate('/IJPPI/author/dashboard');
     }
 
     dispatch(reset());
@@ -460,7 +460,7 @@ try {
               {isResending ? 'Sending...' : 'Resend Verification Email'}
             </button>
             <Link
-              to="/login"
+              to="/IJPPI/login"
               className="block w-full py-3 px-4 bg-outlook-blue text-white rounded-lg hover:bg-outlook-darkBlue transition-colors"
             >
               Back to Login
@@ -502,7 +502,7 @@ try {
               {isResending ? 'Sending...' : 'Resend Verification Email'}
             </button>
             <Link
-              to="/login"
+              to="/IJPPI/login"
               className="block w-full py-3 px-4 bg-outlook-blue text-white rounded-lg hover:bg-outlook-darkBlue transition-colors"
             >
               Back to Login
@@ -857,7 +857,7 @@ try {
             <p className="text-sm text-gray-600">
               Already have an account?{' '}
               <Link
-                to="/login"
+                to="/IJPPI/login"
                 className="font-medium text-blue-600 hover:text-blue-700"
               >
                 Sign in
