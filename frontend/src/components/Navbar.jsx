@@ -38,14 +38,14 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
   };
 
   const handleLoginClick = () => {
-    window.location.href = '/login';
+    window.location.href = '/IJPPI/login';
   };
 
   const handleSubmitClick = () => {
     if (isAuthenticated) {
-      window.location.href = '/author/new-submission';
+      window.location.href = '/IJPPI/author/new-submission';
     } else {
-      window.location.href = '/login';
+      window.location.href = '/IJPPI/login';
     }
   };
 
@@ -70,7 +70,7 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
     <div>
       <div className='w-full h-[50px] flex justify-end items-center px-[101px] bg-[#1946DA]'>
         <div className='flex gap-8 text-white font-sans font-[400] text-[16px] leading-[100%]'>
-          <p className='hover:cursor-pointer ' onClick={()=>{window.open('https://mspublication.com/','_blank')}}>MsPublications</p>
+          <p className='hover:cursor-pointer ' onClick={()=>{window.open('https://mspublication.com/','_blank')}}>MaxoSmith PUBLICATIONS</p>
           <p>Subscription</p>
         </div>
 
@@ -106,7 +106,7 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
   className="
     bg-[#0257EE] text-white font-medium
     rounded-full
-
+    hidden xl:block
     h-[40px] px-[20px] text-[14px]
     md:h-[42px] md:px-[24px] md:text-[15px]
     lg:h-[44px] lg:w-[172px] lg:px-0 lg:text-[15px]
@@ -128,6 +128,7 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
               <span className="font-[500] text-[18px] whitespace-nowrap">{user?.firstName || 'User'}</span>
             </div>
             <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+            
               <button
                 onClick={handleDashboardClick}
                 className="w-full text-left px-4 py-3 hover:bg-gray-50 text-gray-700 text-[14px] font-[500]"
@@ -219,12 +220,7 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
             >
               Submit article
             </button>
-            <button 
-              onClick={()=>{window.open('https://mspublication.com','_blank')}}
-              className="bg-black text-white p-3 right-1 top-0 text-xs rounded-bl-md rounded-br-md hover:bg-gray-700 cursor-pointer"
-            >
-              MsPublications
-            </button>
+           
           </div>
         </div>
       )}
