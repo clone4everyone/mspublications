@@ -1,19 +1,23 @@
-import { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { FaGreaterThan, FaCheckCircle, FaShieldAlt, FaRocket, FaUsers, FaGlobe } from 'react-icons/fa';
-import { useDispatch, useSelector } from 'react-redux';
-import api from '../../utils/api';
-const benefits = [
-  { icon: FaCheckCircle, text: "Rigorous peer-review process ensuring quality" },
-  { icon: FaShieldAlt, text: "Fast publication with transparent editorial handling" },
-  { icon: FaRocket, text: "Global visibility and indexing" },
-  { icon: FaUsers, text: "Open access to maximize readership" },
-  { icon: FaGlobe, text: "No article processing charges (APC) for authors" }
-];
+import { useEffect, useRef, useState } from 'react';
 
+// Reusable CheckIcon Component
+const CheckIcon = ({ className = "w-7 h-7" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 28 28" fill="none">
+    <path d="M27.8297 27.0037L24.01 23.184C25.0437 21.9637 25.6678 20.3863 25.6678 18.6667C25.6678 14.8062 22.5283 11.6667 18.6678 11.6667C14.8073 11.6667 11.6678 14.8062 11.6678 18.6667C11.6678 22.5272 14.8073 25.6667 18.6678 25.6667C20.3887 25.6667 21.966 25.0425 23.1852 24.0088L27.0048 27.8285C27.1192 27.9428 27.2685 27.9988 27.4178 27.9988C27.5672 27.9988 27.7165 27.9417 27.8308 27.8285C28.0583 27.601 28.0572 27.2312 27.8297 27.0037ZM18.6667 24.5C15.4502 24.5 12.8333 21.8832 12.8333 18.6667C12.8333 15.4502 15.4502 12.8333 18.6667 12.8333C21.8832 12.8333 24.5 15.4502 24.5 18.6667C24.5 21.8832 21.8832 24.5 18.6667 24.5ZM13.4167 26.8333H5.25C2.99833 26.8333 1.16667 25.0017 1.16667 22.75V5.25C1.16667 2.99833 2.99833 1.16667 5.25 1.16667H11.6842C12.0738 1.16667 12.4588 1.20167 12.8333 1.26817V7.58333C12.8333 9.191 14.1423 10.5 15.75 10.5H22.5318C22.7115 10.5 22.8818 10.4172 22.9927 10.2748C23.1035 10.1325 23.1408 9.947 23.0965 9.772C22.7593 8.45367 22.0733 7.2485 21.1108 6.28717L17.045 2.22133C15.6123 0.788667 13.7083 0 11.683 0H5.24883C2.3555 0 0 2.3555 0 5.25V22.75C0 25.6445 2.3555 28 5.25 28H13.4167C13.7387 28 14 27.7387 14 27.4167C14 27.0947 13.7387 26.8333 13.4167 26.8333ZM14 1.596C14.8237 1.91333 15.5785 2.40333 16.2213 3.04617L20.2872 7.112C20.9195 7.74433 21.4118 8.50267 21.7338 9.33333H15.75C14.7852 9.33333 14 8.54817 14 7.58333V1.596ZM11.0833 12.8333H5.25C4.928 12.8333 4.66667 12.572 4.66667 12.25C4.66667 11.928 4.928 11.6667 5.25 11.6667H11.0833C11.4053 11.6667 11.6667 11.928 11.6667 12.25C11.6667 12.572 11.4053 12.8333 11.0833 12.8333ZM4.66667 16.9167C4.66667 16.5947 4.928 16.3333 5.25 16.3333H8.75C9.072 16.3333 9.33333 16.5947 9.33333 16.9167C9.33333 17.2387 9.072 17.5 8.75 17.5H5.25C4.928 17.5 4.66667 17.2387 4.66667 16.9167ZM4.66667 21.5833C4.66667 21.2613 4.928 21 5.25 21H9.33333C9.65533 21 9.91667 21.2613 9.91667 21.5833C9.91667 21.9053 9.65533 22.1667 9.33333 22.1667H5.25C4.928 22.1667 4.66667 21.9053 4.66667 21.5833ZM22.575 17.0835C22.799 17.3157 22.7932 17.6843 22.561 17.9083L19.4075 20.958C18.9875 21.3722 18.4333 21.581 17.878 21.581C17.3227 21.581 16.7708 21.3745 16.3473 20.9603L14.756 19.3912C14.5262 19.1648 14.5238 18.7962 14.7502 18.5663C14.9765 18.3365 15.3475 18.3353 15.575 18.5605L17.1652 20.1285C17.5583 20.5135 18.1977 20.5123 18.592 20.1238L21.749 17.0707C21.9812 16.8467 22.351 16.8537 22.5738 17.0847L22.575 17.0835Z" fill="#0257EE"/>
+  </svg>
+);
+
+// Reusable CircleCheckIcon Component
+const CircleCheckIcon = ({ className = "w-7 h-7" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 19 19" fill="none">
+    <path d="M9.16667 0C2.74167 0 0 2.74167 0 9.16667C0 15.5917 2.74167 18.3333 9.16667 18.3333C15.5917 18.3333 18.3333 15.5917 18.3333 9.16667C18.3333 2.74167 15.5917 0 9.16667 0ZM13.5875 7.11583C12.4942 8.82667 10.9375 10.9708 8.58667 12.3817C8.31667 12.5442 7.9775 12.54 7.71167 12.3708C6.445 11.5683 5.49417 10.7083 4.71667 9.66417C4.44167 9.295 4.51833 8.77333 4.8875 8.49833C5.25583 8.22333 5.77833 8.30083 6.0525 8.66917C6.61417 9.42333 7.2925 10.0683 8.16583 10.6733C9.96583 9.45667 11.2025 7.75083 12.1817 6.21833C12.4308 5.83 12.9458 5.71667 13.3325 5.965C13.7208 6.21333 13.835 6.72833 13.5875 7.11583Z" fill="#0257EE"/>
+  </svg>
+);
+
+// Custom hook for scroll animations
 const useScrollAnimation = () => {
+  const elementRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -25,60 +29,157 @@ const useScrollAnimation = () => {
       { threshold: 0.1 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (elementRef.current) {
+        observer.unobserve(elementRef.current);
       }
     };
   }, []);
 
-  return [ref, isVisible];
+  return [elementRef, isVisible];
 };
 
-const AnimatedSection = ({ children, className = "", direction = "left" }) => {
+// Feature Item Component with Icon
+const FeatureItem = ({ text, delay = 0 }) => {
   const [ref, isVisible] = useScrollAnimation();
   
-  const animationClass = direction === "left" 
-    ? "translate-x-[-100px] opacity-0" 
-    : "translate-x-[100px] opacity-0";
-  
   return (
-    <div
+    <div 
       ref={ref}
-      className={`transition-all duration-1000 ease-out ${
-        isVisible ? "translate-x-0 opacity-100" : animationClass
-      } ${className}`}
+      className={`flex gap-4 md:gap-5 items-start transition-all duration-700 ease-out ${
+        isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
     >
-      {children}
+      <div className='w-[40px] h-[40px] md:w-[50px] md:h-[50px] flex-shrink-0 flex items-center justify-center rounded-[10px] border border-[#1946DA] bg-white'>
+        <CheckIcon />
+      </div>
+      <p className='font-[400] text-base sm:text-lg md:text-[20px] leading-relaxed md:leading-[176%] text-[#233B4E]'>
+        {text}
+      </p>
     </div>
   );
 };
 
+// Scope Item Component
+const ScopeItem = ({ title, description, delay = 0 }) => {
+  const [ref, isVisible] = useScrollAnimation();
+  
+  return (
+    <div 
+      ref={ref}
+      className={`flex gap-3 sm:gap-4 items-start transition-all duration-700 ease-out ${
+        isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <CircleCheckIcon className="w-6 h-6 sm:w-7 sm:h-7 lg:w-[30px] lg:h-[30px] flex-shrink-0 mt-0.5" />
+      <p className='font-medium text-base sm:text-lg leading-relaxed lg:leading-[27px] text-[#233B4E] flex-1'>
+        <span className='font-bold text-black'>{title}</span> {description}
+      </p>
+    </div>
+  );
+};
+
+
 export default function LandingPage() {
+  const [heroRef, heroVisible] = useScrollAnimation();
+  const [welcomeLeftRef, welcomeLeftVisible] = useScrollAnimation();
+  const [welcomeRightRef, welcomeRightVisible] = useScrollAnimation();
+  const [reviewLeftRef, reviewLeftVisible] = useScrollAnimation();
+  const [reviewRightRef, reviewRightVisible] = useScrollAnimation();
+  const [whyPublishLeftRef, whyPublishLeftVisible] = useScrollAnimation();
+  const [whyPublishRightRef, whyPublishRightVisible] = useScrollAnimation();
+const videoRef = useRef(null);
+  const fullscreenVideoRef = useRef(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  useEffect(() => {
+    // Smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+    return () => {
+      document.documentElement.style.scrollBehavior = 'auto';
+    };
+  }, []);
+ const handleVideoClick = () => {
+    setIsFullscreen(true);
+    setTimeout(() => {
+      if (fullscreenVideoRef.current) {
+        fullscreenVideoRef.current.play();
+      }
+    }, 100);
+  };
+
+  const handleCloseFullscreen = () => {
+    if (fullscreenVideoRef.current) {
+      fullscreenVideoRef.current.pause();
+    }
+    setIsFullscreen(false);
+  };
+  const scopeItems = [
+    {
+      title: 'Formulation Science:',
+      description: 'Research on conventional dosage forms, pre-formulation studies, physical pharmacy, and the development and characterization of robust pharmaceutical systems'
+    },
+    {
+      title: 'Advanced Drug Delivery:',
+      description: 'Innovations in controlled, sustained, and stimuli-responsive delivery systems, including the use of smart polymers and novel modes of administration.'
+    },
+    {
+      title: 'Nanomedicine:',
+      description: 'Design and evaluation of nanocarriers, nanotechnology-based delivery platforms, and the study of ligand-carrier interactions for targeted therapy.'
+    },
+    {
+      title: 'Biopharmaceutics & Pharmacokinetics:',
+      description: 'Investigative studies on the absorption, distribution, metabolism, and excretion (ADME) profiles of drug products, including molecular drug design and prodrug strategies.'
+    },
+    {
+      title: 'Analytical & Regulatory Science:',
+      description: 'Development and validation of novel analytical methods for drug quantification and stability testing.'
+    },
+    {
+      title: 'Pharmacology & Toxicology:',
+      description: 'In-depth evaluation of the safety, biocompatibility, and therapeutic performance of Active Pharmaceutical Ingredients (APIs) and their finished formulations.'
+    }
+  ];
+
   return (
     <div className="w-full overflow-x-hidden">
       {/* Hero Section */}
       <div className="relative w-full min-h-screen overflow-hidden font-inria">
-        <img
-          src='https://res.cloudinary.com/duhadnqmh/image/upload/v1767785108/hero-section_mc81n7.png'
-          alt="Cloud background"
-          className="absolute inset-0 w-full h-full object-cover z-0 blur-[2px]"
-        />
-        <div className="absolute inset-0 bg-[#00000099] z-0" />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0 blur-[5px]"
+        >
+          <source src='https://res.cloudinary.com/duhadnqmh/video/upload/v1768106710/2340-157269921_small_uqfw6w.mp4' type="video/mp4" />
+          <img
+            src='https://res.cloudinary.com/duhadnqmh/image/upload/v1767785108/hero-section_mc81n7.png'
+            alt="Cloud background"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </video>
+        <div className="absolute inset-0 bg-[#233B4EB2] z-0" />
         
-        <section className="relative z-10 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 2xl:px-[90px] pt-12 sm:pt-16 md:pt-20 lg:pt-[80px] pb-20 md:pb-24 lg:pb-[125px] flex items-center justify-between min-h-[calc(100vh-80px)]">
+        <section 
+          ref={heroRef}
+          className={`relative z-10 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 2xl:px-[90px] pt-12 sm:pt-16 md:pt-20 lg:pt-[80px] pb-20 md:pb-24 lg:pb-[125px] flex items-center justify-between min-h-[calc(100vh-80px)] transition-all duration-1000 ease-out ${
+            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
           <div className="max-w-full lg:max-w-[650px] xl:max-w-[916px] text-white z-20">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] leading-tight sm:leading-[50px] md:leading-[60px] lg:leading-[90px]">
+            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-[42px] leading-tight sm:leading-[50px] md:leading-[60px] lg:leading-[90px]">
               A Trusted Journal Partner
             </h3>
-            <h1 className='font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[120px] leading-tight sm:leading-[60px] md:leading-[70px]'>
+            <h1 className='font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[120px] leading-tight sm:leading-[60px] md:leading-[80px] lg:leading-[100px]'>
               International
             </h1>
-            <h3 className="font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[64px] leading-tight sm:leading-[50px] md:leading-[65px] lg:leading-[85px] mt-4 sm:mt-5 md:mt-6">
+            <h3 className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[42px] xl:text-[46px] leading-tight sm:leading-[40px] md:leading-[50px] lg:leading-[65px] xl:leading-[85px] mt-4 sm:mt-5 md:mt-6">
               Journal of Pharmacological &
               <br/>
               Pharmaceutical Innovations.
@@ -86,173 +187,225 @@ export default function LandingPage() {
           </div>
         </section>
       </div>
+     
+      <div className='px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 2xl:px-[101px] w-full py-10 sm:py-16 md:py-20 lg:py-[101px] flex flex-col gap-12 md:gap-16 lg:gap-20'>
+        {/* Welcome Section */}
+        <div className='w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12'>
+          <div 
+            ref={welcomeLeftRef}
+            className={`overflow-hidden rounded-3xl sm:rounded-[40px] lg:rounded-[66px] w-full lg:w-[45%] xl:w-[724px] h-[250px] sm:h-[300px] lg:h-[360.26px] transition-all duration-1000 ease-out ${
+              welcomeLeftVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+            }`}
+          >
+            <img src='https://res.cloudinary.com/duhadnqmh/image/upload/v1767788229/d98ca4e0083302c4d3897496f60e2101121dbbc7_sf3sv3.jpg' className='w-full h-full object-cover'/>
+          </div>
 
-      {/* Welcome Section */}
-      <div className='w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 2xl:px-[90px] pt-8 sm:pt-10 md:pt-12 pb-8 sm:pb-10 md:pb-12 bg-[#F0F0FF]'>
-        <div className='w-full rounded-3xl sm:rounded-[40px] lg:rounded-[50px] bg-gradient-to-br from-[#0257EE] to-[#013288] min-h-[600px] lg:h-screen flex flex-col lg:flex-row gap-4 sm:gap-5 py-4 sm:py-6 md:py-8 px-4 sm:px-6 md:px-8 items-center'>
-          <AnimatedSection direction="left" className='w-full lg:w-[50%] h-64 sm:h-80 md:h-96 lg:h-full'>
-            <img 
-              src='https://res.cloudinary.com/duhadnqmh/image/upload/v1767788229/d98ca4e0083302c4d3897496f60e2101121dbbc7_sf3sv3.jpg' 
-              className='w-full h-full rounded-3xl sm:rounded-[40px] lg:rounded-[50px] object-cover'
-              alt="IJPPI"
-            />
-          </AnimatedSection>
-          
-          <AnimatedSection direction="right" className='flex flex-col gap-3 sm:gap-4 md:gap-5 text-white w-full lg:w-[50%] px-2 sm:px-4'>
-            <p className='font-semibold text-lg sm:text-xl md:text-2xl lg:text-[28px] leading-tight'>
-              Everything you need
+          <div 
+            ref={welcomeRightRef}
+            className={`flex flex-col gap-4 md:gap-6 w-full lg:w-[52%] xl:w-[890px] justify-center transition-all duration-1000 ease-out ${
+              welcomeRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+            }`}
+          >
+            <p className='text-2xl sm:text-3xl md:text-[42px] leading-tight md:leading-[85px] font-sans font-[600] text-[#1946DA]'>Welcome to IJPPI</p>
+            <p className='font-[400] text-base sm:text-lg md:text-xl lg:text-[24px] leading-relaxed md:leading-[48px] text-justify text-[#233B4E]'>
+              The International Journal of Pharmacological and Pharmaceutical Innovations (IJPPI) are a premier platform dedicated to the dissemination of high-impact research in the pharmaceutical sciences, with a 2026 focus on bridging the gap between conventional pharmaceutical technologies and next-generation delivery systems.
             </p>
-            <h2 className='font-bold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-tight sm:leading-[50px] md:leading-[65px] lg:leading-[85px]'>
-              Welcome to IJPPI
-            </h2>
-            <p className='font-medium text-base sm:text-lg md:text-xl lg:text-[24px] leading-relaxed sm:leading-[36px] md:leading-[42px] lg:leading-[48px]'>
-              The International Journal of Pharmacological and Pharmaceutical Innovations (IJPPI) is a peer-reviewed, open-access journal dedicated to advancing excellence and innovation in the fields of pharmacology and pharmaceutics.
-            </p>
-            <button className='border-2 rounded-xl sm:rounded-2xl flex items-center gap-1 w-40 sm:w-[186px] justify-between px-2 py-2 mt-3 sm:mt-4 md:mt-5 hover:bg-white hover:text-[#0257EE] transition-all duration-300'>
-              <span className='font-normal text-base sm:text-[18px]'>Learn More</span>
-              <span className='bg-white text-black rounded-full w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center'>
-                <FaGreaterThan className="text-xs sm:text-sm" />
-              </span>
-            </button>
-          </AnimatedSection>
+          </div>
         </div>
 
-        {/* Features Section */}
-        <div className='flex flex-col items-center mt-12 sm:mt-16 md:mt-20 lg:mt-24 gap-6 sm:gap-8 md:gap-10 w-full'>
-          <AnimatedSection direction="left">
-            <h2 className='font-medium text-3xl sm:text-4xl md:text-5xl lg:text-[64px] leading-tight text-center'>
-              Features
-            </h2>
-          </AnimatedSection>
-          
-          <AnimatedSection direction="right">
-            <p className='font-medium text-base sm:text-lg md:text-xl lg:text-[24px] leading-relaxed sm:leading-[38px] md:leading-[44px] lg:leading-[49px] text-center px-4 max-w-4xl'>
-              Pharmacological and toxicological investigations of active pharmaceutical ingredients (APIs), novel compounds, and their formulations are welcomed.
-            </p>
-          </AnimatedSection>
-          
-          <div className='w-full flex flex-col lg:flex-row gap-6 sm:gap-8 md:gap-10'>
-            <AnimatedSection direction="left" className='w-full lg:w-[549px] p-6 sm:p-8 md:p-10 lg:p-12 bg-white rounded-3xl sm:rounded-[40px] flex flex-col gap-6 sm:gap-8 md:gap-10 mx-auto lg:mx-0'>
-              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="76" viewBox="0 0 116 110" fill="none" className="sm:w-[100px] sm:h-[95px] md:w-[116px] md:h-[110px]">
-                <g clipPath="url(#clip0_188_191)">
-                  <path d="M83.3128 16.2791H85.1838C85.1838 15.6057 84.8153 14.9854 84.2215 14.6584L83.3128 16.2791ZM58.2323 2.4721L59.1408 0.851472C58.5758 0.540398 57.8886 0.540394 57.3236 0.851464L58.2323 2.4721ZM83.3128 43.8929L84.2215 45.5135C84.8153 45.1866 85.1838 44.5662 85.1838 43.8929H83.3128ZM58.2323 57.6999L57.3236 59.3205C57.8886 59.6316 58.5758 59.6316 59.1408 59.3205L58.2323 57.6999ZM33.1511 43.8929H31.2801C31.2801 44.5662 31.6485 45.1866 32.2425 45.5136L33.1511 43.8929ZM33.1511 16.2791L32.2425 14.6584C31.6485 14.9854 31.2801 15.6057 31.2801 16.2791H33.1511ZM52.6563 65.9841H54.5272C54.5272 65.3109 54.1588 64.6906 53.5648 64.3635L52.6563 65.9841ZM27.5756 52.1773L28.4842 50.5566C27.9192 50.2455 27.2321 50.2455 26.667 50.5566L27.5756 52.1773ZM52.6563 93.5981L53.5648 95.2187C54.1588 94.8916 54.5272 94.2713 54.5272 93.5981H52.6563ZM27.5756 107.405L26.667 109.026C27.2321 109.337 27.9192 109.337 28.4842 109.026L27.5756 107.405ZM2.4945 93.5981H0.623535C0.623535 94.2713 0.991916 94.8917 1.58589 95.2187L2.4945 93.5981ZM2.4945 65.9841L1.58589 64.3635C0.991918 64.6904 0.623535 65.3109 0.623535 65.9841H2.4945ZM88.8837 52.1774L89.7922 50.5567C89.2272 50.2456 88.5401 50.2456 87.975 50.5567L88.8837 52.1774ZM113.964 65.9842H115.835C115.835 65.311 115.467 64.6907 114.873 64.3637L113.964 65.9842ZM63.8025 65.9842L62.894 64.3637C62.3 64.6907 61.9315 65.311 61.9315 65.9842H63.8025ZM63.8025 93.5982H61.9315C61.9315 94.2714 62.3 94.8919 62.894 95.2188L63.8025 93.5982ZM88.8837 107.405L87.975 109.026C88.5401 109.337 89.2272 109.337 89.7922 109.026L88.8837 107.405ZM113.964 93.5982L114.873 95.2188C115.467 94.8919 115.835 94.2714 115.835 93.5982H113.964ZM84.2215 14.6584L59.1408 0.851472L57.3236 4.09272L82.4042 17.8997L84.2215 14.6584ZM85.1838 43.8929V16.2791H81.4419V43.8929H85.1838ZM59.1408 59.3205L84.2215 45.5135L82.4042 42.2723L57.3236 56.0793L59.1408 59.3205ZM32.2425 45.5136L57.3236 59.3205L59.1408 56.0793L34.0597 42.2723L32.2425 45.5136ZM31.2801 16.2791V43.8929H35.022V16.2791H31.2801ZM57.3236 0.851464L32.2425 14.6584L34.0597 17.8997L59.1408 4.09273L57.3236 0.851464ZM53.5648 64.3635L28.4842 50.5566L26.667 53.7978L51.7476 67.6048L53.5648 64.3635ZM54.5272 93.5981V65.9841H50.7853V93.5981H54.5272ZM28.4842 109.026L53.5648 95.2187L51.7476 91.9774L26.667 105.784L28.4842 109.026ZM1.58589 95.2187L26.667 109.026L28.4842 105.784L3.40312 91.9774L1.58589 95.2187ZM0.623535 65.9841V93.5981H4.36547V65.9841H0.623535ZM26.667 50.5566L1.58589 64.3635L3.40312 67.6048L28.4842 53.7978L26.667 50.5566ZM87.975 53.798L113.056 67.6049L114.873 64.3637L89.7922 50.5567L87.975 53.798ZM64.7112 67.6049L89.7922 53.798L87.975 50.5567L62.894 64.3637L64.7112 67.6049ZM65.6735 93.5982V65.9842H61.9315V93.5982H65.6735ZM89.7922 105.784L64.7112 91.9775L62.894 95.2188L87.975 109.026L89.7922 105.784ZM113.056 91.9775L87.975 105.784L89.7922 109.026L114.873 95.2188L113.056 91.9775ZM112.093 65.9842V93.5982H115.835V65.9842H112.093Z" fill="#020F19" fillOpacity="0.7"/>
-                </g>
-                <defs>
-                  <clipPath id="clip0_188_191">
-                    <rect width="116" height="110" fill="white"/>
-                  </clipPath>
-                </defs>
-              </svg>
-              <h2 className='font-semibold text-xl sm:text-2xl md:text-[30px] leading-tight'>
-                IJPPI is dedicated to
-              </h2>
-              {[
-                "Publishing original research articles, review papers, case studies, and short communications.",
-                "Encouraging interdisciplinary collaboration in pharmaceutical sciences",
-                "Promoting ethical research and adherence to international standards.",
-                "Providing free access to knowledge through our open-access policy."
-              ].map((text, idx) => (
-                <p key={idx} className='flex gap-2 sm:gap-3 items-start'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0 mt-1">
-                    <g clipPath="url(#clip0_188_182)">
-                      <path d="M10.0002 0.833496C3.57516 0.833496 0.833496 3.57516 0.833496 10.0002C0.833496 16.4252 3.57516 19.1668 10.0002 19.1668C16.4252 19.1668 19.1668 16.4252 19.1668 10.0002C19.1668 3.57516 16.4252 0.833496 10.0002 0.833496ZM14.421 7.94933C13.3277 9.66016 11.771 11.8043 9.42016 13.2152C9.15016 13.3777 8.811 13.3735 8.54516 13.2043C7.2785 12.4018 6.32766 11.5418 5.55016 10.4977C5.27516 10.1285 5.35183 9.60683 5.721 9.33183C6.08933 9.05683 6.61183 9.13433 6.886 9.50266C7.44766 10.2568 8.126 10.9018 8.99933 11.5068C10.7993 10.2902 12.036 8.58433 13.0152 7.05183C13.2643 6.6635 13.7793 6.55016 14.166 6.7985C14.5543 7.04683 14.6685 7.56183 14.421 7.94933Z" fill="#0257EE"/>
-                    </g>
-                  </svg>
-                  <span className='font-normal text-sm sm:text-base md:text-[18px] leading-relaxed'>{text}</span>
-                </p>
-              ))}
-              <button className='border-2 border-black rounded-xl sm:rounded-2xl flex items-center gap-1 w-40 sm:w-[186px] justify-between px-2 py-2 mt-3 sm:mt-4 md:mt-5 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-300'>
-                <span className='font-normal text-base sm:text-[18px]'>Learn More</span>
-                <span className='bg-blue-500 text-white rounded-full w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center'>
-                  <FaGreaterThan className="text-xs sm:text-sm" />
-                </span>
-              </button>
-            </AnimatedSection>
+        {/* Dedication Section */}
+        <div className='w-full min-h-[400px] lg:h-[441px] relative overflow-hidden rounded-2xl lg:rounded-none max-[1880px]:bg-[#FAFAFA]'>
+          <div className='relative z-50 px-6 sm:px-8 md:px-10 lg:px-[50px] py-8 sm:py-10 md:py-12 lg:py-[50px] bg-transparent w-full flex flex-col items-start gap-6 md:gap-8'>
+            <p className='text-[#1946DA] text-xl sm:text-2xl md:text-[32px] leading-tight md:leading-[159%] font-[600] font-sans'>IJPPI is dedicated to</p>
+            <div className='flex flex-col gap-3 md:gap-4'>
+              <FeatureItem 
+                text="Encouraging interdisciplinary collaboration in pharmaceutical sciences." 
+                delay={0}
+              />
+              <FeatureItem 
+                text="Promoting ethical research and adherence to international standards." 
+                delay={100}
+              />
+              <FeatureItem 
+                text="Providing free access to knowledge through our open-access policy." 
+                delay={200}
+              />
+              <FeatureItem 
+                text="Publishing original research articles, review papers, case studies, and short communications." 
+                delay={300}
+              />
+            </div>
+          </div>
 
-            <AnimatedSection direction="right" className='w-full lg:w-[549px] p-6 sm:p-8 md:p-10 lg:p-12 bg-white rounded-3xl sm:rounded-[40px] flex flex-col gap-6 sm:gap-8 md:gap-10 mx-auto lg:mx-0'>
-              <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 103 103" fill="none" className="sm:w-[90px] sm:h-[90px] md:w-[103px] md:h-[103px]">
-                <g clipPath="url(#clip0_188_136)">
-                  <path d="M51.5 51.5H66.6796L99.4894 18.3168C103.674 14.1325 103.674 7.32587 99.4894 3.14579C95.451 -0.905542 88.3912 -0.918417 84.3098 3.15437L51.5 36.3375V51.5ZM55.7917 38.0971L87.3526 6.17571C89.7817 3.74662 94.0261 3.74662 96.4552 6.17571C98.9658 8.68633 98.9658 12.7677 96.4466 15.2869L64.8857 47.2083H55.7917V38.0971ZM85.8333 77.25V44.3329L81.5417 48.6761V77.25H42.9167V90.125C42.9167 94.8587 39.067 98.7083 34.3333 98.7083C29.5996 98.7083 25.75 94.8587 25.75 90.125V12.875C25.75 9.56612 24.4582 6.57483 22.4025 4.29167H71.1129L75.1385 0.218875C74.4261 0.0944167 73.7051 0 72.9583 0H12.875C5.77658 0 0 5.77658 0 12.875V25.75H21.4583V90.125C21.4583 97.2234 27.2349 103 34.3333 103H90.125C97.2234 103 103 97.2234 103 90.125V77.25H85.8333ZM21.4583 21.4583H4.29167V12.875C4.29167 8.14129 8.14129 4.29167 12.875 4.29167C17.6087 4.29167 21.4583 8.14129 21.4583 12.875V21.4583ZM98.7083 90.125C98.7083 94.8587 94.8587 98.7083 90.125 98.7083H43.9209C45.9637 96.4295 47.2083 93.421 47.2083 90.125V81.5417H98.7083V90.125Z" fill="#020F19" fillOpacity="0.7"/>
-                </g>
-                <defs>
-                  <clipPath id="clip0_188_136">
-                    <rect width="103" height="103" fill="white"/>
-                  </clipPath>
-                </defs>
-              </svg>
-              <h2 className='font-semibold text-xl sm:text-2xl md:text-[30px] leading-tight'>
-                IJPPI welcomes manuscripts
-              </h2>
-              {[
-                "Publishing original research articles, review papers, case studies, and short communications.",
-                "Encouraging interdisciplinary collaboration in pharmaceutical sciences",
-                "Promoting ethical research and adherence to international standards.",
-                "Providing free access to knowledge through our open-access policy."
-              ].map((text, idx) => (
-                <p key={idx} className='flex gap-2 sm:gap-3 items-start'>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0 mt-1">
-                    <g clipPath="url(#clip0_188_182)">
-                      <path d="M10.0002 0.833496C3.57516 0.833496 0.833496 3.57516 0.833496 10.0002C0.833496 16.4252 3.57516 19.1668 10.0002 19.1668C16.4252 19.1668 19.1668 16.4252 19.1668 10.0002C19.1668 3.57516 16.4252 0.833496 10.0002 0.833496ZM14.421 7.94933C13.3277 9.66016 11.771 11.8043 9.42016 13.2152C9.15016 13.3777 8.811 13.3735 8.54516 13.2043C7.2785 12.4018 6.32766 11.5418 5.55016 10.4977C5.27516 10.1285 5.35183 9.60683 5.721 9.33183C6.08933 9.05683 6.61183 9.13433 6.886 9.50266C7.44766 10.2568 8.126 10.9018 8.99933 11.5068C10.7993 10.2902 12.036 8.58433 13.0152 7.05183C13.2643 6.6635 13.7793 6.55016 14.166 6.7985C14.5543 7.04683 14.6685 7.56183 14.421 7.94933Z" fill="#0257EE"/>
-                    </g>
-                  </svg>
-                  <span className='font-normal text-sm sm:text-base md:text-[18px] leading-relaxed'>{text}</span>
+          <div className='hidden min-[1880px]:block absolute left-0 top-0 bottom-0 z-0'>
+            <svg xmlns="http://www.w3.org/2000/svg" className='w-[1070px] h-[442px]' viewBox="0 0 1070 442" fill="none">
+              <path d="M814.724 235V25.5C814.724 11.6929 803.531 0.5 789.724 0.5H25.5C11.6929 0.5 0.5 11.6929 0.5 25.5V416.5C0.5 430.307 11.6929 441.5 25.5 441.5H1044.5C1058.31 441.5 1069.5 430.307 1069.5 416.5V285C1069.5 271.193 1058.31 260 1044.5 260H839.724C825.917 260 814.724 248.807 814.724 235Z" fill="#FAFAFA" stroke="#F1F1F1"/>
+            </svg>
+          </div>
+          <div className='hidden min-[1880px]:block absolute right-0 top-0 bottom-0'>
+            <img src='https://res.cloudinary.com/duhadnqmh/image/upload/v1768033225/64c778ac569656c5151244cb_Union_1_1_rangxs.png' className="h-full w-auto"/>
+          </div>
+        </div>
+
+        {/* Scope of Journal */}
+        <div className='w-full'>
+          <div className='w-full flex flex-col lg:flex-row gap-6 lg:gap-9'>
+            {/* Left Card */}
+            <div 
+              ref={reviewLeftRef}
+              className={`w-full lg:w-[548px] lg:flex-shrink-0 flex flex-col gap-6 lg:gap-10 bg-[#FAFAFAAF] rounded-[20px] lg:rounded-none overflow-hidden lg:h-[726px] transition-all duration-1000 ease-out ${
+                reviewLeftVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+              }`}
+            >
+              <div className='w-full h-[250px] sm:h-[300px] lg:h-[379px] rounded-t-[20px] overflow-hidden'>
+                <img 
+                  src='https://res.cloudinary.com/duhadnqmh/image/upload/v1767793334/157a3d9c3cec49425f58c05aba19fac0e28d59e1_aowyzg.jpg' 
+                  className='w-full h-full object-cover' 
+                  alt='Peer Review Process'
+                />
+              </div>
+              <div className='w-full px-6 sm:px-8 lg:px-[30px] pb-6 lg:pb-0'>
+                <p className='w-full font-semibold text-2xl sm:text-3xl lg:text-[32px] leading-tight lg:leading-[48px] text-[#1946DAE5] mb-4'>
+                  Double-Blind Peer Review Process – IJPPI
                 </p>
-              ))}
-              <button className='bg-blue-600 rounded-xl sm:rounded-2xl flex items-center gap-1 w-40 sm:w-[186px] justify-between px-2 py-2 mt-3 sm:mt-4 md:mt-5 hover:bg-blue-700 transition-all duration-300'>
-                <span className='font-normal text-base sm:text-[18px] text-white'>Learn More</span>
-                <span className='bg-white text-black rounded-full w-7 h-7 sm:w-[30px] sm:h-[30px] flex items-center justify-center'>
-                  <FaGreaterThan className="text-xs sm:text-sm" />
-                </span>
-              </button>
-            </AnimatedSection>
+                <p className='w-full font-normal text-base sm:text-lg leading-relaxed lg:leading-[36px] text-[#020F19]'>
+                  The International Journal of Pharmacological and Pharmaceutical Innovations (IJPPI) follows a structured double-blind peer review process to ensure fairness, quality, and transparency in manuscript handling.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Content */}
+            <div 
+              ref={reviewRightRef}
+              className={`bg-[#FAFAFAAF] p-6 sm:p-8 lg:p-10 w-full flex flex-col gap-6 lg:gap-8 rounded-[20px] lg:rounded-none transition-all duration-1000 ease-out ${
+                reviewRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+              }`}
+            >
+              <p className='font-semibold text-3xl sm:text-4xl lg:text-[42px] leading-tight lg:leading-[24px] text-[#1946DA]'>
+                Scope of the Journal
+              </p>
+              
+              <p className='w-full font-medium text-xl sm:text-2xl lg:text-[26px] leading-relaxed lg:leading-[159%] text-[#233B4E]'>
+                This journal focuses on the intersection of pharmaceutical sciences and advanced material engineering to enhance therapeutic efficacy.
+              </p>
+              
+              <div className='pl-0 sm:pl-3 flex flex-col gap-4 lg:gap-6'>
+                {scopeItems.map((item, index) => (
+                  <ScopeItem 
+                    key={index}
+                    title={item.title}
+                    description={item.description}
+                    delay={index * 100}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
+   
       {/* Why Publish Section */}
-      <div className="bg-white flex items-center justify-center py-12 sm:py-16 md:py-20">
-        <div className="w-full bg-white rounded-2xl overflow-hidden">
-          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 md:gap-0">
-            <AnimatedSection direction="left" className="relative flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 2xl:px-[90px]">
-              <div className="relative w-full">
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" 
-                  alt="Professional working"
-                  className="w-full h-48 sm:h-56 md:h-64 lg:h-72 object-cover rounded-lg shadow-lg"
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <button className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-white rounded-full shadow-xl flex items-center justify-center hover:scale-110 transition-transform">
-                    <div className="w-0 h-0 border-t-6 sm:border-t-8 border-t-transparent border-l-8 sm:border-l-12 border-l-gray-800 border-b-6 sm:border-b-8 border-b-transparent ml-1"></div>
-                  </button>
-                </div>
+      <div className='w-full bg-[#FAFAFA80] flex justify-center items-center py-12 sm:py-16 lg:py-20 xl:h-[669px] relative overflow-hidden'>
+        <div className='flex flex-col lg:flex-row gap-8 lg:gap-14 items-center px-4 sm:px-6 md:px-10 max-w-7xl'>
+          <div 
+            ref={whyPublishLeftRef}
+            className={`w-full lg:w-[50%] xl:w-[689px] h-[300px] sm:h-[400px] lg:h-[529px] rounded-[50px] lg:rounded-[100px] overflow-hidden transition-all duration-1000 ease-out cursor-pointer relative group  z-50 ${
+              whyPublishLeftVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+            }`}
+            onClick={handleVideoClick}
+          >
+            <video 
+              ref={videoRef}
+              className='w-full h-full object-cover'
+              src='https://res.cloudinary.com/duhadnqmh/video/upload/v1768106710/2340-157269921_small_uqfw6w.mp4'
+            />
+            
+            {/* Play button overlay */}
+            <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 group-hover:bg-opacity-40 transition-all duration-300'>
+              <div className='w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-white bg-opacity-90 flex items-center justify-center group-hover:scale-110 transition-transform duration-300'>
+                <svg className='w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-[#1946DA] ml-1' fill='currentColor' viewBox='0 0 20 20'>
+                  <path d='M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z' />
+                </svg>
               </div>
-            </AnimatedSection>
-
-            <AnimatedSection direction="right" className="p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-center">
-              <h2 className="text-2xl sm:text-3xl md:text-3xl font-bold text-gray-800 mb-6 sm:mb-8">
-                Why Publish with IJPPI?
-              </h2>
-              
-              <div className="space-y-3 sm:space-y-4">
-                {benefits.map((benefit, index) => {
-                  const Icon = benefit.icon;
-                  return (
-                    <div 
-                      key={index}
-                      className="flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-[#0257EE] to-[#013288] text-white rounded-full px-4 sm:px-5 md:px-6 py-2.5 sm:py-3 md:py-3.5 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
-                    >
-                      <div className="flex-shrink-0">
-                        <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </div>
-                      <span className="text-xs sm:text-sm md:text-sm font-medium leading-snug">
-                        {benefit.text}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </AnimatedSection>
+            </div>
           </div>
+          
+          <div 
+            ref={whyPublishRightRef}
+            className={`flex flex-col justify-start gap-8 lg:gap-16 w-full lg:w-[48%] transition-all duration-1000 ease-out ${
+              whyPublishRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
+            }`}
+          >
+            <p className='text-2xl sm:text-3xl lg:text-[32px] text-[#1946DA] font-[600] leading-tight lg:leading-[24px]'>Why Publish with IJPPI?</p>
+            <div className='flex flex-col gap-3 md:gap-4'>
+              <FeatureItem 
+                text="Double-Blind Peer Review for fair evaluation." 
+                delay={0}
+              />
+              <FeatureItem 
+                text="Open Access Policy ensuring global visibility." 
+                delay={100}
+              />
+              <FeatureItem 
+                text="Rapid Processing with timely publication." 
+                delay={200}
+              />
+              <FeatureItem 
+                text="Indexing and Abstracting opportunities in major databases." 
+                delay={300}
+              />
+              <FeatureItem 
+                text="DOI assignment for each published article." 
+                delay={400}
+              />
+            </div>
+          </div>
+        </div>
+        
+        <div className='hidden lg:block absolute top-0 right-0 w-[200px] xl:w-auto'>
+          <img src='https://res.cloudinary.com/duhadnqmh/image/upload/v1768041008/466295069177_2_lo3mkv.png' className='w-full h-auto'/>
+        </div>
+        <div className='hidden lg:block absolute bottom-0 left-0 w-[300px] xl:w-[624px] h-auto xl:h-[613px]'>
+          <img src='https://res.cloudinary.com/duhadnqmh/image/upload/v1768041326/466295069177_1_csqtk7.png' className='w-full h-full object-contain'/>
+        </div>
+      </div>
+
+      {/* Fullscreen Video Modal */}
+      {isFullscreen && (
+        <div className='fixed inset-0 z-50 bg-black flex items-center justify-center'>
+          <button
+            onClick={handleCloseFullscreen}
+            className='absolute top-4 right-4 sm:top-6 sm:right-6 z-10 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white bg-opacity-20 hover:bg-opacity-30 flex items-center justify-center transition-all duration-300'
+            aria-label='Close video'
+          >
+            <svg className='w-6 h-6 sm:w-8 sm:h-8 text-white' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+            </svg>
+          </button>
+          
+          <video
+            ref={fullscreenVideoRef}
+            className='w-full h-full object-contain'
+            src='https://res.cloudinary.com/duhadnqmh/video/upload/v1768106710/2340-157269921_small_uqfw6w.mp4'
+            controls
+            autoPlay
+          />
+        </div>
+      )}
+
+      {/* Flow Chart Section */}
+      <div className='w-full relative overflow-hidden py-12 sm:py-16 lg:py-20 flex justify-center items-center px-4 sm:px-6'>
+        <div className='flex flex-col gap-6 sm:gap-8 lg:gap-10 items-center max-w-7xl'>
+          <p className='font-[600] text-2xl sm:text-3xl lg:text-[42px] leading-tight lg:leading-[57.6px] text-[#1946DA] text-center px-4'>
+            Flow Chart Representation of Peer Review
+          </p>
+          <div className='w-full max-w-[1282px]'>
+            <img src='https://res.cloudinary.com/duhadnqmh/image/upload/v1768043197/6f12501d76b5a33c4017cf8a8443eaf4cfb3eb74_tjguk1.png' className='w-full h-auto object-contain'/>
+          </div>
+        </div>
+        
+        <div className='w-full h-full opacity-[5%] absolute inset-0 pointer-events-none'>
+          <img src='https://res.cloudinary.com/duhadnqmh/image/upload/v1768041462/c6dcccc418c105b6d4e23dbb24a7a3cd6217d0a0_fryux6.png' className='object-cover w-full h-full'/>
         </div>
       </div>
     </div>

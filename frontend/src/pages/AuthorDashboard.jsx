@@ -95,7 +95,7 @@ function AuthorDashboard() {
         text: 'text-yellow-700',
         border: 'border-yellow-200',
         icon: Clock,
-        label: 'Pending Review' 
+        label: 'with editor' 
       },
       approved_by_editor: { 
         gradient: 'from-[#1B7A9C] to-[#156680]',
@@ -103,7 +103,7 @@ function AuthorDashboard() {
         text: 'text-blue-700',
         border: 'border-blue-200',
         icon: CheckCircle,
-        label: 'Approved by Editor' 
+        label: 'Under Review' 
       },
       rejected_by_editor: { 
         gradient: 'from-red-500 to-red-600',
@@ -119,7 +119,7 @@ function AuthorDashboard() {
         text: 'text-purple-700',
         border: 'border-purple-200',
         icon: Eye,
-        label: 'With Reviewer' 
+        label: 'Under Review' 
       },
       approved_by_reviewer: { 
         gradient: 'from-emerald-500 to-emerald-600',
@@ -127,7 +127,7 @@ function AuthorDashboard() {
         text: 'text-emerald-700',
         border: 'border-emerald-200',
         icon: CheckCircle,
-        label: 'Approved' 
+        label: 'Under Review' 
       },
       rejected_by_reviewer: { 
         gradient: 'from-red-500 to-red-600',
@@ -135,7 +135,7 @@ function AuthorDashboard() {
         text: 'text-red-700',
         border: 'border-red-200',
         icon: XCircle,
-        label: 'Rejected by Reviewer' 
+        label: 'Under Review' 
       },
       scheduled: { 
         gradient: 'from-indigo-500 to-indigo-600',

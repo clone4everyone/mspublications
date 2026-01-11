@@ -66,8 +66,17 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
   };
 
   return (
-    <nav
-      className={`relative z-50 px-4 sm:px-8 lg:px-[90px] pt-6 w-full h-[70px] sm:h-[89px] flex items-center justify-between
+    <>
+    <div>
+      <div className='w-full h-[50px] flex justify-end items-center px-[101px] bg-[#1946DA]'>
+        <div className='flex gap-8 text-white font-sans font-[400] text-[16px] leading-[100%]'>
+          <p className='hover:cursor-pointer ' onClick={()=>{window.open('https://mspublication.com/','_blank')}}>MsPublications</p>
+          <p>Subscription</p>
+        </div>
+
+      </div>
+<nav
+      className={`relative z-50 px-4 sm:px-8 lg:px-[90px]  w-full h-[91px] sm:h-[89px] flex items-center justify-between
         ${transparent ? "bg-transparent text-white" : "bg-white text-gray-900"}`}
     >
       <div 
@@ -82,7 +91,7 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
           <div key={item.id} className="relative">
             <p
               onClick={() => handleNavClick(item.id)}
-              className={`font-[500] text-[14px] hover:cursor-pointer hover:opacity-80 whitespace-nowrap transition-opacity pb-1
+              className={`font-[500] text-[18px] hover:cursor-pointer hover:opacity-80 whitespace-nowrap transition-opacity pb-1
                 ${currentPage === item.id ? 'font-bold' : ''}`}
             >
               {item.name}
@@ -101,7 +110,7 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
               <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
                 {user?.firstName?.[0] || 'U'}
               </div>
-              <span className="font-[500] text-[14px] whitespace-nowrap">{user?.firstName || 'User'}</span>
+              <span className="font-[500] text-[18px] whitespace-nowrap">{user?.firstName || 'User'}</span>
             </div>
             <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
               <button
@@ -204,10 +213,13 @@ const Navbar = ({ transparent = true, currentPage = 'home', onNavigate }) => {
           </div>
         </div>
       )}
-        <div className='hidden xl:block xl:absolute   bg-black  text-white font-[500]  p-3 right-1 top-0 text-xs rounded-bl-md rounded-br-md hover:bg-gray-700 cursor-pointer ' onClick={()=>{window.open('https://mspublication.com','_blank')}}>MsPublications</div>
+       
       
     
     </nav>
+    </div>
+    </>
+    
   );
 };
 

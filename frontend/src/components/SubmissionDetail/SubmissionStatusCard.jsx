@@ -67,7 +67,7 @@ const filteredReviewers = useMemo(() => {
             </div>
             <span className={`text-white inline-flex items-center space-x-2 ${badge.class} px-4 py-1.5 rounded-lg text-sm font-bold`}>
               {/* <StatusIcon className="w-4 h-4" /> */}
-              <span className=''>{badge.text}</span>
+              <span className=''>{user.role==='author' ? badge.text === 'with editor'?'with editor':'Under Review': badge.text}</span>
             </span>
           </div>
         </div>
@@ -127,7 +127,7 @@ const filteredReviewers = useMemo(() => {
           )}
 
           {/* Schedule Publication */}
-          {canShowActions && user.role === 'editor' && submission.status === 'approved_by_editor' && (
+          {/* {canShowActions && user.role === 'editor' && submission.status === 'approved_by_editor' && (
             <>
               <button
                 onClick={onSchedule}
@@ -144,7 +144,7 @@ const filteredReviewers = useMemo(() => {
                 <span>Send Back</span>
               </button>
             </>
-          )}
+          )} */}
 
           {/* Reviewer Actions */}
           {canShowActions && user.role === 'reviewer' && submission.status === 'with_reviewer' && (

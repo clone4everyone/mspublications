@@ -46,7 +46,7 @@ function NewSubmission() {
 
   // Step 1 data
   const [step1Data, setStep1Data] = useState({
-    journal: '',
+    journal: 'pharma',
     section: '',
     commentsForEditor: '',
     potentialReviewers: [{ name: '', affiliation: '', email: '', expertise: '' }],
@@ -123,6 +123,18 @@ function NewSubmission() {
       toast.error('Please accept all submission requirements');
       return;
     }
+      // Validate at least one complete reviewer
+  const completeReviewers = step1Data.potentialReviewers.filter(
+    reviewer => reviewer.name.trim() && 
+                reviewer.affiliation.trim() && 
+                reviewer.email.trim() && 
+                reviewer.expertise.trim()
+  );
+
+  if (completeReviewers.length === 0) {
+    toast.error('Please add at least one reviewer with all fields filled (name, affiliation, email, and field of expertise)');
+    return;
+  }
 
     const result = await dispatch(createSubmission(step1Data));
     if (result.type === 'submissions/create/fulfilled') {
@@ -136,7 +148,6 @@ function NewSubmission() {
       toast.error('Please upload a document');
       return;
     }
-
     const result = await dispatch(uploadDocument({
       id: currentSubmission._id,
       file: uploadedFile
@@ -349,7 +360,7 @@ function NewSubmission() {
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Step 1: Start Your Submission</h2>
 
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Select Journal *
                 </label>
@@ -363,7 +374,7 @@ function NewSubmission() {
                     <option key={j} value={j} className="capitalize">{j}</option>
                   ))}
                 </select>
-              </div>
+              </div> */}
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">

@@ -18,7 +18,7 @@ function EditSubmission() {
   const dispatch = useDispatch();
   const { currentSubmission, canEdit, isLoading } = useSelector((state) => state.submissions);
 
-  const [editMode, setEditMode] = useState('metadata'); // 'metadata' or 'document'
+  const [editMode, setEditMode] = useState('document'); // 'metadata' or 'document'
   const [uploadedFile, setUploadedFile] = useState(null);
   const [metadata, setMetadata] = useState({
     prefix: '',
@@ -202,7 +202,7 @@ function EditSubmission() {
       <div className="bg-white border-b">
         <div className="max-w-6xl mx-auto py-4 px-4">
           <div className="flex space-x-4">
-            <button
+            {/* <button
               onClick={() => setEditMode('metadata')}
               className={`px-6 py-2 rounded-lg font-medium transition-colors ${
                 editMode === 'metadata'
@@ -211,7 +211,7 @@ function EditSubmission() {
               }`}
             >
               Edit Metadata
-            </button>
+            </button> */}
             <button
               onClick={() => setEditMode('document')}
               className={`px-6 py-2 rounded-lg font-medium transition-colors ${

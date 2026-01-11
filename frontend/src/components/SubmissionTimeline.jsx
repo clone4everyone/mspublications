@@ -14,7 +14,7 @@ import {
   FaForward
 } from 'react-icons/fa';
 
-const SubmissionTimeline = ({ timeline }) => {
+const SubmissionTimeline = ({ timeline,user }) => {
   console.log(timeline)
   if (!timeline || timeline.length === 0) {
     return null;
@@ -98,7 +98,9 @@ const SubmissionTimeline = ({ timeline }) => {
             const showNotes = hasDetailedNotes(event);
 
             return (
-              <div key={index} className="relative flex items-start space-x-6 group">
+              <>
+              {
+                user.role == 'author' && event.eventType === 'editor_approved'?'':<div key={index} className="relative flex items-start space-x-6 group">
                 {/* Icon Circle */}
                 <div className={`relative z-10 flex-shrink-0 w-12 h-12 bg-gradient-to-br ${gradientColor} rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   <Icon className="w-6 h-6 text-white" />
@@ -196,6 +198,9 @@ const SubmissionTimeline = ({ timeline }) => {
                   )}
                 </div>
               </div>
+              }
+              </>
+              
             );
           })}
         </div>

@@ -366,7 +366,15 @@ const submissionSlice = createSlice({
         state.journalStats = action.payload;
       })
       // Upload document
+      .addCase(uploadDocument.pending,(state,action)=>{
+        state.isLoading=true;
+        state.currentSubmission = action.payload;
+      })
       .addCase(uploadDocument.fulfilled, (state, action) => {
+        state.currentSubmission = action.payload;
+      })
+      .addCase(uploadDocument.rejected,(state,action)=>{
+        state.isLoading=false;
         state.currentSubmission = action.payload;
       })
       // Add metadata

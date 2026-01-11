@@ -51,14 +51,14 @@ submission.addTimelineEvent({
     await submission.save();
 
     // Send notification to author
-    await sendNotificationEmail(
-      submission.author.email,
-      `${submission.author.firstName} ${submission.author.lastName}`,
-      'Submission Approved by Editor',
-      `<p>Your submission "<strong>${submission.metadata.title}</strong>" has been approved by the editor.</p>
-       <p>The submission will now be forwarded to a reviewer.</p>
-       ${editorNotes ? `<p><strong>Editor's Notes:</strong> ${editorNotes}</p>` : ''}`
-    );
+    // await sendNotificationEmail(
+    //   submission.author.email,
+    //   `${submission.author.firstName} ${submission.author.lastName}`,
+    //   'Submission Approved by Editor',
+    //   `<p>Your submission "<strong>${submission.metadata.title}</strong>" has been approved by the editor.</p>
+    //    <p>The submission will now be forwarded to a reviewer.</p>
+    //    ${editorNotes ? `<p><strong>Editor's Notes:</strong> ${editorNotes}</p>` : ''}`
+    // );
 
     res.status(200).json({
       success: true,

@@ -4,7 +4,8 @@ const { GetObjectCommand } = require("@aws-sdk/client-s3");
 const { sendNotificationEmail } = require('../config/brevo');
 const User = require('../models/User');
 const { s3 } = require('../config/aws');
-const { convertDocxToPdf } = require('../utils/docxToPdfConverter'); // Add this utility
+const { convertDocxToPdf } = require('../utils/docxConverter');
+// const { convertDocxToPdf } = require('../utils/docxToPdfConverter'); // Add this utility
 async function getBufferFromS3(key) {
   const command = new GetObjectCommand({
     Bucket: process.env.AWS_BUCKET_NAME,
@@ -189,10 +190,10 @@ exports.uploadDocument = async (req, res) => {
     const isDocx = req.file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
                    req.file.originalname.toLowerCase().endsWith('.docx');
 
-    // Convert DOCX to PDF
+    // Convert DOCX to PDF using LibreOffice
     if (isDocx) {
       try {
-        console.log('🔄 Converting DOCX to PDF...');
+        console.log('🔄 Converting DOCX to PDF using LibreOffice...');
         fileBuffer = await convertDocxToPdf(req.file.buffer);
         
         // Update filename and mimetype
@@ -324,10 +325,10 @@ exports.updateSubmissionDocument = async (req, res) => {
     const isDocx = req.file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
                    req.file.originalname.toLowerCase().endsWith('.docx');
 
-    // Convert DOCX to PDF
+    // Convert DOCX to PDF using LibreOffice
     if (isDocx) {
       try {
-        console.log('🔄 Converting DOCX to PDF...');
+        console.log('🔄 Converting DOCX to PDF using LibreOffice...');
         fileBuffer = await convertDocxToPdf(req.file.buffer);
         
         finalFilename = req.file.originalname.replace(/\.docx$/i, '.pdf');
@@ -398,7 +399,7 @@ exports.updateSubmissionDocument = async (req, res) => {
     submission.addTimelineEvent({
       eventType: 'author_edited',
       title: 'Document Updated',
-      description: `Author uploaded a new document file${isDocx ? ' (converted from DOCX to PDF)' : ''}`,
+      description: `Author uploaded a new document file${isDocx ? ' (converted from DOCX to PDF using LibreOffice)' : ''}`,
       performedBy: req.user.id,
       performedByRole: 'author'
     });

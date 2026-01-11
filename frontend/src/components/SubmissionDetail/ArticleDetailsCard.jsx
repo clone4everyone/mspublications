@@ -98,7 +98,7 @@ function ArticleDetailsCard({ submission, user, onOpenPdf }) {
       )}
 
       {/* Assigned Reviewer Section */}
-      {submission.reviewerAssigned && (
+      {submission.reviewerAssigned && user.role==='editor' && (
         <div className="mb-8 bg-purple-50 rounded-lg p-6 border border-purple-100">
           <div className="flex items-center space-x-2 mb-4">
             <div className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center">

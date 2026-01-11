@@ -387,7 +387,7 @@ function SubmissionDetail() {
 
           {currentSubmission.timeline && currentSubmission.timeline.length > 0 && (
             <div className="animate-fade-in-up animate-delay-200">
-              <SubmissionTimeline timeline={currentSubmission.timeline} />
+              <SubmissionTimeline timeline={currentSubmission.timeline} user={user}/>
             </div>
           )}
         </div>

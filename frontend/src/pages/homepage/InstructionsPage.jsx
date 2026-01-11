@@ -74,7 +74,7 @@ export  function InstructionsPage() {
     <div className="min-h-screen bg-white">
       <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-8 sm:py-10 md:py-12">
         {/* Header */}
-        <AnimatedSection className="mb-8 sm:mb-10 md:mb-12">
+        <AnimatedSection className="mb-8 sm:mb-10 md:mb-32">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-[80px] font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
             INSTRUCTIONS TO AUTHORS
           </h1>
@@ -91,7 +91,7 @@ export  function InstructionsPage() {
             </h2>
             <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3">
               <p>
-                The International Journal of Pharmaceutical and Phytopharmacological Research (IJPPR) is a peer-reviewed, open-access journal dedicated to publishing high-quality research in the fields of pharmaceutical sciences, drug development, phytochemistry, pharmacology, and related disciplines. The journal aims to provide a platform for researchers, academicians, and industry professionals to disseminate their findings and contribute to the advancement of pharmaceutical knowledge.
+                IJPPI is an international, peer-reviewed, open-access journal dedicated to publishing innovative research in the fields of pharmacology, pharmaceutical sciences, drug development, formulation technology, pharmacokinetics, regulatory affairs, and related interdisciplinary topics. The journal accepts original research articles, review articles, short communications, and case studies.
               </p>
             </div>
           </section>
@@ -105,17 +105,16 @@ export  function InstructionsPage() {
             </h2>
             <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3">
               <p>
-                IJPPR welcomes submissions in all areas of pharmaceutical and phytopharmacological research, including but not limited to:
+                This journal focuses on the intersection of pharmaceutical sciences and advanced material engineering to enhance therapeutic efficacy. Its scope encompasses:
               </p>
               <ul className="list-disc pl-4 sm:pl-6 space-y-2">
-                <li>Pharmaceutical Chemistry and Drug Design</li>
-                <li>Pharmacology and Toxicology</li>
-                <li>Pharmaceutical Analysis and Quality Assurance</li>
-                <li>Drug Delivery Systems and Pharmaceutical Technology</li>
-                <li>Phytochemistry and Herbal Drug Development</li>
-                <li>Clinical Pharmacy and Pharmacy Practice</li>
-                <li>Pharmaceutical Biotechnology and Biopharmaceutics</li>
-                <li>Regulatory Affairs and Pharmaceutical Legislation</li>
+                <li>Formulation Science: Research on conventional dosage forms, pre-formulation studies, physical pharmacy, and the development and characterization of robust pharmaceutical systems.</li>
+                <li>Advanced Drug Delivery: Innovations in controlled, sustained, and stimuli-responsive delivery systems, including the use of smart polymers and novel modes of administration.</li>
+                <li>Nanomedicine: Design and evaluation of nanocarriers, nanotechnology-based delivery platforms, and the study of ligand-carrier interactions for targeted therapy.</li>
+                <li>Biopharmaceutics & Pharmacokinetics: Investigative studies on the absorption, distribution, metabolism, and excretion (ADME) profiles of drug products, including molecular drug design and prodrug strategies.</li>
+                <li>Analytical & Regulatory Science: Development and validation of novel analytical methods for drug quantification and stability testing.</li>
+                <li>Pharmacology & Toxicology: In-depth evaluation of the safety, biocompatibility, and therapeutic performance of Active Pharmaceutical Ingredients (APIs) and their finished formulations.</li>
+             
               </ul>
             </div>
           </section>
@@ -132,7 +131,8 @@ export  function InstructionsPage() {
               <li>Review Articles</li>
               <li>Short Communications</li>
               <li>Case Reports</li>
-              <li>Letters to the Editor</li>
+              <li>Method Development or Validation Studies</li>
+              <li>Book Reviews and Editorials (by invitation)</li>
             </ul>
           </section>
         </FadeInSection>
@@ -140,16 +140,12 @@ export  function InstructionsPage() {
         {/* Section 4 */}
         <FadeInSection direction="right">
           <section className="mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[48px] font-bold text-gray-900 mb-3 sm:mb-4">
-              4. Submission Guidelines
-            </h2>
+          
             <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3">
-              <p>Authors are requested to adhere to the following guidelines while preparing their manuscripts:</p>
+              <p>Submissions must be in English.</p>
               <ul className="list-disc pl-4 sm:pl-6 space-y-2">
-                <li>Manuscripts must be original and not under consideration elsewhere.</li>
-                <li>Submissions should be made online through the journal's submission portal.</li>
-                <li>All authors must agree to the submission and approve the final version.</li>
-                <li>Conflicts of interest, if any, must be disclosed.</li>
+                <li>Manuscripts must be original, unpublished, and not under consideration elsewhere.</li>
+                <li>Authors must submit their manuscripts via email to: editor.ijppi@mspublication.com or via the online journal system at www.ijppi.mspublication.com</li>
               </ul>
             </div>
           </section>
@@ -157,53 +153,63 @@ export  function InstructionsPage() {
 
         {/* Section 5 */}
         <FadeInSection direction="left">
-          <section className="mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[48px] font-bold text-gray-900 mb-3 sm:mb-4">
-              5. Manuscript Format
-            </h2>
-            <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3">
-              <p>Manuscripts should be prepared in the following format:</p>
-              <ul className="list-disc pl-4 sm:pl-6 space-y-2">
-                <li>File Format: Microsoft Word (.doc or .docx)</li>
-                <li>Font: Times New Roman, 12-point</li>
-                <li>Line Spacing: Double-spaced throughout</li>
-                <li>Margins: 1 inch (2.54 cm) on all sides</li>
-                <li>Page Numbering: Consecutive numbering at the bottom center</li>
-                <li>Word Limit: Research articles (5000-7000 words), Reviews (7000-10000 words), Short communications (2000-3000 words)</li>
-              </ul>
-              <p className="font-semibold mt-4">Manuscript Structure:</p>
-              <ul className="list-disc pl-4 sm:pl-6 space-y-2">
-                <li>Title Page</li>
-                <li>Abstract and Keywords</li>
-                <li>Introduction</li>
-                <li>Materials and Methods</li>
-                <li>Results</li>
-                <li>Discussion</li>
-                <li>Conclusion</li>
-                <li>Acknowledgments (if any)</li>
-                <li>References</li>
-                <li>Tables and Figures</li>
-              </ul>
-            </div>
-          </section>
+      <div className="w-full mx-auto bg-white rounded-2xl mb-8">
+        <h1 className="text-5xl font-bold text-gray-900 mb-8">
+          5. Manuscript Format
+        </h1>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Title Page</h2>
+          <ul className="space-y-2 ml-6">
+            <li className="text-gray-700 list-disc">Title of the manuscript</li>
+            <li className="text-gray-700 list-disc">Author(s) name, affiliation, ORCID iD</li>
+            <li className="text-gray-700 list-disc">Corresponding author with contact details (email, phone)</li>
+            <li className="text-gray-700 list-disc">Conflict of Interest declaration</li>
+            <li className="text-gray-700 list-disc">Abstract200–300 words summarizing background, objectives, methods, results, and conclusions.</li>
+            <li className="text-gray-700 list-disc">keywords: 6–8 words.</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Main Manuscript</h2>
+          <ol className="space-y-2 ml-6 list-decimal">
+            <li className="text-gray-700">Introduction</li>
+            <li className="text-gray-700">Materials and Methods</li>
+            <li className="text-gray-700">Results and Discussion</li>
+            <li className="text-gray-700">Conclusion</li>
+            <li className="text-gray-700">Acknowledgments (if any)</li>
+            <li className="text-gray-700">Conflict of Interest Statement</li>
+            <li className="text-gray-700">Funding Source (if applicable)</li>
+            <li className="text-gray-700">References – as per Vancouver.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Formatting Requirements</h2>
+          <ul className="space-y-2 ml-6">
+            <li className="text-gray-700 list-disc">Font: Times New Roman, 12 pt</li>
+            <li className="text-gray-700 list-disc">Line spacing: 1.5</li>
+            <li className="text-gray-700 list-disc">Page Size: A4, 1-inch margins on all sides</li>
+            <li className="text-gray-700 list-disc">Use headings consistently (bold, sentence case)</li>
+          </ul>
+        </section>
+      
+    </div>
         </FadeInSection>
 
         {/* Section 6 - Ethical Considerations */}
         <FadeInSection direction="up">
           <section className="mb-8 sm:mb-10">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="bg-gradient-to-r   rounded-lg  transition-shadow duration-300">
               <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6">
                 6. Ethical Considerations
               </h2>
               <div className="space-y-3 sm:space-y-4 text-sm sm:text-base md:text-lg leading-relaxed">
-                <p>
-                  Authors must ensure that their research complies with ethical standards. The following guidelines must be followed:
-                </p>
+              
                 <ul className="list-disc pl-4 sm:pl-6 space-y-2">
-                  <li>Human Studies: Research involving human participants must be approved by an institutional ethics committee. Informed consent must be obtained from all participants.</li>
-                  <li>Animal Studies: Studies involving animals must comply with institutional and national guidelines for the care and use of laboratory animals.</li>
-                  <li>Plagiarism: All submissions are screened for plagiarism. Manuscripts with significant overlap with previously published work will be rejected.</li>
-                  <li>Data Fabrication: Authors must ensure the authenticity of their data. Fabrication or falsification of data is strictly prohibited.</li>
+                  <li>Manuscripts involving human/animal research must have approval from relevant ethics committees.</li>
+                  <li>Plagiarism will lead to immediate rejection. Use of plagiarism-detection software is mandatory before submission.</li>
+                  <li>Authors must declare any conflict of interest.</li>
                 </ul>
               </div>
             </div>
@@ -212,177 +218,312 @@ export  function InstructionsPage() {
 
         {/* Section 7 */}
         <FadeInSection direction="right">
-          <section className="mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[48px] font-bold text-gray-900 mb-3 sm:mb-4">
-              7. Instructions for Authors: Manuscript Preparation
-            </h2>
-            <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-4 sm:space-y-5">
-              <div className="bg-gray-50 p-3 sm:p-4 md:p-5 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2">Title Page</h3>
-                <p>The title page should include:</p>
-                <ul className="list-disc pl-4 sm:pl-6 space-y-1 mt-2">
-                  <li>A concise and informative title</li>
-                  <li>Full names of all authors with their affiliations and email addresses</li>
-                  <li>Corresponding author's contact details (email and phone number)</li>
-                  <li>A short running title (not exceeding 50 characters)</li>
-                </ul>
-              </div>
+        
+      <div className="w-full mx-auto bg-white rounded-2xl  ">
+        <h1 className="text-4xl font-bold text-gray-900 mb-8">
+          7. Instructions for Authors: Manuscript Preparation
+        </h1>
 
-              <div className="bg-gray-50 p-3 sm:p-4 md:p-5 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2">Abstract</h3>
-                <p>The abstract should be structured and not exceed 250 words. It should include:</p>
-                <ul className="list-disc pl-4 sm:pl-6 space-y-1 mt-2">
-                  <li>Background/Objective</li>
-                  <li>Methods</li>
-                  <li>Results</li>
-                  <li>Conclusion</li>
-                </ul>
-              </div>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">a. General Guidelines</h2>
+          <p className="text-gray-700 mb-4">
+            Authors are requested to prepare manuscripts in clear, concise English, following these guidelines. All manuscripts must be submitted electronically through the journal submission system. The manuscriptshould be typed in 12-point Times New Roman font, double-spaced, with 1-inch margins on all sides. Number all pages consecutively.
+          </p>
+        </section>
 
-              <div className="bg-gray-50 p-3 sm:p-4 md:p-5 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2">Keywords</h3>
-                <p>Provide 4-6 keywords that represent the main content of the manuscript.</p>
-              </div>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">a. Title Page</h2>
+          <p className="text-gray-700 mb-2">The title page should include the following information:</p>
+          <div className="ml-4 space-y-1 text-gray-700">
+            <p>- Title of the manuscript (concise and informative). (UPPERCASE, BOLD, TIMES NEW ROMAN).</p>
+            <p>- Full names of all authors (first name, middle initial, last name)</p>
+            <p>- Institutional affiliations of each author</p>
+            <p>- Corresponding author details (name, address, phone, email)</p>
+            <p>- Running title (maximum 50 characters)</p>
+          </div>
+        </section>
 
-              <div className="bg-gray-50 p-3 sm:p-4 md:p-5 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2">Introduction</h3>
-                <p>The introduction should provide the background, rationale, and objectives of the study. It should clearly state the research question and its significance.</p>
-              </div>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">b. Abstract and Keywords</h2>
+          <p className="text-gray-700 mb-2">
+            The abstract should not exceed 200-300 words. It must briefly state the purpose of the study, methods, key results, and major conclusions. Avoid citations in the abstract.
+          </p>
+          <p className="text-gray-700">
+            Provide 6–8 keywords that are specific, accurate, and useful for indexing.
+          </p>
+        </section>
 
-              <div className="bg-gray-50 p-3 sm:p-4 md:p-5 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2">Materials and Methods</h3>
-                <p>This section should provide sufficient detail to allow replication of the study. Include:</p>
-                <ul className="list-disc pl-4 sm:pl-6 space-y-1 mt-2">
-                  <li>Study design and setting</li>
-                  <li>Materials, reagents, and equipment used</li>
-                  <li>Detailed methodology</li>
-                  <li>Statistical analysis methods</li>
-                </ul>
-              </div>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">c. Manuscript Sections</h2>
+          <p className="text-gray-700 mb-2">
+            Research articles should be divided into the following sections (Heading should be uppercase, bold & Times New Roman):
+          </p>
+          <div className="ml-4 space-y-1 text-gray-700">
+            <p>- Introduction: State the background and objectives of the work.</p>
+            <p>- Materials and Methods: Provide sufficient detail for reproducibility.</p>
+            <p>- Results: Present findings clearly, supported by tables/figures.</p>
+            <p>- Discussion: Interpret results and their significance.</p>
+            <p>- Conclusion: Summarize key findings.</p>
+            <p>- Acknowledgments: Acknowledge contributors and funding sources.</p>
+          </div>
+          <p className="text-gray-700 mt-2">
+            Subheading should be as sentence case, bold & Times New Roman.
+          </p>
+        </section>
 
-              <div className="bg-gray-50 p-3 sm:p-4 md:p-5 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2">Results</h3>
-                <p>Present the findings in a logical sequence. Use tables and figures to illustrate key results. Avoid duplication of data in text and tables/figures.</p>
-              </div>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">d. Tables and Figures</h2>
+          <p className="text-gray-700">
+            Tables should be numbered consecutively with Arabic numerals and placed at the end of the manuscript. Each table must have a descriptive title and be cited in the text (sentence case, bold & Times New Roman). Figures should be high-resolution (300 dpi minimum), submitted as separate files (JPEG/TIFF), and numbered consecutively. Provide legends for all figures.
+          </p>
+        </section>
 
-              <div className="bg-gray-50 p-3 sm:p-4 md:p-5 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2">Discussion</h3>
-                <p>Interpret the results in the context of existing literature. Discuss the implications, limitations, and potential applications of the findings.</p>
-              </div>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">e. References</h2>
+          <p className="text-gray-700">
+            References should follow the Vancouver style. Number references consecutively in the order they appear in the text. In-text citations should be in superscript. Include all authors when fewer than six; if more, list the first six followed by 'et al.'
+          </p>
+        </section>
 
-              <div className="bg-gray-50 p-3 sm:p-4 md:p-5 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2">Conclusion</h3>
-                <p>Summarize the main findings and their significance. Avoid repeating information from the abstract or results section.</p>
-              </div>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">a. Ethical Considerations</h2>
+          <p className="text-gray-700">
+            Manuscripts reporting studies involving human participants or animals must include a statement of approval by the appropriate ethics committee. Informed consent must be obtained for human studies.
+          </p>
+        </section>
 
-              <div className="bg-gray-50 p-3 sm:p-4 md:p-5 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                <h3 className="font-semibold text-base sm:text-lg md:text-xl mb-2">References</h3>
-                <p>References should be cited in the text by numbers in square brackets [1, 2, 3] and listed at the end of the manuscript in the order of citation. Follow the Vancouver style for referencing.</p>
-                <p className="mt-2 font-semibold">Examples:</p>
-                <div className="pl-2 sm:pl-4 space-y-2 mt-2 text-sm sm:text-base">
-                  <p><span className="font-semibold">Journal Article:</span><br/>
-                  Author(s). Title of the article. Journal Name. Year;Volume(Issue):Page numbers.</p>
-                  <p><span className="font-semibold">Book:</span><br/>
-                  Author(s). Title of the book. Edition. Place of publication: Publisher; Year.</p>
-                </div>
-              </div>
-            </div>
-          </section>
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">b. Conflict of Interest</h2>
+          <p className="text-gray-700">
+            All authors must disclose any financial or non-financial conflicts of interest that may influence the work.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">c. Article Types</h2>
+          <p className="text-gray-700 mb-2">The journal accepts the following article types:</p>
+          <div className="ml-4 space-y-1 text-gray-700">
+            <p>- Original Research Articles (up to 6000 words)</p>
+            <p>- Review Articles (up to 8000 words)</p>
+            <p>- Short Communications (up to 3000 words)</p>
+            <p>- Case Reports (up to 2000 words)</p>
+            <p>- Letters to the Editor (up to 1000 words)</p>
+          </div>
+        </section>
+      </div>
+   
         </FadeInSection>
 
         {/* Section 8 */}
         <FadeInSection direction="left">
-          <section className="mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[48px] font-bold text-gray-900 mb-3 sm:mb-4">
-              8. Submission Procedure for Authors
-            </h2>
-            <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3">
-              <p>Authors should follow the steps below to submit their manuscripts:</p>
-              <ol className="list-decimal pl-4 sm:pl-6 space-y-2">
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-default">Register on the journal's online submission portal.</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-default">Log in using your credentials.</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-default">Navigate to the "Submit Manuscript" section.</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-default">Upload the manuscript file along with supplementary materials (if any).</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-default">Fill in the required metadata, including title, authors, abstract, and keywords.</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-default">Review the submission and confirm.</li>
-                <li className="hover:text-blue-600 transition-colors duration-300 cursor-default">An acknowledgment email will be sent upon successful submission.</li>
-              </ol>
-            </div>
-          </section>
+       <div className="w-full bg-white rounded-2xl mt-8">
+        <h1 className="text-4xl font-bold text-gray-900 mb-6">
+          8. Submission Procedure for Authors
+        </h1>
+        
+        <p className="text-gray-700 mb-8">
+          To ensure smooth handling and fast processing of manuscripts, authors are requested to carefully follow the submission procedure outlined below:
+        </p>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Step 1: Manuscript Preparation</h2>
+          <p className="text-gray-700 mb-2">
+            Prepare your manuscript strictly according to the Instruction to Author given.
+          </p>
+          <p className="text-gray-700 mb-2">Ensure that the manuscript includes:</p>
+          <div className="ml-4 space-y-1 text-gray-700 mb-2">
+            <p>Title Page (with author names, affiliations, ORCID IDs, corresponding author details)</p>
+            <p>Abstract and Keywords</p>
+            <p>Main Text (Introduction, Materials & Methods, Results, Discussion, Conclusion)</p>
+            <p>References (as per journal format)</p>
+            <p>Tables, Figures, Graphical Abstract (if applicable)</p>
+          </div>
+          <p className="text-gray-700">Manuscript should be in Microsoft Word (.doc/.docx) format.</p>
+          <p className="text-gray-700">File size should not exceed 10 MB.</p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Step 2: Plagiarism Check</h2>
+          <p className="text-gray-700 mb-2">Authors are responsible for ensuring originality.</p>
+          <p className="text-gray-700">
+            Manuscripts must be accompanied by a plagiarism report generated from Turnitin/iThenticate/URKUND.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Step 3: Online Submission</h2>
+          <p className="text-gray-700 mb-2">
+            Submit your manuscript online through the Journal's Submission Portal.
+          </p>
+          <p className="text-gray-700 mb-2">
+            Alternatively, manuscripts may be sent via email to the editorial office:
+          </p>
+          <p className="text-blue-600 font-semibold mb-3">editor.ijppi@mspublication.com</p>
+          <p className="text-gray-700 mb-2">Ensure that the cover letter is attached, mentioning:</p>
+          <div className="ml-4 space-y-1 text-gray-700">
+            <p>Type of manuscript (Research/Review/Case Report etc.)</p>
+            <p>Statement of originality</p>
+            <p>Conflicts of interest</p>
+            <p>Approval from all co-authors</p>
+          </div>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Step 4: Initial Screening</h2>
+          <p className="text-gray-700 mb-2">The editorial office will verify:</p>
+          <div className="ml-4 space-y-1 text-gray-700 mb-2">
+            <p>Manuscript completeness</p>
+            <p>Compliance with journal format</p>
+            <p>Plagiarism check result</p>
+            <p>Ethical approval (if applicable)</p>
+          </div>
+          <p className="text-gray-700">
+            Manuscripts not following guidelines will be returned for correction before peer review.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Step 5: Peer Review</h2>
+          <p className="text-gray-700">Eligible manuscripts are sent to two or more independent reviewers.</p>
+          <p className="text-gray-700">The process is double-blind (reviewers and authors remain anonymous).</p>
+          <p className="text-gray-700">Review time: 2–3 weeks on average.</p>
+          <p className="text-gray-700">Decision may be: Accept / Minor Revision / Major Revision / Reject.</p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Step 6: Revision & Resubmission</h2>
+          <p className="text-gray-700">
+            Authors must submit revised manuscripts within the deadline provided.
+          </p>
+          <p className="text-gray-700">
+            All changes must be highlighted or accompanied by a response letter.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Step 7: Acceptance & Proofs</h2>
+          <p className="text-gray-700">Once accepted, the editorial office sends a formal acceptance letter.</p>
+          <p className="text-gray-700">Authors will receive galley proofs (PDF) for final corrections.</p>
+          <p className="text-gray-700">Proof corrections must be returned within 3 working days.</p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Step 8: Publication</h2>
+          <p className="text-gray-700">
+            Final versions are published online in the respective Volume & Issue.
+          </p>
+          <p className="text-gray-700">Each article is assigned a DOI (Digital Object Identifier).</p>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-bold text-gray-900 mb-3">Step 9: Post-Publication</h2>
+          <p className="text-gray-700 mb-2">
+            Published articles are indexed in Google Scholar, CrossRef, and other databases as applicable.
+          </p>
+          <p className="text-gray-700">
+            Authors are encouraged to promote their article through institutional repositories, social media, and academic platforms (e.g., ResearchGate, Academia.edu).
+          </p>
+        </section>
+      </div>
         </FadeInSection>
 
         {/* Section 9 */}
         <FadeInSection direction="right">
-          <section className="mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[48px] font-bold text-gray-900 mb-3 sm:mb-4">
-              9. Review Process
-            </h2>
-            <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3">
-              <p>All submitted manuscripts undergo a rigorous peer-review process:</p>
-              <ul className="list-disc pl-4 sm:pl-6 space-y-2">
-                <li>Initial Screening: The editorial team conducts an initial review to assess the manuscript's suitability.</li>
-                <li>Peer Review: Manuscripts are sent to at least two independent reviewers for evaluation.</li>
-                <li>Decision: Based on reviewers' feedback, the editor makes one of the following decisions:
-                  <ul className="list-disc pl-4 sm:pl-6 space-y-1 mt-2">
-                    <li>Accept</li>
-                    <li>Minor Revisions</li>
-                    <li>Major Revisions</li>
-                    <li>Reject</li>
-                  </ul>
-                </li>
-                <li>Revision: Authors are given an opportunity to revise their manuscripts based on reviewers' comments.</li>
-                <li>Final Decision: Revised manuscripts are re-evaluated before final acceptance.</li>
-              </ul>
-            </div>
-          </section>
+           <div className="w-full bg-white rounded-2xl mt-8">
+        <h1 className="text-4xl font-bold text-gray-900 mb-8">
+          9. Instructions for Authors: Manuscript Preparation
+        </h1>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">a. General Guidelines</h2>
+          <p className="text-gray-700 mb-4">
+            Authors are requested to prepare manuscripts in clear, concise English, following these guidelines. All manuscripts must be submitted electronically through the journal submission system. The manuscriptshould be typed in 12-point Times New Roman font, double-spaced, with 1-inch margins on all sides. Number all pages consecutively.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">a. Title Page</h2>
+          <p className="text-gray-700 mb-2">The title page should include the following information:</p>
+          <div className="ml-4 space-y-1 text-gray-700">
+            <p>- Title of the manuscript (concise and informative). (UPPERCASE, BOLD, TIMES NEW ROMAN).</p>
+            <p>- Full names of all authors (first name, middle initial, last name)</p>
+            <p>- Institutional affiliations of each author</p>
+            <p>- Corresponding author details (name, address, phone, email)</p>
+            <p>- Running title (maximum 50 characters)</p>
+          </div>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">b. Abstract and Keywords</h2>
+          <p className="text-gray-700 mb-2">
+            The abstract should not exceed 200-300 words. It must briefly state the purpose of the study, methods, key results, and major conclusions. Avoid citations in the abstract.
+          </p>
+          <p className="text-gray-700">
+            Provide 6–8 keywords that are specific, accurate, and useful for indexing.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">c. Manuscript Sections</h2>
+          <p className="text-gray-700 mb-2">
+            Research articles should be divided into the following sections (Heading should be uppercase, bold & Times New Roman):
+          </p>
+          <div className="ml-4 space-y-1 text-gray-700">
+            <p>- Introduction: State the background and objectives of the work.</p>
+            <p>- Materials and Methods: Provide sufficient detail for reproducibility.</p>
+            <p>- Results: Present findings clearly, supported by tables/figures.</p>
+            <p>- Discussion: Interpret results and their significance.</p>
+            <p>- Conclusion: Summarize key findings.</p>
+            <p>- Acknowledgments: Acknowledge contributors and funding sources.</p>
+          </div>
+          <p className="text-gray-700 mt-2">
+            Subheading should be as sentence case, bold & Times New Roman.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">d. Tables and Figures</h2>
+          <p className="text-gray-700">
+            Tables should be numbered consecutively with Arabic numerals and placed at the end of the manuscript. Each table must have a descriptive title and be cited in the text (sentence case, bold & Times New Roman). Figures should be high-resolution (300 dpi minimum), submitted as separate files (JPEG/TIFF), and numbered consecutively. Provide legends for all figures.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">e. References</h2>
+          <p className="text-gray-700">
+            References should follow the Vancouver style. Number references consecutively in the order they appear in the text. In-text citations should be in superscript. Include all authors when fewer than six; if more, list the first six followed by 'et al.'
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">a. Ethical Considerations</h2>
+          <p className="text-gray-700">
+            Manuscripts reporting studies involving human participants or animals must include a statement of approval by the appropriate ethics committee. Informed consent must be obtained for human studies.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">b. Conflict of Interest</h2>
+          <p className="text-gray-700">
+            All authors must disclose any financial or non-financial conflicts of interest that may influence the work.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-xl font-semibold text-gray-800 mb-3">c. Article Types</h2>
+          <p className="text-gray-700 mb-2">The journal accepts the following article types:</p>
+          <div className="ml-4 space-y-1 text-gray-700">
+            <p>- Original Research Articles (up to 6000 words)</p>
+            <p>- Review Articles (up to 8000 words)</p>
+            <p>- Short Communications (up to 3000 words)</p>
+            <p>- Case Reports (up to 2000 words)</p>
+            <p>- Letters to the Editor (up to 1000 words)</p>
+          </div>
+        </section>
+      </div>
         </FadeInSection>
 
-        {/* Section 10 */}
-        <FadeInSection direction="left">
-          <section className="mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[48px] font-bold text-gray-900 mb-3 sm:mb-4">
-              10. Publication Charges
-            </h2>
-            <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3">
-              <p>
-                IJPPR follows an open-access model. Authors are required to pay an Article Processing Charge (APC) upon acceptance of their manuscript. The APC covers the costs of peer review, editing, formatting, and online hosting.
-              </p>
-              <p>For detailed information on publication charges, please visit our website or contact the editorial office.</p>
-            </div>
-          </section>
-        </FadeInSection>
-
-        {/* Section 11 */}
-        <FadeInSection direction="right">
-          <section className="mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[48px] font-bold text-gray-900 mb-3 sm:mb-4">
-              11. Copyright and Licensing
-            </h2>
-            <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3">
-              <p>
-                Authors retain copyright of their work while granting the journal the right to first publication. All articles are published under a Creative Commons Attribution License (CC BY), which allows others to share and adapt the work with proper attribution.
-              </p>
-            </div>
-          </section>
-        </FadeInSection>
-
-        {/* Section 12 */}
-        <FadeInSection direction="left">
-          <section className="mb-8 sm:mb-10">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[48px] font-bold text-gray-900 mb-3 sm:mb-4">
-              12. Contact Information
-            </h2>
-            <div className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed space-y-3 bg-blue-50 p-4 sm:p-6 md:p-8 rounded-lg sm:rounded-xl">
-              <p>For any queries regarding manuscript submission or publication, please contact:</p>
-              <p className="mt-4">
-                <span className="font-semibold text-lg sm:text-xl">Editorial Office</span><br/>
-                International Journal of Pharmaceutical and Phytopharmacological Research<br/>
-                Email: <a href="mailto:editor@ijppr.com" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">editor@ijppr.com</a><br/>
-                Website: <a href="http://www.ijppr.com" className="text-blue-600 hover:text-blue-800 hover:underline transition-colors">www.ijppr.com</a>
-              </p>
-            </div>
-          </section>
-        </FadeInSection>
+      
 
         {/* Footer */}
         <AnimatedSection className="mt-8 sm:mt-10 md:mt-12 pt-6 sm:pt-8 border-t border-gray-200 text-center text-gray-600 text-sm sm:text-base md:text-lg">
