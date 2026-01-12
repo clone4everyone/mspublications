@@ -10,29 +10,38 @@ const { startCronJobs } = require('./utils/cronJobs');
 
 // Initialize express app
 const app = express();
+
+// CORS Configuration - MUST be before routes
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://ijppi.mspublication.com",
-  "https://ms-publication-backend.onrender.com" // Add your backend domain
+  "https://ijppi.mspublication.com"
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
-    // Allow server-to-server & Postman requests
+    // Allow requests with no origin (like mobile apps, Postman, or server-to-server)
     if (!origin) return callback(null, true);
-
+    
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log('Blocked by CORS:', origin);
       callback(new Error("Not allowed by CORS"));
     }
   },
+  credentials: true, // Required for withCredentials: true on frontend
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true, // Add this if you're using cookies/auth
-  optionsSuccessStatus: 200 // For legacy browser support
-}));
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  exposedHeaders: ["Content-Range", "X-Content-Range"],
+  maxAge: 86400, // Cache preflight request for 24 hours
+  optionsSuccessStatus: 200
+};
 
+// Apply CORS middleware BEFORE any routes
+app.use(cors(corsOptions));
+
+// Handle preflight requests explicitly
+app.options('*', cors(corsOptions));
 
 // Connect to database
 connectDB();
@@ -47,7 +56,6 @@ startCronJobs();
 //     crossOriginEmbedderPolicy: false, // 🔥 
 //   })
 // );
-; // Security headers
 
 app.use(compression()); // Compress responses
 app.use(morgan('dev')); // Logging
@@ -107,6 +115,14 @@ app.use((req, res) => {
 // Global error handler
 app.use((err, req, res, next) => {
   console.error('Error:', err);
+
+  // CORS errors
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({
+      success: false,
+      message: 'CORS policy: Access denied'
+    });
+  }
 
   // Multer file upload errors
   if (err.code === 'LIMIT_FILE_SIZE') {
@@ -168,6 +184,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+  console.log(`Allowed CORS origins: ${allowedOrigins.join(', ')}`);
 });
 
 // Handle unhandled promise rejections
