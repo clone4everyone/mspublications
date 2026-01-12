@@ -10,12 +10,17 @@ const { startCronJobs } = require('./utils/cronJobs');
 
 // Initialize express app
 const app = express();
+app.use((req, res, next) => {
+  res.setHeader('X-DEBUG-FROM', 'EXPRESS');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 // Connect to database
 connectDB();
 
 // Start cron jobs
-startCronJobs();
+// startCronJobs();
 
 app.use(cors({
   origin: [
