@@ -20,7 +20,7 @@ startCronJobs();
 // Middleware
 app.use(helmet()); // Security headers
 app.use(cors({
-  origin: [process.env.FRONTEND_URL , 'http://localhost:3000','http://journal.ijppi.mspublication.com'],
+  origin: [process.env.FRONTEND_URL , 'http://localhost:3000','https://journal.ijppi.mspublication.com'],
   credentials: true
 }));
 app.use(compression()); // Compress responses
