@@ -10,11 +10,6 @@ const { startCronJobs } = require('./utils/cronJobs');
 
 // Initialize express app
 const app = express();
-app.use((req, res, next) => {
-  res.setHeader('X-DEBUG-FROM', 'EXPRESS');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  next();
-});
 
 // Connect to database
 connectDB();
@@ -22,19 +17,29 @@ connectDB();
 // Start cron jobs
 // startCronJobs();
 
-app.use(cors({
-  origin: [
-    'https://ijppi.mspublication.com',
-    'https://www.ijppi.mspublication.com',
-    'http://localhost:3000',
-    'http://localhost:5173'
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+const allowedOrigins = new Set([
+  'https://ijppi.mspublication.com',
+  'https://www.ijppi.mspublication.com',
+  'http://localhost:3000',
+  'http://localhost:5173'
+]);
 
-app.options('*', cors());
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true); // Postman / server-to-server
+    if (allowedOrigins.has(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS blocked'), false);
+  },
+  credentials: true
+}));
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  next();
+});
+
+
 app.use(compression()); // Compress responses
 app.use(morgan('dev')); // Logging
 app.use(express.json({ limit: '10mb' })); // Parse JSON bodies
