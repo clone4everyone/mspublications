@@ -12,7 +12,8 @@ const { startCronJobs } = require('./utils/cronJobs');
 const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://ijppi.mspublication.com"
+  "https://ijppi.mspublication.com",
+  "https://ms-publication-backend.onrender.com" // Add your backend domain
 ];
 
 app.use(cors({
@@ -27,7 +28,9 @@ app.use(cors({
     }
   },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // Add this if you're using cookies/auth
+  optionsSuccessStatus: 200 // For legacy browser support
 }));
 
 
