@@ -9,6 +9,7 @@ const connectDB = require('./config/database');
 const { startCronJobs } = require('./utils/cronJobs');
 
 // Initialize express app
+const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
   "https://ijppi.mspublication.com"
