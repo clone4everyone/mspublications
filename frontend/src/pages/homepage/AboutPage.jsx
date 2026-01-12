@@ -156,98 +156,94 @@ export  function AboutPage() {
           </div>
         </div>
 
-        {/* Policy Cards - First Row */}
-        <div ref={policyRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-[36px] mb-6 lg:mb-[29px]">
-          {/* Plagiarism Policy Card */}
-          <div className={`w-full rounded-[20px] bg-white p-6 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 ${
-            policyVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
-          }`}>
-            <img
-              src="https://res.cloudinary.com/duhadnqmh/image/upload/v1768107063/7f8c7926de516ca4ae237e9a5511bb6836c39856_uyvg5c.jpg"
-              alt="Plagiarism Policy"
-              className="w-full h-[200px] sm:h-[250px] lg:h-[328px] rounded-[20px] object-cover"
-            />
-            <div className="relative mt-8 lg:mt-12 px-1 flex flex-col">
-              <div className="flex items-center gap-4">
-                <div className="w-[50px] h-[50px] rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
-                  <DocumentIcon />
-                </div>
-                <h3 className="text-lg sm:text-xl lg:text-[22px] font-semibold leading-[176%] tracking-[-0.02em] text-[#0257EE]">
-                  Plagiarism Policy
-                </h3>
-              </div>
-              <p className="mt-4 text-sm sm:text-base lg:text-[18px] font-normal leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
-                Originality and proper citation are paramount. The IJPPI maintains a strict zero-tolerance policy towards plagiarism and considers all forms of academic misconduct as grave ethical violations.
-              </p>
-              <button className="mt-6 lg:mt-8 self-end w-[160px] sm:w-[186px] h-[48px] rounded-[54px] border-[1.2px] border-[#233B4E] flex items-center justify-between px-4 sm:px-6 text-[#233B4E] font-inter text-base sm:text-[18px] font-normal hover:bg-[#233B4E] hover:text-white transition-colors">
-                <span>Learn More</span>
-                <div className="w-[30px] h-[30px] rounded-full border border-[#233B4E] flex items-center justify-center">
-                  <ArrowIcon />
-                </div>
-              </button>
-            </div>
-          </div>
+     {/* ==================== POLICY CARDS SECTION ==================== */}
+<div ref={policyRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 xl:gap-10 mb-12 lg:mb-20">
+  {[
+    {
+      title: "Plagiarism Policy",
+      img: "https://res.cloudinary.com/duhadnqmh/image/upload/v1768107063/7f8c7926de516ca4ae237e9a5511bb6836c39856_uyvg5c.jpg",
+      description:
+        "Originality and proper citation are paramount. The IJPPI maintains a strict zero-tolerance policy towards plagiarism and considers all forms of academic misconduct as grave ethical violations.",
+      link: "https://mspublication.com/plagiarismpolicy.html"
+    },
+    {
+      title: "Open Access Policy",
+      img: "https://res.cloudinary.com/duhadnqmh/image/upload/v1768107063/f0b1318fab74c7018c8de7e6ecb0f68ebd94458b_dx5ugo.jpg",
+      description:
+        "All content published in IJPPI is freely available online without subscription charges. The journal adheres to the principle that providing open access to research supports global knowledge exchange and accelerates scientific progress.",
+      link: "https://mspublication.com/openaccesspolicy.html"
+    },
+    {
+      title: "Publication Ethics",
+      img: "https://res.cloudinary.com/duhadnqmh/image/upload/v1768107063/7a02581290c0f05ef839240ba8f4d84b2c1e3aac_hcssbp.jpg",
+      description:
+        "IJPPI strictly follows international ethical standards and COPE (Committee on Publication Ethics) guidelines. Plagiarism, duplicate publication, and unethical practices are not tolerated.",
+      link: "https://mspublication.com/publicationethics.html"
+    }
+  ].map((policy, index) => (
+    <div
+      key={policy.title}
+      className={`group bg-white rounded-2xl overflow-hidden shadow-[#0000000D] transition-all duration-300 flex flex-col h-full ${
+        policyVisible
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-12"
+      }`}
+      style={{ transitionDelay: `${index * 150}ms` }}
+    >
+      {/* Image */}
+      <div className="aspect-[4/3] overflow-hidden">
+        <img
+          src={policy.img}
+          alt={policy.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
 
-          {/* Open Access Policy Card */}
-          <div className={`w-full rounded-[20px] bg-white p-6 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-200 ${
-            policyVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-          }`}>
-            <img
-              src="https://res.cloudinary.com/duhadnqmh/image/upload/v1768107063/f0b1318fab74c7018c8de7e6ecb0f68ebd94458b_dx5ugo.jpg"
-              alt="Open Access Policy"
-              className="w-full h-[200px] sm:h-[250px] lg:h-[328px] rounded-[20px] object-cover"
-            />
-            <div className="relative mt-8 lg:mt-12 px-1 flex flex-col">
-              <div className="flex items-center gap-4">
-                <div className="w-[50px] h-[50px] rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
-                  <DocumentIcon />
-                </div>
-                <h3 className="text-lg sm:text-xl lg:text-[22px] font-semibold leading-[176%] tracking-[-0.02em] text-[#0257EE]">
-                  Open Access Policy
-                </h3>
-              </div>
-              <p className="mt-4 text-sm sm:text-base lg:text-[18px] font-normal leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
-                All content published in IJPPI is freely available online without subscription charges. The journal adheres to the principle that providing open access to research supports global knowledge exchange and accelerates scientific progress.
-              </p>
-              <button className="mt-6 lg:mt-8 self-end w-[160px] sm:w-[186px] h-[48px] rounded-[54px] border-[1.2px] border-[#233B4E] flex items-center justify-between px-4 sm:px-6 text-[#233B4E] font-inter text-base sm:text-[18px] font-normal hover:bg-[#233B4E] hover:text-white transition-colors">
-                <span>Learn More</span>
-                <div className="w-[30px] h-[30px] rounded-full border border-[#233B4E] flex items-center justify-center">
-                  <ArrowIcon />
-                </div>
-              </button>
-            </div>
+      {/* Content */}
+      <div className="flex flex-col flex-grow p-6 lg:p-8">
+        {/* Icon + Title */}
+        <div className="flex items-center gap-4 mb-5">
+          <div className="w-12 h-12 rounded-xl border-2 border-[#0257EE]/30 bg-[#0257EE]/5 flex items-center justify-center shrink-0 transition-colors group-hover:border-[#0257EE]/60">
+            <DocumentIcon />
           </div>
-
-          {/* Publication Ethics Card */}
-          <div className={`w-full rounded-[20px] bg-white p-6 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-400 ${
-            policyVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
-          }`}>
-            <img
-              src="https://res.cloudinary.com/duhadnqmh/image/upload/v1768107063/7a02581290c0f05ef839240ba8f4d84b2c1e3aac_hcssbp.jpg"
-              alt="Publication Ethics"
-              className="w-full h-[200px] sm:h-[250px] lg:h-[328px] rounded-[20px] object-cover"
-            />
-            <div className="mt-8 lg:mt-12 px-1 flex flex-col relative">
-              <div className="flex items-center gap-4">
-                <div className="w-[50px] h-[50px] rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
-                  <DocumentIcon />
-                </div>
-                <h3 className="text-lg sm:text-xl lg:text-[22px] font-semibold leading-[176%] tracking-[-0.02em] text-[#0257EE]">
-                  Publication Ethics
-                </h3>
-              </div>
-              <p className="mt-4 text-sm sm:text-base lg:text-[18px] font-normal leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
-                IJPPI strictly follows international ethical standards and COPE (Committee on Publication Ethics) guidelines. Plagiarism, duplicate publication, and unethical practices are not tolerated.
-              </p>
-              <button className="mt-6 lg:mt-8 self-end w-[160px] sm:w-[186px] h-[48px] rounded-[54px] border-[1.2px] border-[#233B4E] flex items-center justify-between px-4 sm:px-6 text-[#233B4E] font-inter text-base sm:text-[18px] font-normal hover:bg-[#233B4E] hover:text-white transition-colors">
-                <span>Learn More</span>
-                <div className="w-[30px] h-[30px] rounded-full border border-[#233B4E] flex items-center justify-center">
-                  <ArrowIcon />
-                </div>
-              </button>
-            </div>
-          </div>
+          <h3 className="text-xl sm:text-2xl lg:text-[22px] font-semibold text-[#0257EE] leading-tight">
+            {policy.title}
+          </h3>
         </div>
+
+        {/* Description - grows to push button down */}
+        <p className="text-[#233B4E] text-base sm:text-lg lg:text-[18px] leading-relaxed flex-grow mb-8">
+          {policy.description}
+        </p>
+
+        {/* Learn More Button - always at bottom */}
+       <button
+  className="
+    self-end w-full max-w-[200px] h-12 rounded-full 
+    border-2 border-[#233B4E] 
+    flex items-center justify-between pl-6 md:pr-1 
+    text-[#233B4E] font-medium 
+    hover:bg-[#233B4E] hover:text-white 
+    transition-all duration-300
+    group
+  "
+>
+  <span>Learn More</span>
+  
+  <div className="
+    w-8 h-8 rounded-full 
+    border border-[#233B4E] 
+    flex items-center justify-center
+    transition-colors duration-300
+    group-hover:bg-white
+  ">
+    <ArrowIcon className="text-[#233B4E] group-hover:text-[#233B4E]/90 bg-white" />
+  </div>
+</button>
+      </div>
+    </div>
+  ))}
+</div>
 
         {/* Info Cards - Second Row */}
         <div ref={infoRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-[36px] mb-6 lg:mb-[29px]">
@@ -314,7 +310,8 @@ export  function AboutPage() {
         </div>
 
         {/* Bottom Section - Peer Review Process */}
-        <div ref={bottomRef} className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
+        <section id='#peerReview'>
+             <div ref={bottomRef} className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
           {/* Peer Review Process - Large Card */}
           <div className={`xl:col-span-2 bg-white rounded-[20px] flex flex-col lg:flex-row gap-8 lg:gap-20 p-6 sm:p-8 lg:p-[49px] transition-all duration-1000 delay-100 ${
             bottomVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
@@ -406,6 +403,8 @@ export  function AboutPage() {
             </div>
           </div>
         </div>
+        </section>
+     
       </div>
     </div>
   );

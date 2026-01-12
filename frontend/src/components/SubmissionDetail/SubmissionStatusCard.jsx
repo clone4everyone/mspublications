@@ -194,10 +194,10 @@ const filteredReviewers = useMemo(() => {
 
       {/* Submission Information Grid */}
       <div className="mt-8 space-y-4">
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <div className="w-40 text-sm font-bold text-gray-500 uppercase tracking-wide">Journal</div>
           <div className="flex-1 font-semibold text-gray-900 capitalize">{submission.journal}</div>
-        </div>
+        </div> */}
         
         <div className="flex items-center">
           <div className="w-40 text-sm font-bold text-gray-500 uppercase tracking-wide">Section</div>

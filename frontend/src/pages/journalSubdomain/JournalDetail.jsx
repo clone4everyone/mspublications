@@ -175,7 +175,7 @@ function JournalDetail() {
         )}
       </div>
 
-      <Footer/>
+      <Footer onNavigate={setCurrentPage}/>
     </div>
    
 

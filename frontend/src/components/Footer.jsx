@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-
+import {useNavigate} from 'react-router-dom'
 const useScrollAnimation = () => {
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -28,10 +28,20 @@ const useScrollAnimation = () => {
   return [ref, isVisible];
 };
 
-const Footer = () => {
+const Footer = ({onNavigate}) => {
   const [footerRef, footerVisible] = useScrollAnimation();
   const [bottomRef, bottomVisible] = useScrollAnimation();
+const navigate=useNavigate();
+const peerReview = () => {
+    // 1. Change page
+    onNavigate("about");
 
+    // 2. Wait for page render, then scroll
+    setTimeout(() => {
+      const section = document.getElementById("peerReview");
+      section?.scrollIntoView({ behavior: "smooth" });
+    }, 100);
+  };
   return (
     <>
       <div 
@@ -105,13 +115,13 @@ const Footer = () => {
             Quick Links
           </p>
           <ul className='list-disc pl-4 sm:pl-5 text-[#FFFFFFCC] font-[400] text-[14px] sm:text-[15px] md:text-[16px] leading-[40px] sm:leading-[45px] md:leading-[50px]'>
-            <li className='cursor-pointer hover:text-white transition-colors duration-300'>
+            <li className='cursor-pointer hover:text-white transition-colors duration-300' onClick={()=>{window.open('https://mspublication.com/publicationethics.html','_blank')}}>
               Publication Ethics
             </li>
             <li className='cursor-pointer hover:text-white transition-colors duration-300'>
               Archival Policy
             </li>
-            <li className='cursor-pointer hover:text-white transition-colors duration-300'>
+            <li className='cursor-pointer hover:text-white transition-colors duration-300' onClick={()=>{peerReview()}}>
               Peer Review Process
             </li>
           </ul>
@@ -149,7 +159,7 @@ const Footer = () => {
         </p>
 
         <p className='text-white text-[12px] sm:text-[13px] md:text-[14px] leading-[34px] text-center sm:text-right'>
-          Designed & Developed by MS Publication
+          Designed & Developed by MaxoSmith Publications
         </p>
       </div>
     </>

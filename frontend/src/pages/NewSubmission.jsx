@@ -9,7 +9,7 @@ import {
   clearCurrentSubmission 
 } from '../redux/slices/submissionSlice';
 import { toast } from 'react-toastify';
-import { FaArrowLeft, FaArrowRight, FaCheck, FaUpload, FaTimes, FaSpinner } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaCheck, FaUpload, FaTimes, FaSpinner,FaExclamationCircle,FaCheckCircle } from 'react-icons/fa';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import api from '../utils/api';
@@ -70,6 +70,93 @@ function NewSubmission() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
 
+    const [reviewerErrors, setReviewerErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+   // Email validation regex
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+    // Name validation (at least 2 characters, only letters and spaces)
+  const isValidName = (name) => {
+    const nameRegex = /^[a-zA-Z\s]{2,}$/;
+    return nameRegex.test(name.trim());
+  };
+
+   const validateReviewerField = (index, field, value) => {
+    const errors = { ...reviewerErrors };
+    if (!errors[index]) errors[index] = {};
+
+    switch (field) {
+      case 'name':
+        if (!value.trim()) {
+          errors[index].name = 'Name is required';
+        } else if (!isValidName(value)) {
+          errors[index].name = 'Name must be at least 2 characters and contain only letters';
+        } else {
+          delete errors[index].name;
+        }
+        break;
+
+      case 'affiliation':
+        if (!value.trim()) {
+          errors[index].affiliation = 'Affiliation is required';
+        } else if (value.trim().length < 2) {
+          errors[index].affiliation = 'Affiliation must be at least 2 characters';
+        } else {
+          delete errors[index].affiliation;
+        }
+        break;
+
+      case 'email':
+        if (!value.trim()) {
+          errors[index].email = 'Email is required';
+        } else if (!isValidEmail(value)) {
+          errors[index].email = 'Please enter a valid email address';
+        } else {
+          delete errors[index].email;
+        }
+        break;
+
+      case 'expertise':
+        if (!value.trim()) {
+          errors[index].expertise = 'Field of expertise is required';
+        } else if (value.trim().length < 3) {
+          errors[index].expertise = 'Field of expertise must be at least 3 characters';
+        } else {
+          delete errors[index].expertise;
+        }
+        break;
+    }
+
+    // Clean up empty error objects
+    if (Object.keys(errors[index]).length === 0) {
+      delete errors[index];
+    }
+
+    setReviewerErrors(errors);
+  };
+
+    // Handle field blur to mark as touched
+  const handleFieldBlur = (index, field) => {
+    setTouched({
+      ...touched,
+      [`${index}-${field}`]: true
+    });
+  };
+
+   const updateReviewerField = (index, field, value) => {
+    const newReviewers = [...step1Data.potentialReviewers];
+    newReviewers[index][field] = value;
+    setStep1Data({ ...step1Data, potentialReviewers: newReviewers });
+    
+    // Validate on change
+    validateReviewerField(index, field, value);
+  };
+
+ 
   // Add this function after the state declarations
   const fetchKeywordSuggestions = async (query) => {
     if (!query || query.length < 2 || !step1Data.journal) return;
@@ -115,6 +202,21 @@ function NewSubmission() {
   }, [dispatch]);
 
   const handleStep1Submit = async () => {
+      // Validate all reviewers
+    let hasErrors = false;
+    const newTouched = {};
+    
+    step1Data.potentialReviewers.forEach((reviewer, index) => {
+      ['name', 'affiliation', 'email', 'expertise'].forEach(field => {
+        newTouched[`${index}-${field}`] = true;
+        validateReviewerField(index, field, reviewer[field]);
+        if (reviewerErrors[index]?.[field]) {
+          hasErrors = true;
+        }
+      });
+    });
+    
+    setTouched(newTouched);
     if (!step1Data.journal || !step1Data.section) {
       toast.error('Please select journal and section');
       return;
@@ -136,6 +238,10 @@ function NewSubmission() {
     return;
   }
 
+    if (hasErrors) {
+      alert('Please fix all validation errors before continuing');
+      return;
+    }
     const result = await dispatch(createSubmission(step1Data));
     if (result.type === 'submissions/create/fulfilled') {
       setCurrentStep(2);
@@ -220,6 +326,9 @@ function NewSubmission() {
   const removeReference = (index) => {
     const newReferences = step3Data.references.filter((_, i) => i !== index);
     setStep3Data({ ...step3Data, references: newReferences });
+     const newErrors = { ...reviewerErrors };
+    delete newErrors[index];
+    setReviewerErrors(newErrors);
   };
 
   const addReviewer = () => {
@@ -263,7 +372,14 @@ function NewSubmission() {
       });
     }
   };
-
+const isReviewerComplete = (index) => {
+    const reviewer = step1Data.potentialReviewers[index];
+    return reviewer.name.trim() && 
+           reviewer.affiliation.trim() && 
+           reviewer.email.trim() && 
+           reviewer.expertise.trim() &&
+           !reviewerErrors[index];
+  };
   const removeKeyword = (index) => {
     const newKeywords = step3Data.keywords.filter((_, i) => i !== index);
     setStep3Data({ ...step3Data, keywords: newKeywords });
@@ -357,153 +473,193 @@ function NewSubmission() {
         <div className="bg-white rounded-lg shadow-lg p-8">
           {/* Step 1: Start */}
           {currentStep === 1 && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Step 1: Start Your Submission</h2>
+          <div className="space-y-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Step 1: Start Your Submission</h2>
 
-              {/* <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Select Journal *
-                </label>
-                <select
-                  value={step1Data.journal}
-                  onChange={(e) => setStep1Data({ ...step1Data, journal: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-outlook-blue focus:border-transparent"
-                >
-                  <option value="">Choose a journal...</option>
-                  {JOURNALS.map(j => (
-                    <option key={j} value={j} className="capitalize">{j}</option>
-                  ))}
-                </select>
-              </div> */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Select Section *
+          </label>
+          <select
+            value={step1Data.section}
+            onChange={(e) => setStep1Data({ ...step1Data, section: e.target.value })}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Choose a section...</option>
+            {SECTIONS.map(s => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Select Section *
-                </label>
-                <select
-                  value={step1Data.section}
-                  onChange={(e) => setStep1Data({ ...step1Data, section: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-outlook-blue focus:border-transparent"
-                >
-                  <option value="">Choose a section...</option>
-                  {SECTIONS.map(s => (
-                    <option key={s} value={s}>{s}</option>
-                  ))}
-                </select>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Comments for Editor
+          </label>
+          <textarea
+            value={step1Data.commentsForEditor}
+            onChange={(e) => setStep1Data({ ...step1Data, commentsForEditor: e.target.value })}
+            rows={4}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Any special comments or notes for the editor..."
+          />
+        </div>
+
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <label className="block text-sm font-medium text-gray-700">
+              Potential Reviewers (At least 2 required) *
+            </label>
+            <div className="text-sm text-gray-600">
+              {step1Data.potentialReviewers.filter((_, i) => isReviewerComplete(i)).length} / 2 complete
+            </div>
+          </div>
+
+          {step1Data.potentialReviewers.map((reviewer, index) => (
+            <div key={index} className="mb-4 p-4 border-2 border-gray-200 rounded-lg relative">
+              <div className="flex justify-between items-center mb-3">
+                <div className="flex items-center gap-2">
+                  <h4 className="font-medium">Reviewer {index + 1}</h4>
+                  {isReviewerComplete(index) && (
+                    <FaCheckCircle className="text-green-500" />
+                  )}
+                </div>
+                {step1Data.potentialReviewers.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeReviewer(index)}
+                    className="text-red-600 hover:text-red-700 p-1"
+                  >
+                    <FaTimes />
+                  </button>
+                )}
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Comments for Editor
-                </label>
-                <textarea
-                  value={step1Data.commentsForEditor}
-                  onChange={(e) => setStep1Data({ ...step1Data, commentsForEditor: e.target.value })}
-                  rows={4}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-outlook-blue focus:border-transparent"
-                  placeholder="Any special comments or notes for the editor..."
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Potential Reviewers (At least 2 required)
-                </label>
-                {step1Data.potentialReviewers.map((reviewer, index) => (
-                  <div key={index} className="mb-4 p-4 border border-gray-200 rounded-lg">
-                    <div className="flex justify-between items-center mb-3">
-                      <h4 className="font-medium">Reviewer {index + 1}</h4>
-                      {index > 0 && (
-                        <button
-                          type="button"
-                          onClick={() => removeReviewer(index)}
-                          className="text-red-600 hover:text-red-700"
-                        >
-                          <FaTimes />
-                        </button>
-                      )}
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      <input
-                        type="text"
-                        placeholder="Name"
-                        value={reviewer.name}
-                        onChange={(e) => {
-                          const newReviewers = [...step1Data.potentialReviewers];
-                          newReviewers[index].name = e.target.value;
-                          setStep1Data({ ...step1Data, potentialReviewers: newReviewers });
-                        }}
-                        className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-outlook-blue"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Affiliation"
-                        value={reviewer.affiliation}
-                        onChange={(e) => {
-                          const newReviewers = [...step1Data.potentialReviewers];
-                          newReviewers[index].affiliation = e.target.value;
-                          setStep1Data({ ...step1Data, potentialReviewers: newReviewers });
-                        }}
-                        className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-outlook-blue"
-                      />
-                      <input
-                        type="email"
-                        placeholder="Email"
-                        value={reviewer.email}
-                        onChange={(e) => {
-                          const newReviewers = [...step1Data.potentialReviewers];
-                          newReviewers[index].email = e.target.value;
-                          setStep1Data({ ...step1Data, potentialReviewers: newReviewers });
-                        }}
-                        className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-outlook-blue"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Field of Expertise"
-                        value={reviewer.expertise}
-                        onChange={(e) => {
-                          const newReviewers = [...step1Data.potentialReviewers];
-                          newReviewers[index].expertise = e.target.value;
-                          setStep1Data({ ...step1Data, potentialReviewers: newReviewers });
-                        }}
-                        className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-outlook-blue"
-                      />
-                    </div>
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={addReviewer}
-                  className="text-outlook-blue hover:text-outlook-darkBlue font-medium"
-                >
-                  + Add Another Reviewer
-                </button>
-              </div>
-
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <label className="flex items-start space-x-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {/* Name Field */}
+                <div>
                   <input
-                    type="checkbox"
-                    checked={step1Data.agreementsAccepted}
-                    onChange={(e) => setStep1Data({ ...step1Data, agreementsAccepted: e.target.checked })}
-                    className="mt-1"
+                    type="text"
+                    placeholder="Name *"
+                    value={reviewer.name}
+                    onChange={(e) => updateReviewerField(index, 'name', e.target.value)}
+                    onBlur={() => handleFieldBlur(index, 'name')}
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                      touched[`${index}-name`] && reviewerErrors[index]?.name
+                        ? 'border-red-500'
+                        : 'border-gray-300'
+                    }`}
                   />
-                  <span className="text-sm text-gray-700">
-                    I confirm that this submission has not been previously published, nor is it before another journal for consideration. The submission was prepared strictly as per Instructions to Authors, and I agree to have my data collected and stored according to the privacy statement.
-                  </span>
-                </label>
-              </div>
+                  {touched[`${index}-name`] && reviewerErrors[index]?.name && (
+                    <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                      <FaExclamationCircle className="inline" />
+                      {reviewerErrors[index].name}
+                    </p>
+                  )}
+                </div>
 
-              <div className="flex justify-end">
-                <LoadingButton
-                  onClick={handleStep1Submit}
-                  loading={isLoading}
-                  icon={FaArrowRight}
-                >
-                  Save and Continue
-                </LoadingButton>
+                {/* Affiliation Field */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Affiliation *"
+                    value={reviewer.affiliation}
+                    onChange={(e) => updateReviewerField(index, 'affiliation', e.target.value)}
+                    onBlur={() => handleFieldBlur(index, 'affiliation')}
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                      touched[`${index}-affiliation`] && reviewerErrors[index]?.affiliation
+                        ? 'border-red-500'
+                        : 'border-gray-300'
+                    }`}
+                  />
+                  {touched[`${index}-affiliation`] && reviewerErrors[index]?.affiliation && (
+                    <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                      <FaExclamationCircle className="inline" />
+                      {reviewerErrors[index].affiliation}
+                    </p>
+                  )}
+                </div>
+
+                {/* Email Field */}
+                <div>
+                  <input
+                    type="email"
+                    placeholder="Email *"
+                    value={reviewer.email}
+                    onChange={(e) => updateReviewerField(index, 'email', e.target.value)}
+                    onBlur={() => handleFieldBlur(index, 'email')}
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                      touched[`${index}-email`] && reviewerErrors[index]?.email
+                        ? 'border-red-500'
+                        : 'border-gray-300'
+                    }`}
+                  />
+                  {touched[`${index}-email`] && reviewerErrors[index]?.email && (
+                    <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                      <FaExclamationCircle className="inline" />
+                      {reviewerErrors[index].email}
+                    </p>
+                  )}
+                </div>
+
+                {/* Expertise Field */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Field of Expertise *"
+                    value={reviewer.expertise}
+                    onChange={(e) => updateReviewerField(index, 'expertise', e.target.value)}
+                    onBlur={() => handleFieldBlur(index, 'expertise')}
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 ${
+                      touched[`${index}-expertise`] && reviewerErrors[index]?.expertise
+                        ? 'border-red-500'
+                        : 'border-gray-300'
+                    }`}
+                  />
+                  {touched[`${index}-expertise`] && reviewerErrors[index]?.expertise && (
+                    <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                      <FaExclamationCircle className="inline" />
+                      {reviewerErrors[index].expertise}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={addReviewer}
+            className="text-blue-600 hover:text-blue-700 font-medium"
+          >
+            + Add Another Reviewer
+          </button>
+        </div>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <label className="flex items-start space-x-3">
+            <input
+              type="checkbox"
+              checked={step1Data.agreementsAccepted}
+              onChange={(e) => setStep1Data({ ...step1Data, agreementsAccepted: e.target.checked })}
+              className="mt-1"
+            />
+            <span className="text-sm text-gray-700">
+              I confirm that this submission has not been previously published, nor is it before another journal for consideration. The submission was prepared strictly as per Instructions to Authors, and I agree to have my data collected and stored according to the privacy statement.
+            </span>
+          </label>
+        </div>
+
+        <div className="flex justify-end">
+          <button
+            onClick={handleStep1Submit}
+            className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          >
+            Save and Continue
+            <FaArrowRight />
+          </button>
+        </div>
+      </div>
           )}
 
           {/* Step 2: Upload Document */}

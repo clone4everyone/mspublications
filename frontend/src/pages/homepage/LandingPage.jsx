@@ -50,7 +50,7 @@ const FeatureItem = ({ text, delay = 0 }) => {
   return (
     <div 
       ref={ref}
-      className={`flex gap-4 md:gap-5 items-start transition-all duration-700 ease-out ${
+      className={`flex gap-4 md:gap-5 items-center transition-all duration-700 ease-out ${
         isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
       }`}
       style={{ transitionDelay: `${delay}ms` }}
@@ -179,7 +179,7 @@ const videoRef = useRef(null);
             <h1 className='font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[120px] leading-tight sm:leading-[60px] md:leading-[80px] lg:leading-[100px]'>
               International
             </h1>
-            <h3 className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[42px] xl:text-[46px] leading-tight sm:leading-[40px] md:leading-[50px] lg:leading-[65px] xl:leading-[85px] mt-4 sm:mt-5 md:mt-6">
+            <h3 className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[42px] xl:text-[46px] leading-tight sm:leading-[40px] md:leading-[50px] lg:leading-[65px] xl:leading-[70px] mt-4 sm:mt-5 md:mt-6">
               Journal of Pharmacological &
               <br/>
               Pharmaceutical Innovations.
@@ -193,7 +193,7 @@ const videoRef = useRef(null);
         <div className='w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12'>
           <div 
             ref={welcomeLeftRef}
-            className={`overflow-hidden rounded-3xl sm:rounded-[40px] lg:rounded-[66px] w-full lg:w-[45%] xl:w-[724px] h-[250px] sm:h-[300px] lg:h-[360.26px] transition-all duration-1000 ease-out ${
+            className={`overflow-hidden rounded-3xl sm:rounded-[40px] lg:rounded-[46px] w-full lg:w-[45%] xl:w-[724px] h-[250px] sm:h-[300px] lg:h-[360.26px] transition-all duration-1000 ease-out ${
               welcomeLeftVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
             }`}
           >
@@ -253,8 +253,8 @@ const videoRef = useRef(null);
             {/* Left Card */}
             <div 
               ref={reviewLeftRef}
-              className={`w-full lg:w-[548px] lg:flex-shrink-0 flex flex-col gap-6 lg:gap-10 bg-[#FAFAFAAF] rounded-[20px] lg:rounded-none overflow-hidden lg:h-[726px] transition-all duration-1000 ease-out ${
-                reviewLeftVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
+              className={`w-full lg:w-[548px] lg:flex-shrink-0 flex flex-col gap-6 lg:gap-10 bg-[#FAFAFAAF] rounded-[20px] lg:rounded-none overflow-hidden lg:h-[726px] transition-all duration-1000 ease-out shadow-[#0000000D] ${
+                reviewLeftVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12' 
               }`}
             >
               <div className='w-full h-[250px] sm:h-[300px] lg:h-[379px] rounded-t-[20px] overflow-hidden'>
@@ -277,7 +277,7 @@ const videoRef = useRef(null);
             {/* Right Content */}
             <div 
               ref={reviewRightRef}
-              className={`relative bg-[#FAFAFAAF] p-6 sm:p-8 lg:p-10 w-full flex flex-col gap-6 lg:gap-8 rounded-[20px] lg:rounded-none transition-all duration-1000 ease-out ${
+              className={`relative bg-[#FAFAFAAF] p-6 sm:p-8 lg:p-10 w-full flex flex-col gap-6 lg:gap-8 rounded-[20px] lg:rounded-none transition-all duration-1000 ease-out shadow-[#0000000D] ${
                 reviewRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
               }`}
             >
@@ -343,7 +343,7 @@ const videoRef = useRef(null);
             }`}
           >
             <p className='text-2xl sm:text-3xl lg:text-[32px] text-[#1946DA] font-[600] leading-tight lg:leading-[24px]'>Why Publish with IJPPI?</p>
-            <div className='flex flex-col gap-3 md:gap-4'>
+            <div className='flex flex-col gap-3 md:gap-4 '>
               <FeatureItem 
                 text="Double-Blind Peer Review for fair evaluation." 
                 delay={0}
