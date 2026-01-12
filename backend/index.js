@@ -10,7 +10,15 @@ const { startCronJobs } = require('./utils/cronJobs');
 
 // Initialize express app
 const app = express();
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://ijppi.mspublication.com"
+  ],
+  credentials: true,
+}));
 
+app.options("*", cors()); 
 // Connect to database
 connectDB();
 
@@ -19,10 +27,7 @@ startCronJobs();
 
 // Middleware
 app.use(helmet()); // Security headers
-app.use(cors({
-  origin: [process.env.FRONTEND_URL , 'http://localhost:3000','https://ijppi.mspublication.com'],
-  credentials: true
-}));
+
 app.use(compression()); // Compress responses
 app.use(morgan('dev')); // Logging
 app.use(express.json({ limit: '10mb' })); // Parse JSON bodies
