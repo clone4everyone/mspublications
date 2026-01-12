@@ -18,7 +18,7 @@ connectDB();
 startCronJobs();
 
 // Middleware
-app.use(helmet()); // Security headers
+// app.use(helmet()); // Security headers
 app.use(cors({
   origin: [process.env.FRONTEND_URL , 'http://localhost:3000','https://ijppi.mspublication.com',
   'https://www.ijppi.mspublication.com'],
