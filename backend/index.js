@@ -9,16 +9,33 @@ const connectDB = require('./config/database');
 const { startCronJobs } = require('./utils/cronJobs');
 
 // Initialize express app
-const app = express();
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://ijppi.mspublication.com"
+];
+
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://ijppi.mspublication.com"
-  ],
+  origin: function (origin, callback) {
+    // Allow server-to-server & Postman requests
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-app.options("*", cors()); 
+// ✅ IMPORTANT: Preflight must use SAME config
+app.options("*", cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
 // Connect to database
 connectDB();
 
