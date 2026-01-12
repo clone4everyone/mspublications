@@ -26,7 +26,13 @@ connectDB();
 startCronJobs();
 
 // Middleware
-app.use(helmet()); // Security headers
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false, // 🔥 
+    crossOriginEmbedderPolicy: false, // 🔥 
+  })
+);
+; // Security headers
 
 app.use(compression()); // Compress responses
 app.use(morgan('dev')); // Logging
