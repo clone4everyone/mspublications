@@ -10,6 +10,7 @@ const { startCronJobs } = require('./utils/cronJobs');
 
 // Initialize express app
 const app = express();
+console.log('🔥 RUNNING THIS FILE:', __filename);
 
 // Connect to database
 connectDB();
