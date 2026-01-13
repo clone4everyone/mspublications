@@ -146,7 +146,7 @@ const videoRef = useRef(null);
     }
   ];
 
-  return (
+return (
     <div className="w-full overflow-x-hidden">
       {/* Hero Section */}
       <div className="relative w-full h-[80vh] md:min-h-screen overflow-hidden font-inria">
@@ -173,13 +173,13 @@ const videoRef = useRef(null);
           }`}
         >
           <div className="max-w-full lg:max-w-[650px] xl:max-w-[916px] text-white z-20">
-            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-[42px] leading-tight sm:leading-[50px] md:leading-[60px] lg:leading-[90px]">
+            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-[42px] leading-tight sm:leading-relaxed md:leading-[50px] lg:leading-[60px] xl:leading-[90px]">
               A Trusted Journal Partner
             </h3>
-            <h1 className='font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[120px] leading-tight sm:leading-[60px] md:leading-[80px] lg:leading-[100px]'>
+            <h1 className='font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-[120px] leading-tight sm:leading-snug md:leading-[60px] lg:leading-[80px] xl:leading-[100px]'>
               International
             </h1>
-            <h3 className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-[42px] xl:text-[46px] leading-tight sm:leading-[40px] md:leading-[50px] lg:leading-[65px] xl:leading-[70px] mt-4 sm:mt-5 md:mt-6">
+            <h3 className="font-bold text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl 2xl:text-[46px] leading-snug sm:leading-relaxed md:leading-[35px] lg:leading-[45px] xl:leading-[55px] 2xl:leading-[70px] mt-3 sm:mt-4 md:mt-5 lg:mt-6">
               Journal of Pharmacological &
               <br/>
               Pharmaceutical Innovations.
@@ -206,17 +206,17 @@ const videoRef = useRef(null);
               welcomeRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
             }`}
           >
-            <p className='text-2xl sm:text-3xl md:text-[42px] leading-tight md:leading-[85px] font-sans font-[600] text-[#1946DA]'>Welcome to IJPPI</p>
-            <p className='font-[400] text-base sm:text-lg md:text-xl lg:text-[24px] leading-relaxed md:leading-[48px] text-justify text-[#233B4E]'>
+            <p className='text-xl sm:text-2xl md:text-3xl lg:text-[36px] xl:text-[42px] leading-tight md:leading-relaxed lg:leading-[65px] xl:leading-[85px] font-sans font-[600] text-[#1946DA]'>Welcome to IJPPI</p>
+            <p className='font-[400] text-sm sm:text-base md:text-lg lg:text-xl xl:text-[24px] leading-relaxed md:leading-[32px] lg:leading-[40px] xl:leading-[48px] text-justify text-[#233B4E]'>
               The International Journal of Pharmacological and Pharmaceutical Innovations (IJPPI) are a premier platform dedicated to the dissemination of high-impact research in the pharmaceutical sciences, with a 2026 focus on bridging the gap between conventional pharmaceutical technologies and next-generation delivery systems.
             </p>
           </div>
         </div>
 
         {/* Dedication Section */}
-    <div className='w-full min-h-[400px] lg:h-[441px] relative overflow-hidden rounded-2xl lg:rounded-none max-[1880px]:bg-[#FAFAFA]'>
+        <div className='w-full min-h-[400px] lg:h-[441px] relative overflow-hidden rounded-2xl lg:rounded-none max-[1880px]:bg-[#FAFAFA]'>
           <div className='relative z-50 px-6 sm:px-8 md:px-10 lg:px-[50px] py-8 sm:py-10 md:py-12 lg:py-[50px] bg-transparent w-full flex flex-col items-start gap-6 md:gap-8'>
-            <p className='text-[#1946DA] text-xl sm:text-2xl md:text-[32px] leading-tight md:leading-[159%] font-[600] font-sans'>IJPPI is dedicated to</p>
+            <p className='text-[#1946DA] text-lg sm:text-xl md:text-2xl lg:text-[28px] xl:text-[32px] leading-tight md:leading-relaxed lg:leading-[159%] font-[600] font-sans'>IJPPI is dedicated to</p>
             <div className='flex flex-col gap-3 md:gap-4'>
               <FeatureItem 
                 text="Encouraging interdisciplinary collaboration in pharmaceutical sciences." 
@@ -265,10 +265,10 @@ const videoRef = useRef(null);
                 />
               </div>
               <div className='w-full px-6 sm:px-8 lg:px-[30px] pb-6 lg:pb-0'>
-                <p className='w-full font-semibold text-2xl sm:text-3xl lg:text-[32px] leading-tight lg:leading-[48px] text-[#1946DAE5] mb-4'>
+                <p className='w-full font-semibold text-xl sm:text-2xl md:text-[28px] lg:text-[32px] leading-tight lg:leading-[40px] xl:leading-[48px] text-[#1946DAE5] mb-4'>
                   Double-Blind Peer Review Process – IJPPI
                 </p>
-                <p className='w-full font-normal text-base sm:text-lg leading-relaxed lg:leading-[36px] text-[#020F19]'>
+                <p className='w-full font-normal text-sm sm:text-base md:text-lg leading-relaxed lg:leading-[30px] xl:leading-[36px] text-[#020F19]'>
                   The International Journal of Pharmacological and Pharmaceutical Innovations (IJPPI) follows a structured double-blind peer review process to ensure fairness, quality, and transparency in manuscript handling.
                 </p>
               </div>
@@ -281,11 +281,11 @@ const videoRef = useRef(null);
                 reviewRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
               }`}
             >
-              <p className='font-semibold text-3xl sm:text-4xl lg:text-[42px] leading-tight lg:leading-[24px] text-[#1946DA]'>
+              <p className='font-semibold text-2xl sm:text-3xl md:text-[36px] lg:text-[42px] leading-tight lg:leading-[24px] text-[#1946DA]'>
                 Scope of the Journal
               </p>
               
-              <p className='w-full font-medium text-xl sm:text-2xl lg:text-[26px] leading-relaxed lg:leading-[159%] text-[#233B4E]'>
+              <p className='w-full font-medium text-base sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] leading-relaxed lg:leading-[140%] xl:leading-[159%] text-[#233B4E]'>
                 This journal focuses on the intersection of pharmaceutical sciences and advanced material engineering to enhance therapeutic efficacy.
               </p>
               
@@ -300,11 +300,11 @@ const videoRef = useRef(null);
                 ))}
               </div>
 
- <div className='w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] lg:w-[222px] lg:h-[201px] bg-[#D9D9D94D] absolute -top-[20px] sm:-top-[30px] lg:-top-[40px] -right-[30px] sm:-right-[45px] lg:-right-[60px] rounded-full'></div>
+              <div className='w-[120px] h-[120px] sm:w-[160px] sm:h-[160px] lg:w-[222px] lg:h-[201px] bg-[#D9D9D94D] absolute -top-[20px] sm:-top-[30px] lg:-top-[40px] -right-[30px] sm:-right-[45px] lg:-right-[60px] rounded-full'></div>
           
-          <div className='w-[100px] h-[100px] sm:w-[140px] sm:h-[140px] lg:w-[193px] lg:h-[193px] bg-[#D9D9D94D] absolute top-[30px] sm:top-[45px] lg:top-[60px] right-[30px] sm:right-[45px] lg:right-[60px] rounded-full'></div>
+              <div className='w-[100px] h-[100px] sm:w-[140px] sm:h-[140px] lg:w-[193px] lg:h-[193px] bg-[#D9D9D94D] absolute top-[30px] sm:top-[45px] lg:top-[60px] right-[30px] sm:right-[45px] lg:right-[60px] rounded-full'></div>
           
-          <div className='w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] lg:w-[146px] lg:h-[146px] bg-[#D9D9D94D] absolute top-[10px] sm:top-[15px] lg:top-[20px] right-[35%] sm:right-[40%] lg:right-[45%] rounded-full'></div>
+              <div className='w-[80px] h-[80px] sm:w-[110px] sm:h-[110px] lg:w-[146px] lg:h-[146px] bg-[#D9D9D94D] absolute top-[10px] sm:top-[15px] lg:top-[20px] right-[35%] sm:right-[40%] lg:right-[45%] rounded-full'></div>
             </div>
           </div>
         </div>
@@ -315,7 +315,7 @@ const videoRef = useRef(null);
         <div className='flex flex-col lg:flex-row gap-8 lg:gap-14 items-center px-4 sm:px-6 md:px-10 max-w-7xl'>
           <div 
             ref={whyPublishLeftRef}
-            className={`w-full lg:w-[50%] xl:w-[689px] h-[300px] sm:h-[400px] lg:h-[529px] rounded-[50px] lg:rounded-[100px] overflow-hidden transition-all duration-1000 ease-out cursor-pointer relative group  z-50 ${
+            className={`w-full lg:w-[50%] xl:w-[689px] h-[300px] sm:h-[400px] lg:h-[529px] rounded-[50px] lg:rounded-[100px] overflow-hidden transition-all duration-1000 ease-out cursor-pointer relative group z-50 ${
               whyPublishLeftVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-12'
             }`}
             onClick={handleVideoClick}
@@ -342,8 +342,8 @@ const videoRef = useRef(null);
               whyPublishRightVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'
             }`}
           >
-            <p className='text-2xl sm:text-3xl lg:text-[32px] text-[#1946DA] font-[600] leading-tight lg:leading-[24px]'>Why Publish with IJPPI?</p>
-            <div className='flex flex-col gap-3 md:gap-4 '>
+            <p className='text-xl sm:text-2xl md:text-[28px] lg:text-[32px] text-[#1946DA] font-[600] leading-tight lg:leading-[24px]'>Why Publish with IJPPI?</p>
+            <div className='flex flex-col gap-3 md:gap-4'>
               <FeatureItem 
                 text="Double-Blind Peer Review for fair evaluation." 
                 delay={0}
@@ -402,7 +402,7 @@ const videoRef = useRef(null);
       {/* Flow Chart Section */}
       <div className='w-full relative overflow-hidden py-12 sm:py-16 lg:py-20 flex justify-center items-center px-4 sm:px-6'>
         <div className='flex flex-col gap-6 sm:gap-8 lg:gap-10 items-center max-w-7xl'>
-          <p className='font-[600] text-2xl sm:text-3xl lg:text-[42px] leading-tight lg:leading-[57.6px] text-[#1946DA] text-center px-4'>
+          <p className='font-[600] text-xl sm:text-2xl md:text-3xl lg:text-[36px] xl:text-[42px] leading-tight lg:leading-[50px] xl:leading-[57.6px] text-[#1946DA] text-center px-4'>
             Flow Chart Representation of Peer Review
           </p>
           <div className='w-full max-w-[1282px]'>

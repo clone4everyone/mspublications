@@ -60,7 +60,7 @@ export  function AboutPage() {
       {/* Hero Section */}
       <div
         ref={heroRef}
-        className={`relative w-full h-[300px] sm:h-[400px] lg:h-[532px] bg-cover bg-center overflow-hidden transition-all duration-1000 ${
+        className={`relative w-full h-[250px] sm:h-[350px] md:h-[420px] lg:h-[480px] xl:h-[532px] bg-cover bg-center overflow-hidden transition-all duration-1000 ${
           heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
         style={{
@@ -69,22 +69,22 @@ export  function AboutPage() {
         }}
       >
         <div className="absolute inset-0 z-0" style={{ background: "#233B4EB2" }}></div>
-        <div className="relative z-20 h-full flex flex-col items-center justify-center px-4 gap-10">
-          <h1 className="text-white font-bold text-4xl sm:text-5xl lg:text-[80px] lg:leading-[70px] text-center" style={{ fontFamily: "'Inria Serif', serif" }}>
+        <div className="relative z-20 h-full flex flex-col items-center justify-center px-4 gap-6 sm:gap-8 lg:gap-10">
+          <h1 className="text-white font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[80px] lg:leading-[60px] xl:leading-[70px] text-center" style={{ fontFamily: "'Inria Serif', serif" }}>
             About Us
           </h1>
-          <p className="text-gray-200 font-medium text-sm sm:text-base lg:text-[18px] mt-2" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <p className="text-gray-200 font-medium text-xs sm:text-sm md:text-base lg:text-[18px] mt-2" style={{ fontFamily: "'Inter', sans-serif" }}>
             Home / About Us
           </p>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="px-4 sm:px-6 lg:px-16 xl:px-[101px] py-8 sm:py-12 lg:py-16 xl:py-[101px] bg-[#f0f0ff]">
+      <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[101px] py-8 sm:py-10 md:py-12 lg:py-14 xl:py-16 2xl:py-[101px] bg-[#f0f0ff]">
         
         {/* About Journal Section */}
-        <div ref={journalRef} className='w-full bg-transparent flex flex-col lg:flex-row justify-between gap-6 lg:gap-8 mb-8 lg:mb-[69px] px-4 lg:px-0'>
-          <div className={`w-full lg:w-[694px] aspect-[694/463] rounded-tr-[30px] lg:rounded-tr-[60px] rounded-bl-[30px] lg:rounded-bl-[60px] overflow-hidden relative transition-all duration-1000 delay-100 ${
+        <div ref={journalRef} className='w-full bg-transparent flex flex-col lg:flex-row justify-between gap-6 lg:gap-8 mb-8 sm:mb-10 md:mb-12 lg:mb-16 xl:mb-[69px] px-0'>
+          <div className={`w-full lg:w-[55%] xl:w-[694px] aspect-[694/463] rounded-tr-[20px] sm:rounded-tr-[30px] lg:rounded-tr-[40px] xl:rounded-tr-[60px] rounded-bl-[20px] sm:rounded-bl-[30px] lg:rounded-bl-[40px] xl:rounded-bl-[60px] overflow-hidden relative transition-all duration-1000 delay-100 ${
             journalVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
           }`}>
             <img 
@@ -92,36 +92,36 @@ export  function AboutPage() {
               className='w-full h-full object-cover'
               alt='Journal'
             />
-            <div className='absolute top-0 left-0 rounded-br-[30px] lg:rounded-br-[60px] flex w-[55%] sm:w-[50%] lg:w-[308px] h-[45%] sm:h-[47%] lg:h-[218px] justify-center items-center bg-[#0257EED9] text-white font-[600] text-[20px] sm:text-[28px] lg:text-[42px] leading-[28px] sm:leading-[38px] lg:leading-[52px] px-4'>
+            <div className='absolute top-0 left-0 rounded-br-[20px] sm:rounded-br-[30px] lg:rounded-br-[40px] xl:rounded-br-[60px] flex w-[58%] sm:w-[52%] lg:w-[45%] xl:w-[308px] h-[42%] sm:h-[45%] lg:h-[47%] xl:h-[218px] justify-center items-center bg-[#0257EED9] text-white font-[600] text-[16px] sm:text-[20px] md:text-[24px] lg:text-[32px] xl:text-[42px] leading-[22px] sm:leading-[28px] md:leading-[34px] lg:leading-[42px] xl:leading-[52px] px-3 sm:px-4'>
               About the <br/> journal
             </div>
           </div>
 
-          <div className={`flex flex-col items-start w-full lg:w-[925px]  justify-evenly lg:gap-0 transition-all duration-1000 delay-300 ${
+          <div className={`flex flex-col items-start w-full lg:w-[43%] xl:w-[925px] gap-4 sm:gap-5 md:gap-6 lg:gap-0 justify-evenly transition-all duration-1000 delay-300 ${
             journalVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
           }`}>
-            <p className='font-[600] text-[28px] sm:text-[36px] lg:text-[42px] leading-[40px] sm:leading-[56px] lg:leading-[72px] text-[#0257EE]'>
+            <p className='font-[600] text-[22px] sm:text-[28px] md:text-[32px] lg:text-[36px] xl:text-[42px] leading-[32px] sm:leading-[40px] md:leading-[48px] lg:leading-[56px] xl:leading-[72px] text-[#0257EE]'>
               Focus & Scope
             </p>
-            <p className='font-[400] text-[16px] sm:text-[24px] lg:text-[24px] leading-[32px] lg:leading-[58px]'>
+            <p className='font-[400] text-[14px] sm:text-[16px] md:text-[18px] lg:text-[20px] xl:text-[24px] leading-[24px] sm:leading-[28px] md:leading-[32px] lg:leading-[40px] xl:leading-[58px]'>
               The International Journal of Pharmacological and Pharmaceutical Innovations (IJPPI) is a peer-reviewed, open access journal dedicated to publishing cutting-edge research across pharmacology and pharmaceutical sciences. IJPPI serves as a platform for academicians, researchers, and industry professionals to share innovations, discoveries, and advancements in drug research, development, and therapeutic applications.
             </p>
           </div>
         </div>
 
         {/* Scope Section */}
-        <div ref={scopeRef} className="w-full bg-white rounded-[20px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16 p-6 sm:p-8 lg:p-[49px] mb-8 lg:mb-[29px]">
-          <div className={`flex flex-col gap-6 flex-1 transition-all duration-1000 delay-100 ${
+        <div ref={scopeRef} className="w-full bg-white rounded-[16px] lg:rounded-[20px] mx-auto flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 xl:gap-16 p-5 sm:p-6 md:p-8 lg:p-10 xl:p-[49px] mb-6 sm:mb-8 lg:mb-[29px]">
+          <div className={`flex flex-col gap-4 sm:gap-5 md:gap-6 flex-1 transition-all duration-1000 delay-100 ${
             scopeVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
           }`}>
-            <h2 className="font-inter font-semibold text-2xl sm:text-3xl lg:text-[42px] lg:leading-[24px] tracking-[0.04em] text-[#1946DA]">
+            <h2 className="font-inter font-semibold text-xl sm:text-2xl md:text-3xl lg:text-[36px] xl:text-[42px] lg:leading-[24px] tracking-[0.04em] text-[#1946DA]">
               Scope of the Journal
             </h2>
-            <p className="font-inter font-medium text-lg sm:text-xl lg:text-[26px] lg:leading-[159%] tracking-[-0.02em] text-[#233B4E]">
+            <p className="font-inter font-medium text-base sm:text-lg md:text-xl lg:text-[22px] xl:text-[26px] lg:leading-[140%] xl:leading-[159%] tracking-[-0.02em] text-[#233B4E]">
               This journal focuses on the intersection of pharmaceutical sciences and advanced material engineering to enhance therapeutic efficacy.
             </p>
 
-            <ul className="flex flex-col gap-4 font-inter text-sm sm:text-base lg:text-[18px] leading-[27px] text-[#233B4E]">
+            <ul className="flex flex-col gap-3 sm:gap-4 font-inter text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] leading-[22px] sm:leading-[24px] lg:leading-[27px] text-[#233B4E]">
               {[
                 { title: "Formulation Science:", desc: "Research on conventional dosage forms, pre-formulation studies, physical pharmacy, and characterization of robust pharmaceutical systems." },
                 { title: "Advanced Drug Delivery:", desc: "Innovations in controlled, sustained, and stimuli-responsive delivery systems, including the use of smart polymers and novel modes of administration" },
@@ -130,7 +130,7 @@ export  function AboutPage() {
                 { title: "Analytical & Regulatory Science:", desc: "Development and validation of novel analytical methods for drug quantification and stability testing." },
                 { title: "Pharmacology & Toxicology:", desc: "In-depth evaluation of safety, biocompatibility, and therapeutic performance of active pharmaceutical ingredients (APIs)." }
               ].map((item, i) => (
-                <li key={i} className="flex gap-4 lg:gap-6">
+                <li key={i} className="flex gap-3 sm:gap-4 lg:gap-6">
                   <CheckIcon />
                   <span>
                     <span className="font-bold">{item.title}</span>{" "}
@@ -140,24 +140,24 @@ export  function AboutPage() {
               ))}
             </ul>
 
-            <p className="font-inter font-normal text-sm sm:text-base lg:text-[18px] leading-[27px] tracking-[-1px] text-[#233B4E]">
+            <p className="font-inter font-normal text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] leading-[22px] sm:leading-[24px] lg:leading-[27px] tracking-[-1px] text-[#233B4E]">
               IJPPI publishes Original Research Articles, Review Articles, Short Communications, and Case Studies, ensuring comprehensive coverage of both fundamental and applied research.
             </p>
           </div>
 
-          <div className={`w-full lg:w-[673px] h-[300px] sm:h-[400px] lg:h-[673px] pt-[52px] transition-all duration-1000 delay-300 ${
+          <div className={`w-full lg:w-[45%] xl:w-[673px] h-[250px] sm:h-[320px] md:h-[400px] lg:h-[500px] xl:h-[673px] pt-0 lg:pt-[52px] transition-all duration-1000 delay-300 ${
             scopeVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
           }`}>
             <img
               src="https://res.cloudinary.com/duhadnqmh/image/upload/v1768043547/96726d23ebbcffc0141ad05746e0abbdd392b6fb_qcrotj.png"
               alt="Scope of Journal"
-              className="w-full h-full object-fit rounded-[20px]"
+              className="w-full h-full object-cover rounded-[16px] lg:rounded-[20px]"
             />
           </div>
         </div>
 
      {/* ==================== POLICY CARDS SECTION ==================== */}
-<div ref={policyRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 xl:gap-10 mb-12 lg:mb-20">
+<div ref={policyRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 xl:gap-10 mb-10 sm:mb-12 lg:mb-16 xl:mb-20">
   {[
     {
       title: "Plagiarism Policy",
@@ -183,7 +183,7 @@ export  function AboutPage() {
   ].map((policy, index) => (
     <div
       key={policy.title}
-      className={`group bg-white rounded-2xl overflow-hidden shadow-[#0000000D] transition-all duration-300 flex flex-col h-full ${
+      className={`group bg-white rounded-xl lg:rounded-2xl overflow-hidden shadow-[#0000000D] transition-all duration-300 flex flex-col h-full ${
         policyVisible
           ? "opacity-100 translate-y-0"
           : "opacity-0 translate-y-12"
@@ -200,44 +200,44 @@ export  function AboutPage() {
       </div>
 
       {/* Content */}
-      <div className="flex flex-col flex-grow p-6 lg:p-8">
+      <div className="flex flex-col flex-grow p-5 sm:p-6 lg:p-7 xl:p-8">
         {/* Icon + Title */}
-        <div className="flex items-center gap-4 mb-5">
-          <div className="w-12 h-12 rounded-xl border-2 border-[#0257EE]/30 bg-[#0257EE]/5 flex items-center justify-center shrink-0 transition-colors group-hover:border-[#0257EE]/60">
+        <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-5">
+          <div className="w-10 h-10 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-lg lg:rounded-xl border-2 border-[#0257EE]/30 bg-[#0257EE]/5 flex items-center justify-center shrink-0 transition-colors group-hover:border-[#0257EE]/60">
             <DocumentIcon />
           </div>
-          <h3 className="text-xl sm:text-2xl lg:text-[22px] font-semibold text-[#0257EE] leading-tight">
+          <h3 className="text-lg sm:text-xl lg:text-[20px] xl:text-[22px] font-semibold text-[#0257EE] leading-tight">
             {policy.title}
           </h3>
         </div>
 
         {/* Description - grows to push button down */}
-        <p className="text-[#233B4E] text-base sm:text-lg lg:text-[18px] leading-relaxed flex-grow mb-8">
+        <p className="text-[#233B4E] text-[14px] sm:text-[15px] md:text-base lg:text-[17px] xl:text-[18px] leading-relaxed flex-grow mb-6 sm:mb-7 lg:mb-8">
           {policy.description}
         </p>
 
         {/* Learn More Button - always at bottom */}
        <button
   className="
-    self-end w-full max-w-[200px] h-12 rounded-full 
+    self-end w-full max-w-[180px] sm:max-w-[200px] h-10 sm:h-11 lg:h-12 rounded-full 
     border-2 border-[#233B4E] 
-    flex items-center justify-between pl-6 md:pr-1 
-    text-[#233B4E] font-medium 
+    flex items-center justify-between pl-4 sm:pl-5 lg:pl-6 pr-1 
+    text-[#233B4E] font-medium text-[13px] sm:text-[14px] lg:text-[15px]
     hover:bg-[#233B4E] hover:text-white 
     transition-all duration-300
-    group
+    group/btn
   "
 >
   <span>Learn More</span>
   
   <div className="
-    w-8 h-8 rounded-full 
+    w-7 h-7 sm:w-8 sm:h-8 rounded-full 
     border border-[#233B4E] 
     flex items-center justify-center
     transition-colors duration-300
-    group-hover:bg-white
+    group-hover/btn:bg-white
   ">
-    <ArrowIcon className="text-[#233B4E] group-hover:text-[#233B4E]/90 bg-white" />
+    <ArrowIcon className="text-[#233B4E] group-hover/btn:text-[#233B4E]/90 bg-white" />
   </div>
 </button>
       </div>
@@ -246,44 +246,44 @@ export  function AboutPage() {
 </div>
 
         {/* Info Cards - Second Row */}
-        <div ref={infoRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-[36px] mb-6 lg:mb-[29px]">
+        <div ref={infoRef} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 xl:gap-[36px] mb-5 sm:mb-6 lg:mb-8 xl:mb-[29px]">
           {/* Publication Frequency */}
-          <div className={`w-full rounded-[20px] bg-white p-6 sm:p-8 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 ${
+          <div className={`w-full rounded-[16px] lg:rounded-[20px] bg-white p-5 sm:p-6 lg:p-7 xl:p-8 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 ${
             infoVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
           }`}>
-            <div className="flex items-center gap-4">
-              <div className="w-[50px] h-[50px] rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-[44px] h-[44px] sm:w-[47px] sm:h-[47px] lg:w-[50px] lg:h-[50px] rounded-[8px] lg:rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
                 <DocumentIcon />
               </div>
-              <h3 className="text-lg sm:text-xl lg:text-[22px] font-semibold leading-[176%] tracking-[-0.02em] text-[#0257EE]">
+              <h3 className="text-base sm:text-lg md:text-xl lg:text-[20px] xl:text-[22px] font-semibold leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#0257EE]">
                 Publication Frequency
               </h3>
             </div>
-            <p className="mt-4 text-sm sm:text-base lg:text-[18px] font-normal leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
+            <p className="mt-3 sm:mt-4 text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
               IJPPI will be published quarterly (four issues per year: January-March, April-June, July-September, and October-December). Special issues may be announced for emerging themes or conference proceedings.
             </p>
           </div>
 
           {/* Time Durations */}
-          <div className={`w-full rounded-[20px] bg-white p-6 sm:p-8 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-200 ${
+          <div className={`w-full rounded-[16px] lg:rounded-[20px] bg-white p-5 sm:p-6 lg:p-7 xl:p-8 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-200 ${
             infoVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
           }`}>
-            <div className="flex items-center gap-4">
-              <div className="w-[50px] h-[50px] rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-[44px] h-[44px] sm:w-[47px] sm:h-[47px] lg:w-[50px] lg:h-[50px] rounded-[8px] lg:rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
                 <DocumentIcon />
               </div>
-              <h3 className="text-lg sm:text-xl lg:text-[22px] font-semibold leading-[176%] tracking-[-0.02em] text-[#0257EE]">
+              <h3 className="text-base sm:text-lg md:text-xl lg:text-[20px] xl:text-[22px] font-semibold leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#0257EE]">
                 Time Durations
               </h3>
             </div>
-            <ul className="mt-6 flex flex-col gap-4 font-inter text-sm sm:text-base lg:text-[18px] leading-[27px] text-[#233B4E]">
+            <ul className="mt-4 sm:mt-5 lg:mt-6 flex flex-col gap-3 sm:gap-4 font-inter text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] leading-[22px] sm:leading-[24px] lg:leading-[27px] text-[#233B4E]">
               {[
                 "Editorial Screening: 5–7 days",
                 "Peer Review: 3–4 weeks",
                 "Final Decision 4–6 weeks from date of submission",
                 "Publication: 1–2 weeks after acceptance"
               ].map((item, i) => (
-                <li key={i} className="flex gap-4 lg:gap-6">
+                <li key={i} className="flex gap-3 sm:gap-4 lg:gap-6">
                   <CheckIcon />
                   <span className="font-normal">{item}</span>
                 </li>
@@ -292,18 +292,18 @@ export  function AboutPage() {
           </div>
 
           {/* Copyright & Licensing */}
-          <div className={`w-full rounded-[20px] bg-white p-6 sm:p-8 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-400 ${
+          <div className={`w-full rounded-[16px] lg:rounded-[20px] bg-white p-5 sm:p-6 lg:p-7 xl:p-8 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-400 ${
             infoVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
           }`}>
-            <div className="flex items-center gap-4">
-              <div className="w-[50px] h-[50px] rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-[44px] h-[44px] sm:w-[47px] sm:h-[47px] lg:w-[50px] lg:h-[50px] rounded-[8px] lg:rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
                 <DocumentIcon />
               </div>
-              <h3 className="text-lg sm:text-xl lg:text-[22px] font-semibold leading-[176%] tracking-[-0.02em] text-[#0257EE]">
+              <h3 className="text-base sm:text-lg md:text-xl lg:text-[20px] xl:text-[22px] font-semibold leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#0257EE]">
                 Copyright & Licensing
               </h3>
             </div>
-            <p className="mt-4 text-sm sm:text-base lg:text-[18px] font-normal leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
+            <p className="mt-3 sm:mt-4 text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
               Authors retain copyright of their work. Articles are published under a Creative Commons Attribution License (CC BY), allowing sharing and reuse with proper citation.
             </p>
           </div>
@@ -311,24 +311,24 @@ export  function AboutPage() {
 
         {/* Bottom Section - Peer Review Process */}
         <section id='#peerReview'>
-             <div ref={bottomRef} className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
+             <div ref={bottomRef} className="grid grid-cols-1 xl:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
           {/* Peer Review Process - Large Card */}
-          <div className={`xl:col-span-2 bg-white rounded-[20px] flex flex-col lg:flex-row gap-8 lg:gap-20 p-6 sm:p-8 lg:p-[49px] transition-all duration-1000 delay-100 ${
+          <div className={`xl:col-span-2 bg-white rounded-[16px] lg:rounded-[20px] flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12 xl:gap-20 p-5 sm:p-6 md:p-8 lg:p-10 xl:p-[49px] transition-all duration-1000 delay-100 ${
             bottomVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'
           }`}>
-            <div className="flex flex-col gap-6 flex-1">
-              <div className="flex items-center gap-4">
-                <div className="w-[50px] h-[50px] rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
+            <div className="flex flex-col gap-4 sm:gap-5 md:gap-6 flex-1">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-[44px] h-[44px] sm:w-[47px] sm:h-[47px] lg:w-[50px] lg:h-[50px] rounded-[8px] lg:rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
                   <DocumentIcon />
                 </div>
-                <h3 className="text-lg sm:text-xl lg:text-[22px] font-semibold leading-[176%] tracking-[-0.02em] text-[#0257EE]">
+                <h3 className="text-base sm:text-lg md:text-xl lg:text-[20px] xl:text-[22px] font-semibold leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#0257EE]">
                   Peer Review Process
                 </h3>
               </div>
-              <p className="text-sm sm:text-base lg:text-[18px] font-normal leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
+              <p className="text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
                 IJPPI follows a double-blind peer review process, where both authors and reviewers remain anonymous to ensure unbiased evaluation.
               </p>
-              <ul className="flex flex-col gap-4 lg:gap-5 font-inter text-sm sm:text-base lg:text-[18px] leading-[27px] text-[#233B4E]">
+              <ul className="flex flex-col gap-3 sm:gap-4 lg:gap-5 font-inter text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] leading-[22px] sm:leading-[24px] lg:leading-[27px] text-[#233B4E]">
                 {[
                   "Manuscript Submission by Author (via Online Submission System)",
                   "Initial Editorial Screening (Scope, Formatting, Plagiarism Check)",
@@ -342,7 +342,7 @@ export  function AboutPage() {
                   "Proofs Sent to Author for Final Approval",
                   "Final Publication with DOI Assignment and Online Hosting"
                 ].map((item, i) => (
-                  <li key={i} className="flex gap-4 lg:gap-6">
+                  <li key={i} className="flex gap-3 sm:gap-4 lg:gap-6">
                     <CheckIcon />
                     <span className="font-normal">{item}</span>
                   </li>
@@ -350,62 +350,61 @@ export  function AboutPage() {
               </ul>
             </div>
 
-            <div className="w-full lg:w-[410px] h-[300px] sm:h-[400px] lg:h-[683px]">
+            <div className="w-full lg:w-[380px] xl:w-[410px] h-[280px] sm:h-[350px] md:h-[420px] lg:h-[560px] xl:h-[683px]">
               <img
                 src="https://res.cloudinary.com/duhadnqmh/image/upload/v1768107093/f64b2fd9d26e53d876408dd1d0255ad6cff25119_sjwjih.jpg"
                 alt="Peer Review Process"
-                className="w-full h-full object-cover rounded-[20px]"
+                className="w-full h-full object-cover rounded-[16px] lg:rounded-[20px]"
               />
             </div>
           </div>
 
           {/* Right Column - Acceptance Rate & Archival Policy */}
-          <div className="flex flex-col gap-6 lg:gap-8">
+          <div className="flex flex-col gap-5 sm:gap-6 lg:gap-8">
             {/* Acceptance Rate Card */}
-            <div className={`w-full rounded-[20px] bg-white p-6 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-300 ${
+            <div className={`w-full rounded-[16px] lg:rounded-[20px] bg-white p-5 sm:p-6 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-300 ${
               bottomVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
             }`}>
               <img
                 src="https://res.cloudinary.com/duhadnqmh/image/upload/v1768107063/f0b1318fab74c7018c8de7e6ecb0f68ebd94458b_dx5ugo.jpg"
                 alt="Acceptance Rate"
-                className="w-full h-[200px] sm:h-[250px] lg:h-[328px] rounded-[20px] object-cover"
+                className="w-full h-[180px] sm:h-[220px] md:h-[260px] lg:h-[280px] xl:h-[328px] rounded-[16px] lg:rounded-[20px] object-cover"
               />
-              <div className="relative mt-8 lg:mt-12 px-1 flex flex-col">
-                <div className="flex items-center gap-4">
-                  <div className="w-[50px] h-[50px] rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
+              <div className="relative mt-6 sm:mt-8 lg:mt-10 xl:mt-12 px-1 flex flex-col">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-[44px] h-[44px] sm:w-[47px] sm:h-[47px] lg:w-[50px] lg:h-[50px] rounded-[8px] lg:rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
                     <DocumentIcon />
                   </div>
-                  <h3 className="text-lg sm:text-xl lg:text-[22px] font-semibold leading-[176%] tracking-[-0.02em] text-[#0257EE]">
+                  <h3 className="text-base sm:text-lg md:text-xl lg:text-[20px] xl:text-[22px] font-semibold leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#0257EE]">
                     Acceptance Rate
                   </h3>
                 </div>
-                <p className="mt-4 text-sm sm:text-base lg:text-[18px] font-normal leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
+                <p className="mt-3 sm:mt-4 text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
                   The journal aims to maintain high-quality standards, with an estimated acceptance rate of 20–25% in the initial years.
                 </p>
               </div>
             </div>
 
             {/* Archival Policy Card */}
-            <div className={`w-full rounded-[20px] bg-white p-6 sm:p-8 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-500 ${
+            <div className={`w-full rounded-[16px] lg:rounded-[20px] bg-white p-5 sm:p-6 lg:p-7 xl:p-8 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.05)] flex flex-col transition-all duration-1000 delay-500 ${
               bottomVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'
             }`}>
-              <div className="flex items-center gap-4">
-                <div className="w-[50px] h-[50px] rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-[44px] h-[44px] sm:w-[47px] sm:h-[47px] lg:w-[50px] lg:h-[50px] rounded-[8px] lg:rounded-[10px] border border-[#0257EE] bg-white flex items-center justify-center shrink-0">
                   <DocumentIcon />
                 </div>
-                <h3 className="text-lg sm:text-xl lg:text-[22px] font-semibold leading-[176%] tracking-[-0.02em] text-[#0257EE]">
+                <h3 className="text-base sm:text-lg md:text-xl lg:text-[20px] xl:text-[22px] font-semibold leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#0257EE]">
                   Archival Policy
                 </h3>
               </div>
-              <p className="mt-4 text-sm sm:text-base lg:text-[18px] font-normal leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
+              <p className="mt-3 sm:mt-4 text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
                 All published articles are preserved through digital archiving systems to ensure permanent accessibility.
               </p>
             </div>
           </div>
         </div>
         </section>
-     
-      </div>
-    </div>
-  );
+  </div>
+</div>
+);
 }
