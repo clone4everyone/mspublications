@@ -10,7 +10,21 @@ const s3 = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
+const generatePresignedUploadUrl = async (filename, contentType, journal = 'general') => {
+  const key = generateS3Key(filename, journal);
+  
+  const command = new PutObjectCommand({
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: key,
+    ContentType: contentType,
+  });
 
+  const presignedUrl = await getSignedUrl(s3, command, { 
+    expiresIn: 300 // 5 minutes - enough time for upload
+  });
+
+  return { presignedUrl, key };
+};
 // ✅ Use MEMORY storage to enable DOCX to PDF conversion
 // Files will be in req.file.buffer, then manually uploaded to S3 after conversion
 const uploadDocument = multer({
@@ -99,4 +113,6 @@ module.exports = {
   getSignedFileUrl,
   getBufferFromS3,
   deleteFile,
+  generatePresignedUploadUrl
+
 };

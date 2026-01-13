@@ -6,7 +6,9 @@ import {
   uploadDocument, 
   addMetadata, 
   confirmSubmission,
-  clearCurrentSubmission 
+  clearCurrentSubmission ,
+  getUploadUrl,
+  confirmUpload
 } from '../redux/slices/submissionSlice';
 import { toast } from 'react-toastify';
 import { FaArrowLeft, FaArrowRight, FaCheck, FaUpload, FaTimes, FaSpinner,FaExclamationCircle,FaCheckCircle } from 'react-icons/fa';
@@ -43,7 +45,7 @@ function NewSubmission() {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [uploadedFile, setUploadedFile] = useState(null);
-
+  const [uploadLoading,setUploadLoading]=useState(false);
   // Step 1 data
   const [step1Data, setStep1Data] = useState({
     journal: 'pharma',
@@ -249,7 +251,7 @@ function NewSubmission() {
     }
   };
 
- const handleStep2Submit = async () => {
+const handleStep2Submit = async () => {
   if (!uploadedFile) {
     toast.error('Please upload a PDF document');
     return;
@@ -261,21 +263,67 @@ function NewSubmission() {
     return;
   }
 
-  // Validate file size (10MB = 10 * 1024 * 1024 bytes)
+  // Validate file size (10MB)
   const maxSize = 10 * 1024 * 1024;
   if (uploadedFile.size > maxSize) {
     toast.error('File size must be less than 10MB');
     return;
   }
 
-  const result = await dispatch(uploadDocument({
-    id: currentSubmission._id,
-    file: uploadedFile
-  }));
+  
 
-  if (result.type === 'submissions/uploadDocument/fulfilled') {
-    setCurrentStep(3);
-    toast.success('Document uploaded successfully');
+  try {
+    // ✅ STEP 1: Get presigned URL from backend
+    setUploadLoading(true)
+    const urlResult = await dispatch(getUploadUrl({
+      id: currentSubmission._id,
+      filename: uploadedFile.name,
+      contentType: uploadedFile.type
+    }));
+
+    if (urlResult.type === 'submissions/getUploadUrl/rejected') {
+      toast.error(urlResult.payload || 'Failed to get upload URL');
+     setUploadLoading(false)
+      return;
+    }
+
+    const { presignedUrl, key } = urlResult.payload;
+
+    // ✅ STEP 2: Upload directly to S3 (bypasses your server!)
+    const uploadResponse = await fetch(presignedUrl, {
+      method: 'PUT',
+      body: uploadedFile,
+      headers: {
+        'Content-Type': uploadedFile.type,
+      }
+    });
+   console.log(uploadResponse)
+    if (!uploadResponse.ok) {
+      
+      throw new Error(`S3 upload failed: ${uploadResponse.statusText}`);
+    }
+
+    // ✅ STEP 3: Confirm upload with backend (save metadata)
+    const confirmResult = await dispatch(confirmUpload({
+      id: currentSubmission._id,
+      key,
+      filename: uploadedFile.name,
+      size: uploadedFile.size,
+      mimetype: uploadedFile.type
+    }));
+
+    if (confirmResult.type === 'submissions/confirmUpload/fulfilled') {
+      setCurrentStep(3);
+      toast.success('Document uploaded successfully');
+    } else {
+      toast.error(confirmResult.payload || 'Failed to confirm upload');
+    }
+
+  } catch (error) {
+    console.error('Upload error:', error);
+    toast.error(error.message || 'Upload failed');
+  } finally {
+    setUploadLoading(false)
   }
 };
 
@@ -729,7 +777,7 @@ const isReviewerComplete = (index) => {
       </LoadingButton>
       <LoadingButton
         onClick={handleStep2Submit}
-        loading={isLoading}
+        loading={uploadLoading}
         disabled={!uploadedFile}
         icon={FaArrowRight}
       >

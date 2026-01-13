@@ -1,5 +1,5 @@
 const Submission = require('../models/Submission');
-const { getSignedFileUrl ,uploadToS3, generateS3Key, deleteFile} = require('../config/aws');
+const { getSignedFileUrl ,uploadToS3, generateS3Key, deleteFile,generatePresignedUploadUrl} = require('../config/aws');
 const { GetObjectCommand } = require("@aws-sdk/client-s3");
 const { sendNotificationEmail } = require('../config/brevo');
 const User = require('../models/User');
@@ -138,7 +138,109 @@ console.log(submission.status);
   }
 };
 
+exports.getUploadUrl = async (req, res) => {
+  try {
+    const { filename, contentType } = req.body;
+    const submission = await Submission.findById(req.params.id);
+console.log("here")
+    if (!submission) {
+      return res.status(404).json({
+        success: false,
+        message: 'Submission not found'
+      });
+    }
 
+    if (submission.author.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized'
+      });
+    }
+
+    // Validate PDF
+    if (contentType !== 'application/pdf') {
+      return res.status(400).json({
+        success: false,
+        message: 'Only PDF files are allowed'
+      });
+    }
+
+    const { presignedUrl, key } = await generatePresignedUploadUrl(
+      filename, 
+      contentType, 
+      submission.journal
+    );
+
+    res.status(200).json({
+      success: true,
+      data: { presignedUrl, key }
+    });
+
+  } catch (error) {
+    console.error('Get upload URL error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error generating upload URL',
+      error: error.message
+    });
+  }
+};
+
+exports.confirmDocumentUpload = async (req, res) => {
+  try {
+    const { key, filename, size, mimetype } = req.body;
+    const submission = await Submission.findById(req.params.id);
+
+    if (!submission) {
+      return res.status(404).json({
+        success: false,
+        message: 'Submission not found'
+      });
+    }
+
+    if (submission.author.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized'
+      });
+    }
+
+    // Validate file size
+    const maxSize = 10 * 1024 * 1024;
+    if (size > maxSize) {
+      return res.status(400).json({
+        success: false,
+        message: 'File size must be less than 10MB'
+      });
+    }
+
+    // Save metadata to submission
+    submission.documentFile = {
+      key,
+      filename,
+      size,
+      mimetype,
+      uploadedAt: new Date()
+    };
+
+    submission.currentStep = 2;
+    await submission.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Document uploaded successfully',
+      data: { submission }
+    });
+
+  } catch (error) {
+    console.error('Confirm upload error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error confirming upload',
+      error: error.message
+    });
+  }
+};
 // @desc    Upload document (Step 2) - COMPLETE FIXED VERSION
 // @route   POST /api/submissions/:id/upload
 // @access  Private (Author)

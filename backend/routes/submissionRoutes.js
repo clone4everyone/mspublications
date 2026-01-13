@@ -13,13 +13,17 @@ const {
   updateSubmissionDocument,
   canEditSubmission,
   getDocument,
-  streamDocument
+  streamDocument,
+   getUploadUrl, confirmDocumentUpload
 } = require('../controllers/submissionController');
 const { protect, authorize } = require('../middleware/auth');
 const { uploadDocument: uploadDocMiddleware } = require('../config/aws');
 
 // Author routes
+
 router.post('/', protect, authorize('author'), createSubmission);
+router.post('/:id/get-upload-url', protect, authorize('author'), getUploadUrl);
+router.post('/:id/confirm-upload', protect, authorize('author'), confirmDocumentUpload);
 router.post('/:id/upload', protect, authorize('author'), uploadDocMiddleware.single('document'), uploadDocument);
 // Get PDF signed URL
 router.get(

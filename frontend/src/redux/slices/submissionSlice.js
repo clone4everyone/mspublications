@@ -310,6 +310,60 @@ export const editorSendBack = createAsyncThunk(
     }
   }
 );
+
+export const getUploadUrl = createAsyncThunk(
+  'submissions/getUploadUrl',
+  async ({ id, filename, contentType }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      };
+
+      const { data } = await api.post(
+        `${API_URL}/${id}/get-upload-url`,
+        { filename, contentType },
+        config
+      );
+console.log(data)
+      return data.data;
+    } catch (error) {
+      console.log(error)
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to get upload URL'
+      );
+    }
+  }
+);
+
+// 🆕 Step 3: Confirm upload to backend
+export const confirmUpload = createAsyncThunk(
+  'submissions/confirmUpload',
+  async ({ id, key, filename, size, mimetype }, { rejectWithValue }) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      };
+
+      const { data } = await api.post(
+        `${API_URL}/${id}/confirm-upload`,
+        { key, filename, size, mimetype },
+        config
+      );
+
+      return data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Failed to confirm upload'
+      );
+    }
+  }
+);
 const submissionSlice = createSlice({
   name: 'submissions',
   initialState,
