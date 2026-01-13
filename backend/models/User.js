@@ -1,7 +1,8 @@
 // Add to your User model schema (models/User.js)
 
 const mongoose=require('mongoose');
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const UserSchema = new mongoose.Schema({
   prefix: {
     type: String,
@@ -41,6 +42,8 @@ const UserSchema = new mongoose.Schema({
       'Please add a valid email'
     ],
   },
+  passwordResetToken: String,
+passwordResetExpires: Date,
     isVerified: {
     type: Boolean,
     default: false
@@ -112,5 +115,17 @@ UserSchema.methods.generateVerificationToken = function() {
   
   return token;
 };
-
+// Generate password reset token
+UserSchema.methods.generatePasswordResetToken = function() {
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex');
+  
+  this.passwordResetExpires = Date.now() + 60 * 60 * 1000; // 1 hour
+  
+  return resetToken;
+};
 module.exports = mongoose.model('User', UserSchema);

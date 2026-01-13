@@ -371,6 +371,7 @@ const submissionSlice = createSlice({
         state.currentSubmission = action.payload;
       })
       .addCase(uploadDocument.fulfilled, (state, action) => {
+          state.isLoading=false;
         state.currentSubmission = action.payload;
       })
       .addCase(uploadDocument.rejected,(state,action)=>{

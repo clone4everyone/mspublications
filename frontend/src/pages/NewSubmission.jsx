@@ -249,21 +249,35 @@ function NewSubmission() {
     }
   };
 
-  const handleStep2Submit = async () => {
-    if (!uploadedFile) {
-      toast.error('Please upload a document');
-      return;
-    }
-    const result = await dispatch(uploadDocument({
-      id: currentSubmission._id,
-      file: uploadedFile
-    }));
+ const handleStep2Submit = async () => {
+  if (!uploadedFile) {
+    toast.error('Please upload a PDF document');
+    return;
+  }
 
-    if (result.type === 'submissions/uploadDocument/fulfilled') {
-      setCurrentStep(3);
-      toast.success('Document uploaded successfully');
-    }
-  };
+  // Validate file type
+  if (uploadedFile.type !== 'application/pdf') {
+    toast.error('Please upload a PDF file only');
+    return;
+  }
+
+  // Validate file size (10MB = 10 * 1024 * 1024 bytes)
+  const maxSize = 10 * 1024 * 1024;
+  if (uploadedFile.size > maxSize) {
+    toast.error('File size must be less than 10MB');
+    return;
+  }
+
+  const result = await dispatch(uploadDocument({
+    id: currentSubmission._id,
+    file: uploadedFile
+  }));
+
+  if (result.type === 'submissions/uploadDocument/fulfilled') {
+    setCurrentStep(3);
+    toast.success('Document uploaded successfully');
+  }
+};
 
   const handleStep3Submit = async () => {
     if (!step3Data.title || !step3Data.abstract) {
@@ -508,10 +522,10 @@ const isReviewerComplete = (index) => {
         <div>
           <div className="flex items-center justify-between mb-3">
             <label className="block text-sm font-medium text-gray-700">
-              Potential Reviewers (At least 2 required) *
+              Potential Reviewers (At least 1 required) *
             </label>
             <div className="text-sm text-gray-600">
-              {step1Data.potentialReviewers.filter((_, i) => isReviewerComplete(i)).length} / 2 complete
+              {step1Data.potentialReviewers.filter((_, i) => isReviewerComplete(i)).length} / 1 complete
             </div>
           </div>
 
@@ -663,67 +677,67 @@ const isReviewerComplete = (index) => {
           )}
 
           {/* Step 2: Upload Document */}
-          {currentStep === 2 && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Step 2: Upload Your Document</h2>
+         {currentStep === 2 && (
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold text-gray-900 mb-6">Step 2: Upload Your Document</h2>
 
-              <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center">
-                <FaUpload className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <p className="text-lg font-medium text-gray-700 mb-2">
-                  {uploadedFile ? uploadedFile.name : 'Drop your document here or click to browse'}
-                </p>
-                <p className="text-sm text-gray-500 mb-4">
-                  Accepted formats: PDF, DOC, DOCX (Max 10MB)
-                </p>
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx"
-                  onChange={(e) => setUploadedFile(e.target.files[0])}
-                  className="hidden"
-                  id="file-upload"
-                />
-                <label
-                  htmlFor="file-upload"
-                  className="inline-block bg-outlook-blue hover:bg-outlook-darkBlue text-white px-6 py-2 rounded-lg cursor-pointer transition-colors"
-                >
-                  Choose File
-                </label>
-              </div>
+    <div className="border-2 border-dashed border-gray-300 rounded-lg p-12 text-center">
+      <FaUpload className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+      <p className="text-lg font-medium text-gray-700 mb-2">
+        {uploadedFile ? uploadedFile.name : 'Drop your PDF here or click to browse'}
+      </p>
+      <p className="text-sm text-gray-500 mb-4">
+        Accepted format: PDF only (Max 10MB)
+      </p>
+      <input
+        type="file"
+        accept=".pdf,application/pdf"
+        onChange={(e) => setUploadedFile(e.target.files[0])}
+        className="hidden"
+        id="file-upload"
+      />
+      <label
+        htmlFor="file-upload"
+        className="inline-block bg-outlook-blue hover:bg-outlook-darkBlue text-white px-6 py-2 rounded-lg cursor-pointer transition-colors"
+      >
+        Choose PDF
+      </label>
+    </div>
 
-              {uploadedFile && (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center justify-between">
-                  <div>
-                    <p className="font-medium text-gray-900">{uploadedFile.name}</p>
-                    <p className="text-sm text-gray-600">{(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
-                  </div>
-                  <button
-                    onClick={() => setUploadedFile(null)}
-                    className="text-red-600 hover:text-red-700"
-                  >
-                    <FaTimes />
-                  </button>
-                </div>
-              )}
+    {uploadedFile && (
+      <div className="bg-green-50 border border-green-200 rounded-lg p-4 flex items-center justify-between">
+        <div>
+          <p className="font-medium text-gray-900">{uploadedFile.name}</p>
+          <p className="text-sm text-gray-600">{(uploadedFile.size / 1024 / 1024).toFixed(2)} MB</p>
+        </div>
+        <button
+          onClick={() => setUploadedFile(null)}
+          className="text-red-600 hover:text-red-700"
+        >
+          <FaTimes />
+        </button>
+      </div>
+    )}
 
-              <div className="flex justify-between">
-                <LoadingButton
-                  onClick={() => setCurrentStep(1)}
-                  variant="secondary"
-                  icon={FaArrowLeft}
-                >
-                  Back
-                </LoadingButton>
-                <LoadingButton
-                  onClick={handleStep2Submit}
-                  loading={isLoading}
-                  disabled={!uploadedFile}
-                  icon={FaArrowRight}
-                >
-                  Upload and Continue
-                </LoadingButton>
-              </div>
-            </div>
-          )}
+    <div className="flex justify-between">
+      <LoadingButton
+        onClick={() => setCurrentStep(1)}
+        variant="secondary"
+        icon={FaArrowLeft}
+      >
+        Back
+      </LoadingButton>
+      <LoadingButton
+        onClick={handleStep2Submit}
+        loading={isLoading}
+        disabled={!uploadedFile}
+        icon={FaArrowRight}
+      >
+        Upload and Continue
+      </LoadingButton>
+    </div>
+  </div>
+)}
 
           {/* Step 3: Metadata */}
           {currentStep === 3 && (

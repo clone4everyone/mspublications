@@ -14,24 +14,19 @@ const s3 = new S3Client({
 // ✅ Use MEMORY storage to enable DOCX to PDF conversion
 // Files will be in req.file.buffer, then manually uploaded to S3 after conversion
 const uploadDocument = multer({
-  storage: multer.memoryStorage(), // Store in memory, not directly to S3
-  
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 10 * 1024 * 1024 // 10MB
+  },
   fileFilter: (req, file, cb) => {
-    const allowedMimes = [
-      "application/pdf",
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ];
-
-    if (allowedMimes.includes(file.mimetype)) {
+    if (file.mimetype === 'application/pdf') {
       cb(null, true);
     } else {
-      cb(new Error("Only PDF and DOC/DOCX files are allowed"));
+      cb(new Error('Only PDF files are allowed'), false);
     }
-  },
-
-  limits: { fileSize: 50 * 1024 * 1024 }, // 50MB limit
+  }
 });
+
 
 // ✅ Helper function to upload buffer to S3
 const uploadToS3 = async (buffer, key, contentType, metadata = {}) => {

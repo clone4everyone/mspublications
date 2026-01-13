@@ -4,7 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { register, reset } from '../redux/slices/authSlice';
 import { toast } from 'react-toastify';
 import loginImg from '../../public/assests/login.jpg'
-import { FaUser, FaEnvelope,FaCheckCircle, FaLock, FaUniversity, FaSpinner, FaCheck, FaTimes } from 'react-icons/fa';
+import { FaUser, FaEnvelope, FaCheckCircle, FaLock, FaUniversity, FaSpinner, FaCheck, FaTimes, FaEye, FaEyeSlash } from 'react-icons/fa';
+
 import api from '../utils/api';
 
 function Register() {
@@ -18,6 +19,8 @@ function Register() {
     affiliation: '',
       username: '',
   });
+  const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [registeredEmail, setRegisteredEmail] = useState('');
   const [isResending, setIsResending] = useState(false);
@@ -747,93 +750,117 @@ try {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div>
-              <label htmlFor="password" className="block text-xs font-medium text-gray-700 mb-1">
-                Password *
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                value={password}
-                onChange={onChange}
-                onFocus={() => setShowPasswordRequirements(true)}
-                onBlur={() => onBlur('password')}
-                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-sm"
-              />
-              
-              {showPasswordRequirements && password.length > 0 && (
-                <div className="mt-2 p-2 bg-gray-50 rounded-lg space-y-1">
-                  <p className="text-xs font-semibold text-gray-700 mb-1">Requirements:</p>
-                  <RequirementItem 
-                    met={passwordValidation.minLength} 
-                    text="8+ characters" 
-                  />
-                  <RequirementItem 
-                    met={passwordValidation.hasUpperCase} 
-                    text="Uppercase (A-Z)" 
-                  />
-                  <RequirementItem 
-                    met={passwordValidation.hasLowerCase} 
-                    text="Lowercase (a-z)" 
-                  />
-                  <RequirementItem 
-                    met={passwordValidation.hasNumber} 
-                    text="Number (0-9)" 
-                  />
-                  <RequirementItem 
-                    met={passwordValidation.hasSpecialChar} 
-                    text="Special (!@#$%)" 
-                  />
-                </div>
-              )}
-            </div>
+      <div>
+  <label htmlFor="password" className="block text-xs font-medium text-gray-700 mb-1">
+    Password *
+  </label>
+  <div className="relative">
+    <input
+      id="password"
+      name="password"
+      type={showPassword ? 'text' : 'password'}
+      autoComplete="new-password"
+      required
+      value={password}
+      onChange={onChange}
+      onFocus={() => setShowPasswordRequirements(true)}
+      onBlur={() => onBlur('password')}
+      className="appearance-none block w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent text-sm"
+    />
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+    >
+      {showPassword ? (
+        <FaEyeSlash className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+      ) : (
+        <FaEye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+      )}
+    </button>
+  </div>
+  
+  {showPasswordRequirements && password.length > 0 && (
+    <div className="mt-2 p-2 bg-gray-50 rounded-lg space-y-1">
+      <p className="text-xs font-semibold text-gray-700 mb-1">Requirements:</p>
+      <RequirementItem 
+        met={passwordValidation.minLength} 
+        text="8+ characters" 
+      />
+      <RequirementItem 
+        met={passwordValidation.hasUpperCase} 
+        text="Uppercase (A-Z)" 
+      />
+      <RequirementItem 
+        met={passwordValidation.hasLowerCase} 
+        text="Lowercase (a-z)" 
+      />
+      <RequirementItem 
+        met={passwordValidation.hasNumber} 
+        text="Number (0-9)" 
+      />
+      <RequirementItem 
+        met={passwordValidation.hasSpecialChar} 
+        text="Special (!@#$%)" 
+      />
+    </div>
+  )}
+</div>
 
-            <div>
-              <label htmlFor="password2" className="block text-xs font-medium text-gray-700 mb-1">
-                Confirm Password *
-              </label>
-              <div className="relative">
-                <input
-                  id="password2"
-                  name="password2"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  value={password2}
-                  onChange={onChange}
-                  onBlur={() => onBlur('password2')}
-                  className={`appearance-none block w-full px-3 py-2 border rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent text-sm ${
-                    passwordsMatch === null || !touched.password2
-                      ? 'border-gray-300 focus:ring-blue-600'
-                      : passwordsMatch
-                      ? 'border-green-500 focus:ring-green-500'
-                      : 'border-red-500 focus:ring-red-500'
-                  }`}
-                />
-                {passwordsMatch !== null && touched.password2 && (
-                  <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                    {passwordsMatch ? (
-                      <FaCheck className="text-green-500 w-4 h-4" />
-                    ) : (
-                      <FaTimes className="text-red-500 w-4 h-4" />
-                    )}
-                  </div>
-                )}
-              </div>
-              {touched.password2 && passwordsMatch === false && (
-                <p className="mt-1 text-xs text-red-600">
-                  Passwords do not match
-                </p>
-              )}
-              {touched.password2 && passwordsMatch === true && (
-                <p className="mt-1 text-xs text-green-600">
-                  Passwords match!
-                </p>
-              )}
-            </div>
+      <div>
+  <label htmlFor="password2" className="block text-xs font-medium text-gray-700 mb-1">
+    Confirm Password *
+  </label>
+  <div className="relative">
+    <input
+      id="password2"
+      name="password2"
+      type={showConfirmPassword ? 'text' : 'password'}
+      autoComplete="new-password"
+      required
+      value={password2}
+      onChange={onChange}
+      onBlur={() => onBlur('password2')}
+      className={`appearance-none block w-full px-3 py-2 pr-20 border rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent text-sm ${
+        passwordsMatch === null || !touched.password2
+          ? 'border-gray-300 focus:ring-blue-600'
+          : passwordsMatch
+          ? 'border-green-500 focus:ring-green-500'
+          : 'border-red-500 focus:ring-red-500'
+      }`}
+    />
+    <button
+      type="button"
+      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+    >
+      {showConfirmPassword ? (
+        <FaEyeSlash className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+      ) : (
+        <FaEye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+      )}
+    </button>
+    {passwordsMatch !== null && touched.password2 && (
+      <div className="absolute right-12 top-1/2 transform -translate-y-1/2">
+        {passwordsMatch ? (
+          <FaCheck className="text-green-500 w-4 h-4" />
+        ) : (
+          <FaTimes className="text-red-500 w-4 h-4" />
+        )}
+      </div>
+    )}
+  </div>
+  {touched.password2 && passwordsMatch === false && (
+    <p className="mt-1 text-xs text-red-600">
+      Passwords do not match
+    </p>
+  )}
+  {touched.password2 && passwordsMatch === true && (
+    <p className="mt-1 text-xs text-green-600">
+      Passwords match!
+    </p>
+  )}
+</div>
           </div>
 
           <div className="pt-2">

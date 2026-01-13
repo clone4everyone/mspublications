@@ -571,3 +571,227 @@ exports.changePassword = async (req, res) => {
     });
   }
 };
+
+
+// @desc    Request password reset
+// @route   POST /api/auth/forgot-password
+// @access  Public
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide an email address'
+      });
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (!user) {
+      // Don't reveal that user doesn't exist for security
+      return res.status(200).json({
+        success: true,
+        message: 'If an account exists with this email, you will receive a password reset link.'
+      });
+    }
+
+    if (!user.isVerified) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please verify your email first before resetting password.',
+        needsVerification: true
+      });
+    }
+
+    // Generate reset token
+    const resetToken = user.generatePasswordResetToken();
+    await user.save();
+
+    // Create reset URL
+    const resetUrl = `${process.env.FRONTEND_URL}/IJPPI/reset-password/${resetToken}`;
+
+    // Send password reset email
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background-color: #0078D4; color: white; padding: 20px; text-align: center; }
+          .content { padding: 30px; background-color: #f9f9f9; }
+          .button { 
+            display: inline-block; 
+            padding: 12px 30px; 
+            background-color: #0078D4; 
+            color: white !important; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            margin: 20px 0; 
+          }
+          .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+          .warning { color: #ff6b6b; margin-top: 20px; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>MS Publication</h1>
+          </div>
+          <div class="content">
+            <h2>Password Reset Request</h2>
+            <p>Dear ${user.prefix || ''} ${user.firstName} ${user.lastName},</p>
+            <p>We received a request to reset your password. Click the button below to reset it:</p>
+            <div style="text-align: center;">
+              <a href="${resetUrl}" class="button">Reset Password</a>
+            </div>
+            <p>Or copy and paste this link into your browser:</p>
+            <p style="word-break: break-all; color: #0078D4;">${resetUrl}</p>
+            <p class="warning"><strong>Note:</strong> This link will expire in 1 hour.</p>
+            <p>If you didn't request a password reset, please ignore this email and your password will remain unchanged.</p>
+          </div>
+          <div class="footer">
+            <p>This is an automated message from MS Publication Journal Management System.</p>
+            <p>&copy; ${new Date().getFullYear()} MS Publication. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    const emailResult = await sendEmail({
+      to: user.email,
+      toName: `${user.firstName} ${user.lastName}`,
+      subject: 'Password Reset Request - MS Publication',
+      htmlContent
+    });
+
+    if (!emailResult.success) {
+      // Clear the reset token if email fails
+      user.passwordResetToken = undefined;
+      user.passwordResetExpires = undefined;
+      await user.save();
+
+      return res.status(500).json({
+        success: false,
+        message: 'Failed to send password reset email. Please try again.'
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset link sent to your email.'
+    });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error processing password reset request',
+      error: error.message
+    });
+  }
+};
+
+// @desc    Reset password
+// @route   POST /api/auth/reset-password/:token
+// @access  Public
+exports.resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    if (!password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide a new password'
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters long'
+      });
+    }
+
+    // Hash the token to compare with stored hash
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
+
+    // Find user with matching token and check if not expired
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired password reset token'
+      });
+    }
+
+    // Set new password
+    user.password = password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+
+    // Send confirmation email
+    const htmlContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background-color: #4CAF50; color: white; padding: 20px; text-align: center; }
+          .content { padding: 30px; background-color: #f9f9f9; }
+          .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>MS Publication</h1>
+          </div>
+          <div class="content">
+            <h2>Password Reset Successful</h2>
+            <p>Dear ${user.prefix || ''} ${user.firstName} ${user.lastName},</p>
+            <p>Your password has been successfully reset.</p>
+            <p>You can now log in with your new password.</p>
+            <p>If you didn't make this change, please contact us immediately.</p>
+          </div>
+          <div class="footer">
+            <p>This is an automated message from MS Publication Journal Management System.</p>
+            <p>&copy; ${new Date().getFullYear()} MS Publication. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `;
+
+    await sendEmail({
+      to: user.email,
+      toName: `${user.firstName} ${user.lastName}`,
+      subject: 'Password Reset Successful - MS Publication',
+      htmlContent
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Password reset successful! You can now login with your new password.'
+    });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error resetting password',
+      error: error.message
+    });
+  }
+};

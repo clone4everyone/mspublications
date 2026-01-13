@@ -170,29 +170,21 @@ export const EditorialBoardPage = ({ journal }) => {
             <div>
               <ul className='font-[600] font-sans text-[16px] xs:text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] leading-[140%] sm:leading-[150%] md:leading-[50px] space-y-1 sm:space-y-2'>
                 <li className='text-[#0461F0]'>Editor-in-Chief</li>
-                <li>Dr. Robindra Kumar Pandit</li>
-                <li className='text-[14px] xs:text-[15px] sm:text-[16px] md:text-[18px] lg:text-[20px] text-gray-700'>
-                  Lovely Professional University, Jalandhar, Punjab, India.
-                </li>
-                <li className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] text-[#0461F0] break-all'>
-                  Email: editor.ijppi@mspublication.com
-                </li>
+                
               </ul>
+              <div className='font-[600] font-sans text-[16px] xs:text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px]  sm:leading-[150%] '>
+                <a href='https://orcid.org/0009-0004-4660-5504' className='underline'>Dr. Robindra Kumar Pandit</a>
+                <p className='text-[14px] xs:text-[15px] sm:text-[16px] md:text-[18px] lg:text-[20px] text-gray-700'>
+                  Lovely Professional University, Jalandhar, Punjab, India.
+                </p>
+                <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] text-[#0461F0] break-all'>
+                  Email: editor.ijppi@mspublication.com
+                </p>
+              </div>
             </div>
 
             {/* Description Text */}
-            <div className='flex flex-col gap-2 sm:gap-3 md:gap-4 font-sans font-[400] text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px] leading-[140%] sm:leading-[150%] md:leading-[160%] lg:leading-[24px] text-[#556070]'>
-              <p>
-                IJPPI is dedicated to building a strong, diverse, and dynamic Editorial and Advisory Board to uphold the highest standards of academic publishing. We welcome applications from experienced researchers, academicians, and professionals with proven expertise in pharmacological and pharmaceutical sciences.
-              </p>
-              <p>
-                Prospective members are encouraged to send their updated CV/Resume to: 
-                <span className='text-[#0461F0] font-[500]'> editor.ijppi@mspublication.com</span>.
-              </p>
-              <p>
-                New applicants may initially be invited to serve as reviewers/referees. Based on performance, commitment, and contribution to the peer-review process, they may later be considered for inclusion as Editorial Board Members.
-              </p>
-            </div>
+           
           </div>
         </div>
       </div>

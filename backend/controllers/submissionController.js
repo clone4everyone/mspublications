@@ -174,7 +174,24 @@ exports.uploadDocument = async (req, res) => {
       bufferAvailable: !!req.file.buffer
     });
 
-    // Check if buffer is available (should be with memory storage)
+    // Validate PDF file type
+    if (req.file.mimetype !== 'application/pdf') {
+      return res.status(400).json({
+        success: false,
+        message: 'Only PDF files are allowed'
+      });
+    }
+
+    // Validate file size (10MB)
+    const maxSize = 10 * 1024 * 1024;
+    if (req.file.size > maxSize) {
+      return res.status(400).json({
+        success: false,
+        message: 'File size must be less than 10MB'
+      });
+    }
+
+    // Check if buffer is available
     if (!req.file.buffer) {
       return res.status(500).json({
         success: false,
@@ -182,42 +199,13 @@ exports.uploadDocument = async (req, res) => {
       });
     }
 
-    let fileBuffer = req.file.buffer;
-    let finalFilename = req.file.originalname;
-    let finalMimetype = req.file.mimetype;
-
-    // Check if it's a DOCX file
-    const isDocx = req.file.mimetype === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
-                   req.file.originalname.toLowerCase().endsWith('.docx');
-
-    // Convert DOCX to PDF using LibreOffice
-    if (isDocx) {
-      try {
-        console.log('🔄 Converting DOCX to PDF using LibreOffice...');
-        fileBuffer = await convertDocxToPdf(req.file.buffer);
-        
-        // Update filename and mimetype
-        finalFilename = req.file.originalname.replace(/\.docx$/i, '.pdf');
-        finalMimetype = 'application/pdf';
-        
-        console.log('✅ Conversion successful! PDF size:', fileBuffer.length);
-      } catch (conversionError) {
-        console.error('❌ Conversion error:', conversionError);
-        return res.status(500).json({
-          success: false,
-          message: 'Error converting DOCX to PDF. Please ensure the file is valid or upload a PDF directly.',
-          error: conversionError.message
-        });
-      }
-    }
-
     // Generate S3 key
-    const s3Key = generateS3Key(finalFilename, submission.journal);
+    const s3Key = generateS3Key(req.file.originalname, submission.journal);
 
     // Upload to S3
     try {
       console.log('☁️ Uploading to S3:', s3Key);
-      await uploadToS3(fileBuffer, s3Key, finalMimetype, {
+      await uploadToS3(req.file.buffer, s3Key, req.file.mimetype, {
         uploadedBy: req.user.id,
         submissionId: req.params.id,
         originalFilename: req.file.originalname
@@ -235,9 +223,9 @@ exports.uploadDocument = async (req, res) => {
     // Save to submission
     submission.documentFile = {
       key: s3Key,
-      filename: finalFilename,
-      size: fileBuffer.length,
-      mimetype: finalMimetype,
+      filename: req.file.originalname,
+      size: req.file.size,
+      mimetype: req.file.mimetype,
       uploadedAt: new Date()
     };
 
@@ -246,9 +234,7 @@ exports.uploadDocument = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: isDocx 
-        ? 'Document converted to PDF and uploaded successfully' 
-        : 'Document uploaded successfully',
+      message: 'Document uploaded successfully',
       data: { submission }
     });
 

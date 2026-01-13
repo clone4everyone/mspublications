@@ -340,7 +340,7 @@ return (
                   <li>Tables, Figures, Graphical Abstract (if applicable)</li>
                 </ul>
               </li>
-              <li>Manuscript should be in <strong>Microsoft Word (.doc/.docx)</strong> format.</li>
+              <li>Manuscript should be in <strong>PDF</strong> format.</li>
               <li>File size should not exceed <strong>10 MB</strong>.</li>
             </ul>
           </div>

@@ -12,7 +12,7 @@ const navigate=useNavigate();
     { name: "Current issue", id: "current" },
     { name: "Archives", id: "archives" },
     { name: "Instructions to Author", id: "instructions" },
-    { name: "Contact", id: "contact" },
+    { name: "Contact Us", id: "contact" },
     { name: "Editorial board", id: "editorial" },
   ];
 

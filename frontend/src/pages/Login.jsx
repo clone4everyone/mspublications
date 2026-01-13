@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import { login, reset } from '../redux/slices/authSlice';
 import { toast } from 'react-toastify';
-import { FaEnvelope, FaLock, FaSpinner, FaUser } from 'react-icons/fa';
+import { FaEnvelope, FaLock, FaSpinner, FaUser, FaEye, FaEyeSlash } from 'react-icons/fa';
 import loginImg from '../../public/assests/login.jpg'
 
 function Login() {
@@ -11,6 +11,7 @@ function Login() {
     emailOrUsername: '',
     password: '',
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const { emailOrUsername, password } = formData;
 
@@ -115,15 +116,35 @@ function Login() {
                     <input
                       id="password"
                       name="password"
-                      type="password"
+                      type={showPassword ? 'text' : 'password'}
                       autoComplete="current-password"
                       required
                       value={password}
                       onChange={onChange}
-                      className="appearance-none relative block w-full pl-10 pr-3 py-2.5 sm:py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-outlook-blue focus:border-transparent text-sm sm:text-base"
+                      className="appearance-none relative block w-full pl-10 pr-10 py-2.5 sm:py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-outlook-blue focus:border-transparent text-sm sm:text-base"
                       placeholder="Password"
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    >
+                      {showPassword ? (
+                        <FaEyeSlash className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 hover:text-gray-600" />
+                      ) : (
+                        <FaEye className="h-4 w-4 sm:h-5 sm:w-5 text-gray-400 hover:text-gray-600" />
+                      )}
+                    </button>
                   </div>
+                </div>
+              
+                <div className="flex items-center justify-end">
+                  <Link
+                    to="/IJPPI/forgot-password"
+                    className="text-sm font-medium text-outlook-blue hover:text-outlook-darkBlue"
+                  >
+                    Forgot password?
+                  </Link>
                 </div>
               </div>
 

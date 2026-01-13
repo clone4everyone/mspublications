@@ -140,7 +140,7 @@ function JournalDetail() {
 
         {currentPage === 'about' && (
           <div className="">
-            <AboutPage journal={journal}  />
+            <AboutPage journal={journal}  onNavigate={setCurrentPage}/>
           </div>
         )}
 

@@ -109,7 +109,7 @@ export const ContactPage = ({ journal }) => {
             
             <p className='flex gap-4 sm:gap-5 font-normal text-sm sm:text-[16px] leading-tight items-center break-all'>
               <Mail className='text-xl sm:text-[24px] flex-shrink-0'/>
-              <span className='break-words'>mspublication@gmail.com</span>
+              <span className='break-words'>editor.ijppi@mspublication.com</span>
             </p>
             
             <p className='flex gap-4 sm:gap-5 font-normal text-sm sm:text-[16px] leading-tight'>

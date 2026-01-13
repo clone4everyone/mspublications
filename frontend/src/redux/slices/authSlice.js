@@ -32,7 +32,33 @@ export const register = createAsyncThunk(
     }
   }
 );
+// Forgot password
+export const forgotPassword = createAsyncThunk(
+  'auth/forgotPassword',
+  async (email, thunkAPI) => {
+    try {
+      const response = await api.post(`${API_URL}/forgot-password`, { email });
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
+// Reset password
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async ({ token, password }, thunkAPI) => {
+    try {
+      const response = await api.post(`${API_URL}/reset-password/${token}`, { password });
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || error.message;
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 // Login user
 // Update the login function in your authSlice.js
 
@@ -134,7 +160,33 @@ const authSlice = createSlice({
       // Get Me
       .addCase(getMe.fulfilled, (state, action) => {
         state.user = action.payload;
-      });
+      })
+      // Forgot Password
+.addCase(forgotPassword.pending, (state) => {
+  state.isLoading = true;
+})
+.addCase(forgotPassword.fulfilled, (state) => {
+  state.isLoading = false;
+  state.isSuccess = true;
+})
+.addCase(forgotPassword.rejected, (state, action) => {
+  state.isLoading = false;
+  state.isError = true;
+  state.message = action.payload;
+})
+// Reset Password
+.addCase(resetPassword.pending, (state) => {
+  state.isLoading = true;
+})
+.addCase(resetPassword.fulfilled, (state) => {
+  state.isLoading = false;
+  state.isSuccess = true;
+})
+.addCase(resetPassword.rejected, (state, action) => {
+  state.isLoading = false;
+  state.isError = true;
+  state.message = action.payload;
+})
   },
 });
 

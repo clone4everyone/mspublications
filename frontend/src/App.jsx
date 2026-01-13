@@ -18,6 +18,8 @@ import JournalDetail from './pages/journalSubdomain/JournalDetail';
 import EditSubmission from './pages/EditSubmission';
 import NotFound from './pages/NotFound';
 import ReviewerManagementPage from './pages/ReviewerManagementPage';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -60,6 +62,8 @@ function App() {
           {/* Public Routes */}
           <Route path="/IJPPI/login" element={<Login />} />
           <Route path="/IJPPI/register" element={<Register />} />
+          <Route path="/IJPPI/forgot-password" element={<ForgotPassword />} />
+<Route path="/IJPPI/reset-password/:token" element={<ResetPassword />} />
           <Route path="/IJPPI/verify-email/:token" element={<VerifyEmail />} /> {/* Add this route */}
           <Route path="/" element={<JournalHomepage />} /> 
           <Route path="/IJPPI" element={<JournalDetail />} />
