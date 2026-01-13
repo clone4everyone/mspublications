@@ -10,25 +10,9 @@ const execFileAsync = promisify(execFile);
  * Find LibreOffice installation path on Windows
  */
 const findLibreOfficePath = () => {
-  const possiblePaths = [
-    'C:\\Program Files\\LibreOffice\\program\\soffice.exe',
-    'C:\\Program Files (x86)\\LibreOffice\\program\\soffice.exe',
-    'C:\\Program Files\\LibreOffice 7\\program\\soffice.exe',
-    'C:\\Program Files\\LibreOffice 24\\program\\soffice.exe',
-  ];
-
-  for (const libreOfficePath of possiblePaths) {
-    try {
-      require('fs').accessSync(libreOfficePath);
-      console.log('✅ Found LibreOffice at:', libreOfficePath);
-      return libreOfficePath;
-    } catch (err) {
-      // Path doesn't exist, continue
-    }
-  }
-
-  throw new Error('LibreOffice not found. Please install from https://www.libreoffice.org/download/');
+  return '/usr/bin/libreoffice';
 };
+
 
 /**
  * Convert DOCX buffer to PDF using LibreOffice directly
@@ -78,7 +62,8 @@ const convertDocxToPdf = async (docxBuffer) => {
 
     const { stdout, stderr } = await execFileAsync(libreOfficePath, args, {
       timeout: 60000, // 60 second timeout
-      windowsHide: true
+      // windowsHide: true
+      env:process.env
     });
 
     if (stdout) console.log('📝 LibreOffice stdout:', stdout);
