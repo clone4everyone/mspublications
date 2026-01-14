@@ -15,7 +15,7 @@ import {
 } from 'react-icons/fa';
 
 const SubmissionTimeline = ({ timeline,user }) => {
-  console.log(timeline)
+  
   if (!timeline || timeline.length === 0) {
     return null;
   }

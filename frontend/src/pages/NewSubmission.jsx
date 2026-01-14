@@ -297,7 +297,7 @@ const handleStep2Submit = async () => {
         'Content-Type': uploadedFile.type,
       }
     });
-   console.log(uploadResponse)
+   
     if (!uploadResponse.ok) {
       
       throw new Error(`S3 upload failed: ${uploadResponse.statusText}`);

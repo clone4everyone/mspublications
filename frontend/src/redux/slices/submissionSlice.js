@@ -327,7 +327,7 @@ export const getUploadUrl = createAsyncThunk(
         { filename, contentType },
         config
       );
-console.log(data)
+
       return data.data;
     } catch (error) {
       console.log(error)

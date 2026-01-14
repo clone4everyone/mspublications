@@ -16,6 +16,7 @@ import { FaGreaterThan } from 'react-icons/fa';
 import { FileText, Globe, Zap, Database, Award } from 'lucide-react';
 import Footer from '../../components/Footer';
 import LandingPage from '../homepage/LandingPage';
+import Subscription from '../homepage/Subscription';
 
 function JournalDetail() {
   // const { journalId } = useParams();
@@ -76,16 +77,16 @@ function JournalDetail() {
     navigate('/IJPPI/login');
   };
 
-  if (!journal) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="relative">
-          <div className="w-16 h-16 border-4 border-teal-200 rounded-full"></div>
-          <div className="w-16 h-16 border-4 border-[#1B7A9C] rounded-full animate-spin border-t-transparent absolute top-0"></div>
-        </div>
-      </div>
-    );
-  }
+  // if (!journal) {
+  //   return (
+  //     <div className="min-h-screen bg-white flex items-center justify-center">
+  //       <div className="relative">
+  //         <div className="w-16 h-16 border-4 border-teal-200 rounded-full"></div>
+  //         <div className="w-16 h-16 border-4 border-[#1B7A9C] rounded-full animate-spin border-t-transparent absolute top-0"></div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
   const benefits = [
     { icon: FileText, text: "Double-Blind Peer Review for fair evaluation." },
     { icon: Globe, text: "Open Access Policy ensuring global visibility." },
@@ -171,6 +172,12 @@ function JournalDetail() {
         {currentPage === 'editorial' && (
           <div className="">
             <EditorialBoardPage  journal />
+          </div>
+        )}
+
+        {currentPage === 'subscription' && (
+          <div>
+            <Subscription/>
           </div>
         )}
       </div>

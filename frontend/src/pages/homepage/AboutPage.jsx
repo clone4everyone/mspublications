@@ -481,6 +481,30 @@ export  function AboutPage({onNavigate}) {
               <p className="mt-3 sm:mt-4 text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
                 All published articles are preserved through digital archiving systems to ensure permanent accessibility.
               </p>
+                  <button
+  className="
+    self-end w-full max-w-[180px] sm:max-w-[200px] h-10 sm:h-11 lg:h-12 rounded-full 
+    border-2 border-[#233B4E] 
+    flex items-center justify-between pl-4 sm:pl-5 lg:pl-6 pr-1 
+    text-[#233B4E] font-medium text-[13px] sm:text-[14px] lg:text-[15px]
+    hover:bg-[#233B4E] hover:text-white 
+    transition-all duration-300
+    group/btn
+  "
+  onClick={()=>{window.open('https://mspublication.com/archivalpolicy.html','_blank')}}
+>
+  <span>Learn More</span>
+  
+  <div className="
+    w-7 h-7 sm:w-8 sm:h-8 rounded-full 
+    border border-[#233B4E] 
+    flex items-center justify-center
+    transition-colors duration-300
+    group-hover/btn:bg-white
+  ">
+    <ArrowIcon className="text-[#233B4E] group-hover/btn:text-[#233B4E]/90 bg-white" />
+  </div>
+</button>
             </div>
           </div>
         </div>

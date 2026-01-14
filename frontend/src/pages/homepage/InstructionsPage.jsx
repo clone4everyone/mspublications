@@ -508,6 +508,7 @@ return (
             </div>
             
             <p className="italic mt-4">*The fee paid once is not refundable.</p>
+              <h3 className=" mt-4">Updated On : 14/01/2026</h3>
           </div>
         </section>
       </FadeInSection>

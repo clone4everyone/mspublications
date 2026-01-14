@@ -71,7 +71,7 @@ const navigate=useNavigate();
       <div className='w-full h-[40px] sm:h-[45px] md:h-[50px] flex justify-end items-center px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 2xl:px-[101px] bg-[#1946DA]'>
         <div className='flex gap-4 sm:gap-6 md:gap-8 text-white font-sans font-[400] text-[12px] sm:text-[13px] md:text-[14px] lg:text-[15px] xl:text-[16px] leading-[100%] items-center'>
           <p className='hover:cursor-pointer' onClick={()=>{window.open('https://mspublication.com/','_blank')}}>MaxoSmith Publications</p>
-          <p className='hidden sm:block'>Subscription</p>
+          <p className='hidden sm:block cursor-pointer' onClick={()=>handleNavClick('subscription')}>Subscription</p>
            <div className="hidden md:flex gap-2 sm:gap-3 lg:gap-4 items-center">
         {isAuthenticated ? (
           <div className="relative group">

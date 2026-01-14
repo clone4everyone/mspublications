@@ -10,7 +10,7 @@ const s3 = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
-const generatePresignedUploadUrl = async (filename, contentType, journal = 'general') => {
+const generatePresignedUploadUrl = async (filename,contentType, journal = 'general') => {
   const key = generateS3Key(filename, journal);
   
   const command = new PutObjectCommand({
