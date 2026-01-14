@@ -133,7 +133,7 @@ exports.register = async (req, res) => {
     await user.save();
 
     // Create verification URL
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
+    const verificationUrl = `${process.env.FRONTEND_URL}/ijppi/verify-email/${verificationToken}`;
 
     // Send verification email
     const htmlContent = `
@@ -291,7 +291,7 @@ exports.resendVerification = async (req, res) => {
     await user.save();
 
     // Create verification URL
-    const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
+    const verificationUrl = `${process.env.FRONTEND_URL}/ijppi/verify-email/${verificationToken}`;
 
     // Send verification email (same HTML as register)
     const htmlContent = `
