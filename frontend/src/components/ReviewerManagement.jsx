@@ -561,7 +561,7 @@ const reviewerRoles = ['Associate', 'Assistant', 'Editorial'];
   >
     {reviewerRoles.map((role) => (
       <option key={role} value={role}>
-        {role}
+        {role} Editor
       </option>
     ))}
   </select>
