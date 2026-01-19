@@ -63,8 +63,44 @@ function Login() {
 
     dispatch(login(userData));
   };
+const navItems=[
+  {
+    name:'MaxoSmith Publications',
+    link:'https://mspublication.com/'
+  },
 
+]
   return (
+    <>
+    <nav
+          className={`relative z-30 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-[90px] w-full h-[70px] sm:h-[75px] md:h-[80px] lg:h-[85px] xl:h-[91px] flex items-center justify-between bg-white text-gray-900"}`}
+        >
+          <div 
+            className="w-[180px] h-[38px] sm:w-[200px] sm:h-[42px] md:w-[220px] md:h-[47px] lg:w-[240px] lg:h-[52px] xl:w-[267px] xl:h-[57px] font-bold cursor-pointer"
+            onClick={() => {navigate('/IJPPI')}}
+          >
+          <img src='https://res.cloudinary.com/duhadnqmh/image/upload/v1767786487/mslogo_gqwxzo.png' className='w-full h-full object-contain'/>
+          </div>
+    
+          <div className="hidden xl:flex items-center gap-4 lg:gap-5 xl:gap-6 2xl:gap-10">
+            {navItems.map((item) => (
+              <div key={item.id} className="relative">
+                <p
+                  onClick={() => {window.open(item.link,'_blank')}}
+                  className={`font-[500] text-[14px] lg:text-[15px] xl:text-[16px] 2xl:text-[18px] hover:cursor-pointer hover:opacity-80 whitespace-nowrap transition-opacity pb-1
+                  `}
+                >
+                  {item.name}
+                </p>
+              
+              </div>
+            ))}
+          </div>
+ 
+           
+          
+        
+        </nav>
     <div className="min-h-screen h-screen flex items-center justify-center bg-gradient-to-br from-outlook-blue to-outlook-darkBlue overflow-hidden py-10">
       <div className='relative w-full h-full max-w-7xl  mx-auto flex items-center justify-center '>
         {/* Background Image - Hidden on mobile */}
@@ -181,6 +217,8 @@ function Login() {
         </div>
       </div>
     </div>
+    </>
+    
   );
 }
 

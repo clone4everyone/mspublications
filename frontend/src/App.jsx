@@ -20,6 +20,7 @@ import NotFound from './pages/NotFound';
 import ReviewerManagementPage from './pages/ReviewerManagementPage';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
+import AuthorManagementPage from './pages/AuthorManagementPage';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -108,6 +109,14 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['editor']}>
                 <ReviewerManagementPage />
+              </ProtectedRoute>
+            } 
+          />
+              <Route 
+            path="/IJPPI/editor/authors" 
+            element={
+              <ProtectedRoute allowedRoles={['editor']}>
+                <AuthorManagementPage />
               </ProtectedRoute>
             } 
           />

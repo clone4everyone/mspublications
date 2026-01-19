@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { FaUserPlus, FaEdit, FaToggleOn, FaToggleOff, FaSearch, FaUsers, FaCheckCircle, FaTimes, FaArrowLeft, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { FaUserPlus, FaEdit, FaToggleOn, FaToggleOff, FaSearch, FaUsers, FaCheckCircle, FaTimes, FaArrowLeft, FaSignOutAlt, FaUser, FaEyeSlash, FaEye } from 'react-icons/fa';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
  import { logout } from '../redux/slices/authSlice';
@@ -14,17 +14,20 @@ function ReviewerManagement() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingReviewer, setEditingReviewer] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
     affiliation: '',
-    specialization: ['pharma']
+    specialization: ['pharma'],
+    orcid:'',
+    reviewerRole:"Associate"
   });
 
   const specializations = ['pharma', 'history', 'chemistry', 'science', 'ayurvedic', 'technology'];
-
+const reviewerRoles = ['Associate', 'Assistant', 'Editorial'];
   useEffect(() => {
     fetchReviewers();
   }, []);
@@ -188,6 +191,12 @@ function ReviewerManagement() {
                       <FaArrowLeft className="w-4 h-4" />
                     </button> */}
                     <div className="border-l border-white/30 h-8"></div>
+                        <div 
+        className="w-[180px] h-[38px] sm:w-[200px] sm:h-[42px] md:w-[220px] md:h-[47px] lg:w-[240px] lg:h-[52px] xl:w-[267px] xl:h-[57px] font-bold cursor-pointer"
+        onClick={() => navigate('/IJPPI')}
+      >
+      <img src='https://res.cloudinary.com/duhadnqmh/image/upload/v1767786487/mslogo_gqwxzo.png' className='w-full h-full object-contain'/>
+      </div>
                     <div>
                       <h1 className="text-xl font-semibold tracking-tight capitalize">
                         Dashboard
@@ -215,6 +224,7 @@ function ReviewerManagement() {
     <div className="space-y-6">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    
          <div>
           <h3 className=" flex gap-1 text-gray-500 items-center hover:text-gray-600 cursor-pointer" onClick={()=>navigate('/IJPPI/editor/journal/pharma')}><FaArrowLeft/><span className="text-xl font-bold text-gray-500 tracking-tight flex gap-1 items-center hover:text-gray-600 cursor-pointer" >Back To Dashboard</span></h3>
         </div>
@@ -344,7 +354,20 @@ function ReviewerManagement() {
                       <span className="text-gray-400">Affiliation:</span> {reviewer.affiliation}
                     </p>
                   )}
-                  
+                  {reviewer.orcid && (
+  <p className="text-sm text-gray-600 mb-3 ml-12 font-medium">
+    <span className="text-gray-400">ORCID:</span> {reviewer.orcid}
+  </p>
+)}
+
+{reviewer.reviewerRole && (
+  <p className="text-sm text-gray-600 mb-3 ml-12 font-medium">
+    <span className="text-gray-400">Role:</span> 
+    <span className="ml-1 inline-flex items-center px-2.5 py-0.5 bg-purple-50 text-purple-700 rounded-full text-xs font-semibold border border-purple-200">
+      {reviewer.reviewerRole}
+    </span>
+  </p>
+)}
                   {reviewer.specialization && reviewer.specialization.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-3 ml-12">
                       {reviewer.specialization.map((spec, idx) => (
@@ -377,7 +400,9 @@ function ReviewerManagement() {
                         password: '',
                         affiliation: reviewer.affiliation || '',
                         specialization: reviewer.specialization || [],
-                        isActive: reviewer.isActive
+                        isActive: reviewer.isActive,
+                         orcid: reviewer.orcid || '', // Add this
+    reviewerRole: reviewer.reviewerRole || 'Associate' 
                       });
                     }}
                     className="p-2.5 text-[#0461F0] hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-200"
@@ -465,23 +490,36 @@ function ReviewerManagement() {
                 )}
               </div>
 
-              {!editingReviewer && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
-                    Password <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0461F0] focus:border-transparent text-sm font-medium"
-                    placeholder="Enter secure password"
-                  />
-                  <p className="text-xs text-gray-500 mt-1.5 font-medium">
-                    This password will be sent to the reviewer's email address
-                  </p>
-                </div>
-              )}
+          {!editingReviewer && (
+  <div>
+    <label className="block text-sm font-semibold text-gray-700 mb-2">
+      Password <span className="text-red-500">*</span>
+    </label>
+    <div className="relative">
+      <input
+        type={showPassword ? "text" : "password"}
+        value={formData.password}
+        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        className="w-full px-4 py-2.5 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0461F0] focus:border-transparent text-sm font-medium"
+        placeholder="Enter secure password"
+      />
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+      >
+        {showPassword ? (
+          <FaEyeSlash className="w-5 h-5" />
+        ) : (
+          <FaEye className="w-5 h-5" />
+        )}
+      </button>
+    </div>
+    <p className="text-xs text-gray-500 mt-1.5 font-medium">
+      This password will be sent to the reviewer's email address
+    </p>
+  </div>
+)}
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -495,7 +533,39 @@ function ReviewerManagement() {
                   placeholder="University or Organization"
                 />
               </div>
+<div>
+  <label className="block text-sm font-semibold text-gray-700 mb-2">
+    ORCID
+  </label>
+  <input
+    type="text"
+    value={formData.orcid}
+    onChange={(e) => setFormData({ ...formData, orcid: e.target.value })}
+    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0461F0] focus:border-transparent text-sm font-medium"
+    placeholder="0000-0000-0000-0000"
+  />
+  <p className="text-xs text-gray-500 mt-1.5 font-medium">
+    Optional: Enter the reviewer's ORCID identifier
+  </p>
+</div>
 
+{/* Add Reviewer Role field */}
+<div>
+  <label className="block text-sm font-semibold text-gray-700 mb-2">
+    Reviewer Role <span className="text-red-500">*</span>
+  </label>
+  <select
+    value={formData.reviewerRole}
+    onChange={(e) => setFormData({ ...formData, reviewerRole: e.target.value })}
+    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0461F0] focus:border-transparent text-sm font-medium bg-white"
+  >
+    {reviewerRoles.map((role) => (
+      <option key={role} value={role}>
+        {role}
+      </option>
+    ))}
+  </select>
+</div>
               {/* <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-3">
                   Specialization Areas
@@ -527,13 +597,16 @@ function ReviewerManagement() {
                   onClick={() => {
                     setShowCreateModal(false);
                     setEditingReviewer(null);
+                     setShowPassword(false);
                     setFormData({
                       firstName: '',
                       lastName: '',
                       email: '',
                       password: '',
                       affiliation: '',
-                      specialization: []
+                      specialization: [],
+                        orcid: '', // Add this
+  reviewerRole: 'Associate' // Add this
                     });
                   }}
                   className="px-5 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 font-semibold text-gray-700 transition-all text-sm"

@@ -65,7 +65,7 @@ function EditorDashboard() {
       {/* Top Header Bar - Outlook Style */}
       <div className="h-12 bg-outlook-blue flex items-center justify-between px-6 text-white shadow-md">
         <div className="flex items-center space-x-4">
-          <h1 className="text-lg font-semibold">MS Publication - Editor Portal</h1>
+          <h1 className="text-lg font-semibold">IJPPI - Editor Portal</h1>
         </div>
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">

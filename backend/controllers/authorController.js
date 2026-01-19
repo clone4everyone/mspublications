@@ -1,6 +1,6 @@
 const SibApiV3Sdk = require('sib-api-v3-sdk');
 const Contact=require("../models/Contact")
-
+const User=require("../models/User")
 
 /**
  * @desc    Send contact message to admin
@@ -38,7 +38,32 @@ const msg=await Contact.create({subject,message,email:req.user.email});
     });
   }
 };
+const allReviewers = async(req,res) => {
+   try {
+    const reviewers = await User.find({
+      role: 'reviewer',
+      isActive: true,
+      isVerified: true
+    })
+    .select('firstName lastName prefix email affiliation orcid reviewerRole')
+    .sort({ reviewerRole: 1, lastName: 1 });
 
+    res.status(200).json({
+      success: true,
+      data: {
+        reviewers,
+        count: reviewers.length
+      }
+    });
+  } catch (error) {
+    console.error('Get public reviewers error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch reviewers'
+    });
+  }
+}
 module.exports = {
-  sendContactMessage
+  sendContactMessage,
+  allReviewers
 };

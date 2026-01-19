@@ -17,6 +17,7 @@ import { FileText, Globe, Zap, Database, Award } from 'lucide-react';
 import Footer from '../../components/Footer';
 import LandingPage from '../homepage/LandingPage';
 import Subscription from '../homepage/Subscription';
+import RolesAndResponsibility from '../homepage/RolesAndResponsibility';
 
 function JournalDetail() {
   // const { journalId } = useParams();
@@ -171,7 +172,7 @@ function JournalDetail() {
 
         {currentPage === 'editorial' && (
           <div className="">
-            <EditorialBoardPage  journal />
+            <EditorialBoardPage  journal onNavigate={setCurrentPage}/>
           </div>
         )}
 
@@ -180,6 +181,13 @@ function JournalDetail() {
             <Subscription/>
           </div>
         )}
+        {
+          currentPage === 'RolesAndResponsibility' && (
+            <div>
+              <RolesAndResponsibility/>
+              </div>
+          )
+        }
       </div>
 
       <Footer onNavigate={setCurrentPage}/>

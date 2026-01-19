@@ -5,13 +5,14 @@ const router = express.Router();
 const { protect } = require('../middleware/auth');
 const { 
   sendContactMessage, 
-  getMyContacts 
+  getMyContacts ,
+  allReviewers
 } = require('../controllers/authorController');
 
 // @route   POST /api/author/contact
 // @desc    Send contact message
 // @access  Private
 router.post('/contact', protect, sendContactMessage);
-
+router.get('/reviewers',allReviewers)
 
 module.exports = router;

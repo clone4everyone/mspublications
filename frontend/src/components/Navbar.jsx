@@ -61,7 +61,7 @@ const navigate=useNavigate();
 
   const handleDashboardClick = () => {
     if (user?.role) {
-      window.location.href = `/IJPPI/${user.role}/dashboard`;
+      window.location.href = user.role === 'author'?`/IJPPI/${user.role}/dashboard`:`/IJPPI/${user.role}/journal/pharma`;
     }
   };
 

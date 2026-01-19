@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const EditorialBoardPage = ({ journal }) => {
+export const EditorialBoardPage = ({ journal, onNavigate }) => {
   const [isVisible, setIsVisible] = useState(false);
   const imageRef = useRef(null);
   const contentRef = useRef(null);
+const [reviewers, setReviewers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setIsVisible(true);
-
+fetchReviewers();
     // Intersection Observer for lazy loading animations
     const observer = new IntersectionObserver(
       (entries) => {
@@ -36,8 +38,33 @@ export const EditorialBoardPage = ({ journal }) => {
       }
     };
   }, []);
+const fetchReviewers = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/author/reviewers`);
+      const data = await response.json();
+      if (data.success) {
+        setReviewers(data.data.reviewers);
+      }
+    } catch (error) {
+      console.error('Error fetching reviewers:', error);
+      toast.error('Failed to load editorial board members');
+    } finally {
+      setLoading(false);
+    }
+  };
+  const groupedReviewers = {
+    Associate: reviewers.filter(r => r.reviewerRole === 'Associate'),
+    Assistant: reviewers.filter(r => r.reviewerRole === 'Assistant'),
+    Editorial: reviewers.filter(r => r.reviewerRole === 'Editorial')
+  };
 
-  return (
+  const roleLabels = {
+    Associate: 'Associate Editors',
+    Assistant: 'Assistant Editors',
+    Editorial: 'Editorial Members'
+  };
+
+   return (
     <>
       <style>{`
         @keyframes fadeInDown {
@@ -146,48 +173,164 @@ export const EditorialBoardPage = ({ journal }) => {
           Editorial Board
         </h1>
 
-        {/* Main Content Card */}
+        {/* Editor-in-Chief Card */}
         <div className='w-full max-w-[1400px] bg-white flex flex-col lg:flex-row p-4 sm:p-6 md:p-8 lg:p-12 xl:p-20 items-center justify-center lg:justify-between gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 card-shadow rounded-lg'>
-          
-          {/* Image Section with Lazy Loading */}
-          {/* <div 
-            ref={imageRef}
-            className='lazy-element lazy-image w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] lg:max-w-[324px] h-[320px] sm:h-[340px] md:h-[360px] lg:h-[368px] bg-[#F0F1F3] rounded-[10px] overflow-hidden flex-shrink-0'
-          >
-            <img 
-              src="https://via.placeholder.com/324x368/F0F1F3/666666?text=Editor" 
-              alt="Editor"
-              className='w-full h-full object-cover'
-            />
-          </div> */}
-
-          {/* Content Section with Lazy Loading */}
           <div 
             ref={contentRef}
-            className='lazy-element lazy-content w-full lg:max-w-[536px] xl:max-w-[600px] flex flex-col gap-3 sm:gap-4 md:gap-5'
+            className='lazy-element lazy-content w-full flex flex-col gap-3 sm:gap-4 md:gap-5'
           >
-            {/* Editor Info */}
             <div>
               <ul className='font-[600] font-sans text-[16px] xs:text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] leading-[140%] sm:leading-[150%] md:leading-[50px] space-y-1 sm:space-y-2'>
                 <li className='text-[#0461F0]'>Editor-in-Chief</li>
-                
               </ul>
-              <div className='font-[600] font-sans text-[16px] xs:text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px]  sm:leading-[150%] '>
-                <a href='https://orcid.org/0009-0004-4660-5504' className='underline'>Dr. Robindra Kumar Pandit</a>
-                <p className='text-[14px] xs:text-[15px] sm:text-[16px] md:text-[18px] lg:text-[20px] text-gray-700'>
+              <div className='font-[600] font-sans text-[16px] xs:text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] sm:leading-[150%]'>
+                <a href='https://orcid.org/0009-0004-4660-5504' className='underline hover:text-[#0461F0] transition-colors'>
+                  Dr. Robindra Kumar Pandit
+                </a>
+                <p className='text-[14px] xs:text-[15px] sm:text-[16px] md:text-[18px] lg:text-[20px] text-gray-700 font-normal'>
                   Lovely Professional University, Jalandhar, Punjab, India.
                 </p>
-                <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] text-[#0461F0] break-all'>
+                <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] text-[#0461F0] break-all font-normal'>
                   Email: editor.ijppi@mspublication.com
                 </p>
               </div>
             </div>
-
-            {/* Description Text */}
-           
           </div>
         </div>
+
+        {/* Reviewers Section */}
+        {loading ? (
+          <div className="w-full max-w-[1400px] bg-white p-8 card-shadow rounded-lg flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0461F0]"></div>
+          </div>
+        ) : (
+          <div className='w-full max-w-[1400px] flex flex-col gap-6 sm:gap-8'>
+            {/* Associate Editors */}
+            {groupedReviewers.Associate.length > 0 && (
+              <div className='bg-white p-4 sm:p-6 md:p-8 lg:p-10 card-shadow rounded-lg'>
+                <h2 className='font-poppins font-[700] text-[20px] xs:text-[22px] sm:text-[24px] md:text-[26px] lg:text-[28px] text-[#0461F0] mb-4 sm:mb-6'>
+                  {roleLabels.Associate}
+                </h2>
+                <div className='flex flex-col gap-4 sm:gap-5'>
+                  {groupedReviewers.Associate.map((reviewer, index) => (
+                    <div key={reviewer._id} className='border-b border-gray-200 last:border-0 pb-4 last:pb-0'>
+                      <div className='font-[600] text-[15px] xs:text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px]'>
+                        {reviewer.orcid ? (
+                          <a 
+                            href={`https://orcid.org/${reviewer.orcid}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className='underline hover:text-[#0461F0] transition-colors'
+                          >
+                            {reviewer.prefix && `${reviewer.prefix} `}{reviewer.firstName} {reviewer.lastName}
+                          </a>
+                        ) : (
+                          <span>{reviewer.prefix && `${reviewer.prefix} `}{reviewer.firstName} {reviewer.lastName}</span>
+                        )}
+                      </div>
+                      {reviewer.affiliation && (
+                        <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] text-gray-700 mt-1'>
+                          {reviewer.affiliation}
+                        </p>
+                      )}
+                      <p className='text-[12px] xs:text-[13px] sm:text-[14px] md:text-[15px] text-[#0461F0] mt-1 break-all'>
+                        Email: {reviewer.email}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Assistant Editors */}
+            {groupedReviewers.Assistant.length > 0 && (
+              <div className='bg-white p-4 sm:p-6 md:p-8 lg:p-10 card-shadow rounded-lg'>
+                <h2 className='font-poppins font-[700] text-[20px] xs:text-[22px] sm:text-[24px] md:text-[26px] lg:text-[28px] text-[#0461F0] mb-4 sm:mb-6'>
+                  {roleLabels.Assistant}
+                </h2>
+                <div className='flex flex-col gap-4 sm:gap-5'>
+                  {groupedReviewers.Assistant.map((reviewer, index) => (
+                    <div key={reviewer._id} className='border-b border-gray-200 last:border-0 pb-4 last:pb-0'>
+                      <div className='font-[600] text-[15px] xs:text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px]'>
+                        {reviewer.orcid ? (
+                          <a 
+                            href={`https://orcid.org/${reviewer.orcid}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className='underline hover:text-[#0461F0] transition-colors'
+                          >
+                            {reviewer.prefix && `${reviewer.prefix} `}{reviewer.firstName} {reviewer.lastName}
+                          </a>
+                        ) : (
+                          <span>{reviewer.prefix && `${reviewer.prefix} `}{reviewer.firstName} {reviewer.lastName}</span>
+                        )}
+                      </div>
+                      {reviewer.affiliation && (
+                        <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] text-gray-700 mt-1'>
+                          {reviewer.affiliation}
+                        </p>
+                      )}
+                      <p className='text-[12px] xs:text-[13px] sm:text-[14px] md:text-[15px] text-[#0461F0] mt-1 break-all'>
+                        Email: {reviewer.email}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Editorial Members */}
+            {groupedReviewers.Editorial.length > 0 && (
+              <div className='bg-white p-4 sm:p-6 md:p-8 lg:p-10 card-shadow rounded-lg'>
+                <h2 className='font-poppins font-[700] text-[20px] xs:text-[22px] sm:text-[24px] md:text-[26px] lg:text-[28px] text-[#0461F0] mb-4 sm:mb-6'>
+                  {roleLabels.Editorial}
+                </h2>
+                <div className='flex flex-col gap-4 sm:gap-5'>
+                  {groupedReviewers.Editorial.map((reviewer, index) => (
+                    <div key={reviewer._id} className='border-b border-gray-200 last:border-0 pb-4 last:pb-0'>
+                      <div className='font-[600] text-[15px] xs:text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px]'>
+                        {reviewer.orcid ? (
+                          <a 
+                            href={`https://orcid.org/${reviewer.orcid}`} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className='underline hover:text-[#0461F0] transition-colors'
+                          >
+                            {reviewer.prefix && `${reviewer.prefix} `}{reviewer.firstName} {reviewer.lastName}
+                          </a>
+                        ) : (
+                          <span>{reviewer.prefix && `${reviewer.prefix} `}{reviewer.firstName} {reviewer.lastName}</span>
+                        )}
+                      </div>
+                      {reviewer.affiliation && (
+                        <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] text-gray-700 mt-1'>
+                          {reviewer.affiliation}
+                        </p>
+                      )}
+                      <p className='text-[12px] xs:text-[13px] sm:text-[14px] md:text-[15px] text-[#0461F0] mt-1 break-all'>
+                        Email: {reviewer.email}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* No reviewers message */}
+            {reviewers.length === 0 && (
+              <div className='bg-white p-8 card-shadow rounded-lg text-center'>
+                <p className='text-gray-600 text-[16px]'>No editorial board members found.</p>
+              </div>
+            )}
+          </div>
+        )}
+        <button className='bg-gray-800 text-white p-5 rounded-md' onClick={()=>{onNavigate('RolesAndResponsibility'); window.scrollTo({
+  top: 0,
+  behavior: 'smooth'
+});
+}}>Roles And Responsibility</button>
       </div>
     </>
   );
+
 };

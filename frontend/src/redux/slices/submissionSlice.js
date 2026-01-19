@@ -413,8 +413,11 @@ const submissionSlice = createSlice({
       })
       // Get by journal
       .addCase(getSubmissionsByJournal.fulfilled, (state, action) => {
-        state.submissions = action.payload;
-      })
+  state.submissions = Array.isArray(action.payload)
+    ? action.payload
+    : [];
+})
+
       // Get stats
       .addCase(getJournalStats.fulfilled, (state, action) => {
         state.journalStats = action.payload;

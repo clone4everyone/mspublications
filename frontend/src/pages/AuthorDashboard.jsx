@@ -54,7 +54,7 @@ function AuthorDashboard() {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://ms-publication-backend.onrender.com/api/auth/change-password', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/change-password`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -161,7 +161,7 @@ function AuthorDashboard() {
     const matchesSearch = sub.metadata?.title?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterStatus === 'all' || sub.status === filterStatus;
     return matchesSearch && matchesFilter;
-  });
+  }).filter(sub=> (sub.status !=='pending')).filter(sub =>  sub.status !== 'approved_by_editor' );
 
   const stats = [
     { 
@@ -375,10 +375,10 @@ function AuthorDashboard() {
               {/* Filter Tabs */}
               <div className="flex items-center space-x-4 overflow-x-auto pb-2">
                 {[
-                  { id: 'all', label: 'All', count: submissions.length },
+                  { id: 'all', label: 'All', count: submissions.filter(sub=>sub.status!='pending').length },
                   // { id: 'pending', label: 'Pending', count: submissions.filter(s => s.status === 'pending').length },
                   { id: 'with_reviewer', label: 'In Review', count: submissions.filter(s => s.status === 'with_reviewer').length },
-                  { id: 'approved_by_editor', label: 'Approved', count: submissions.filter(s => s.status === 'approved_by_editor' || s.status === 'scheduled').length },
+                  { id: 'approved_by_editor', label: 'Approved', count:0 },
                     { id: 'rejected_by_editor', label: 'Rejected', count: submissions.filter(s => s.status === 'rejected_by_edtior' || s.status === 'scheduled').length },
                   // { id: 'published', label: 'Published', count: submissions.filter(s => s.status === 'published').length }
                 ].map((filter) => (

@@ -8,8 +8,10 @@ import {
   FaFilter, FaFile, FaClock, FaCheckCircle, FaFileAlt,
   FaMandalorian,
   FaSalesforce,
-  FaUserAlt
+  FaUserAlt,
+
 } from 'react-icons/fa';
+import { XCircle, Settings2} from 'lucide-react'
 import { format } from 'date-fns';
 
 const journalColors = {
@@ -27,10 +29,14 @@ function JournalView() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const statusParam = searchParams.get('status');
-
+ const [passwordData, setPasswordData] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
+  });
   const { user } = useSelector((state) => state.auth);
   const { submissions, isLoading } = useSelector((state) => state.submissions);
-
+const [showProfileModal, setShowProfileModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState(statusParam || 'all');
   const [queries, setQueries] = useState([]);
@@ -60,13 +66,17 @@ function JournalView() {
     }
   };
 
+  // useEffect(() => {
+  //   if (filterStatus === 'all') {
+  //     dispatch(getSubmissionsByJournal({ journal }));
+  //   } else {
+  //     dispatch(getSubmissionsByJournal({ journal, status: filterStatus }));
+  //   }
+  // }, [dispatch, journal, filterStatus]);
   useEffect(() => {
-    if (filterStatus === 'all') {
-      dispatch(getSubmissionsByJournal({ journal }));
-    } else {
-      dispatch(getSubmissionsByJournal({ journal, status: filterStatus }));
-    }
-  }, [dispatch, journal, filterStatus]);
+  dispatch(getSubmissionsByJournal({ journal }));
+}, [dispatch, journal]);
+
 
   const handleLogout = () => {
     dispatch(logout());
@@ -80,6 +90,38 @@ function JournalView() {
       navigate('/IJPPI/reviewer/dashboard');
     }
   };
+  const handleChangePassword = async () => {
+      if (passwordData.newPassword !== passwordData.confirmPassword) {
+        toast.error('Passwords do not match');
+        return;
+      }
+      
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/change-password`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            currentPassword: passwordData.currentPassword,
+            newPassword: passwordData.newPassword
+          })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          toast.success('Password changed successfully');
+          setShowProfileModal(false);
+          setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+        } else {
+          toast.error(data.message);
+        }
+      } catch (error) {
+        toast.error('Error changing password');
+      }
+    };
 
   const getStatusBadge = (status) => {
     const statusMap = {
@@ -96,19 +138,40 @@ function JournalView() {
     return statusMap[status] || { class: 'bg-gray-100 text-gray-700 border border-gray-300', text: status, icon: '📄' };
   };
 
-  const filteredSubmissions = submissions.filter(sub =>
+  // const filteredSubmissions = submissions.filter(sub =>
+  //   sub.metadata?.title?.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
+ submissions
+  .filter(sub => filterStatus === 'all' ? true : sub.status === filterStatus)
+  .filter(sub =>
     sub.metadata?.title?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  )
+let filteredSubmissions=null;
+if(user.role === 'reviewer'){
+  filteredSubmissions=submissions
+  .filter(sub => filterStatus === 'all' ? true : sub.status === filterStatus)
+  .filter(sub =>
+    sub.metadata?.title?.toLowerCase().includes(searchTerm.toLowerCase())
+  ).filter(sub=> sub.status!='pending')
+}else{
+    filteredSubmissions=submissions
+  .filter(sub => filterStatus === 'all' ? true : sub.status === filterStatus)
+  .filter(sub =>
+    sub.metadata?.title?.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+}
 const getStatusCounts = () => {
+  // Use the original submissions array, not the filtered one
+  const allSubmissions = submissions;
+  
   return {
-    all: submissions.length,
-    pending: submissions.filter(s => s.status === 'pending').length,
-    with_reviewer: submissions.filter(s => s.status === 'with_reviewer').length,
-    approved_by_editor: submissions.filter(s => s.status === 'approved_by_editor').length,
-    approved_by_reviewer: submissions.filter(s => s.status === 'approved_by_reviewer').length,
-    rejected_by_editor: submissions.filter(s => s.status === 'rejected_by_editor').length,
-    rejected_by_reviewer: submissions.filter(s => s.status === 'rejected_by_reviewer').length,
+    all:user.role==='reviewer' ? allSubmissions.filter(s => (s.status !== 'draft' && s.status!=='pending')).length : allSubmissions.filter(s=> s.status!=='draft').length,
+    pending: allSubmissions.filter(s => s.status === 'pending').length,
+    with_reviewer: allSubmissions.filter(s => s.status === 'with_reviewer').length,
+    approved_by_editor: allSubmissions.filter(s => s.status === 'approved_by_editor').length,
+    approved_by_reviewer: allSubmissions.filter(s => s.status === 'approved_by_reviewer').length,
+    rejected_by_editor: allSubmissions.filter(s => s.status === 'rejected_by_editor').length,
+    rejected_by_reviewer: allSubmissions.filter(s => s.status === 'rejected_by_reviewer').length,
   };
 };
 
@@ -125,6 +188,12 @@ const getStatusCounts = () => {
       {/* Top Header Bar */}
       <div className={`h-20 ${user.role === 'editor' ? 'bg-[#0461F0]' : 'bg-purple-600'} flex items-center justify-between px-8 text-white shadow-lg`}>
         <div className="flex items-center space-x-6">
+          <div 
+        className="w-[180px] h-[38px] sm:w-[200px] sm:h-[42px] md:w-[220px] md:h-[47px] lg:w-[240px] lg:h-[52px] xl:w-[267px] xl:h-[57px] font-bold cursor-pointer"
+        onClick={() => navigate('/IJPPI')}
+      >
+      <img src='https://res.cloudinary.com/duhadnqmh/image/upload/v1767786487/mslogo_gqwxzo.png' className='w-full h-full object-contain'/>
+      </div>
           <div className="border-l border-white/30 h-8"></div>
           <div>
             <h1 className="text-2xl font-semibold tracking-tight capitalize">
@@ -149,6 +218,7 @@ const getStatusCounts = () => {
             </button>
           )}
         </div>
+    
         <div className="flex items-center space-x-5">
           <div className="flex items-center space-x-3 bg-white/10 px-5 py-2.5 rounded-lg">
             <FaUser className="w-5 h-5" />
@@ -167,7 +237,7 @@ const getStatusCounts = () => {
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left Sidebar - Filters */}
-        <div className="w-80 bg-white border-r border-gray-200 flex flex-col shadow-sm">
+        <div className="w-80 bg-white border-r border-gray-200 flex flex-col shadow-sm overflow-y-auto">
           <div className="p-6">
             <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4 flex items-center">
               <FaFilter className="w-4 h-4 mr-2" />
@@ -328,6 +398,38 @@ const getStatusCounts = () => {
                 </button>
               </div>
             )}
+
+            {
+              user.role === 'editor' && (
+                <div>
+                  <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4 flex items-center mt-6">
+                  <FaUser className="w-4 h-4 mr-2" />
+                  Author Management
+                </h2>
+                <button 
+                  className='w-full flex items-center gap-3 px-5 py-3.5 rounded-lg transition-all duration-200 mb-2 text-base font-semibold hover:bg-gray-200' 
+                  onClick={() => navigate('/IJPPI/editor/authors')}
+                >
+                  <FaUserAlt className="w-5 h-5" />
+                  All Authors
+                </button>
+                  </div>
+              )
+            }
+              <div>
+                  <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4 flex items-center mt-6">
+                  <FaUser className="w-4 h-4 mr-2" />
+                  Change Password
+                </h2>
+                 <button
+            onClick={() => setShowProfileModal(true)}
+            className="w-full flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-xl transition-all"
+          >
+            <Settings2 className="w-5 h-5 flex-shrink-0" />
+            <span className="text-md">Settings</span>
+          </button>
+                  </div>
+                
           </div>
         </div>
 
@@ -477,6 +579,85 @@ const getStatusCounts = () => {
           </div>
         </div>
       )}
+
+       {showProfileModal && (
+              <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+                <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full animate-scale-in overflow-hidden">
+                  <div className="bg-gradient-to-r from-[#3b86f6] to-[#0461F0] px-6 py-5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center">
+                          <Settings2 className="w-5 h-5 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white">Change Password</h3>
+                      </div>
+                      <button 
+                        onClick={() => setShowProfileModal(false)}
+                        className="p-2 hover:bg-white/10 rounded-xl transition-colors"
+                      >
+                        <XCircle className="w-5 h-5 text-white" />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6 space-y-5">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2">
+                        Current Password
+                      </label>
+                      <input
+                        type="password"
+                        value={passwordData.currentPassword}
+                        onChange={(e) => setPasswordData({...passwordData, currentPassword: e.target.value})}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1B7A9C] focus:border-transparent transition-all"
+                        placeholder="Enter current password"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2">
+                        New Password
+                      </label>
+                      <input
+                        type="password"
+                        value={passwordData.newPassword}
+                        onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1B7A9C] focus:border-transparent transition-all"
+                        placeholder="Enter new password"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2">
+                        Confirm New Password
+                      </label>
+                      <input
+                        type="password"
+                        value={passwordData.confirmPassword}
+                        onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-[#1B7A9C] focus:border-transparent transition-all"
+                        placeholder="Confirm new password"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex space-x-3 px-6 pb-6">
+                    <button
+                      onClick={() => setShowProfileModal(false)}
+                      className="flex-1 px-6 py-3 border-2 border-gray-300 rounded-xl hover:bg-gray-50 font-bold text-gray-700 transition-all hover:scale-105"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleChangePassword}
+                      className="flex-1 px-6 py-3 bg-gradient-to-r from-[#3b86f6] to-[#0461F0] text-white rounded-xl hover:shadow-xl font-bold transition-all hover:scale-105"
+                    >
+                      Change Password
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
     </div>
   );
 }

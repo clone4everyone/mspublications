@@ -74,7 +74,7 @@ const sendNotificationEmail = async (to, toName, subject, message) => {
     <body>
       <div class="container">
         <div class="header">
-          <h1>MS Publication</h1>
+          <h1>IJPPI</h1>
         </div>
         <div class="content">
           <h2>${subject}</h2>
@@ -82,8 +82,8 @@ const sendNotificationEmail = async (to, toName, subject, message) => {
           ${message}
         </div>
         <div class="footer">
-          <p>This is an automated message from MS Publication Journal Management System.</p>
-          <p>&copy; ${new Date().getFullYear()} MS Publication. All rights reserved.</p>
+          <p>This is an automated message from IJPPI System.</p>
+          <p>&copy; ${new Date().getFullYear()} IJPPI. All rights reserved.</p>
         </div>
       </div>
     </body>

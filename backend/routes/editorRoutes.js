@@ -10,7 +10,9 @@ const {
   createReviewer,        // NEW
   getAllReviewers,       // NEW
   getAvailableReviewers, // NEW
-  updateReviewer         // NEW
+  updateReviewer ,
+  getAllAuthors,
+  toggleAuthorStatus        // NEW
 } = require('../controllers/editorController');
 const { protect, authorize } = require('../middleware/auth');
 
@@ -29,4 +31,7 @@ router.put('/submissions/:id/move-to-reviewer', moveToReviewer);
 router.put('/submissions/:id/schedule', schedulePublication);
 router.put('/submissions/:id/send-back', sendBackToAuthor);  // NEW: Add this route
 
+
+router.get('/authors', protect, authorize('editor'), getAllAuthors);
+router.put('/authors/:authorId/toggle-status', protect, authorize('editor'), toggleAuthorStatus);
 module.exports = router;

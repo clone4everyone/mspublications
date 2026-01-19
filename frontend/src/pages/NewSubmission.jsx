@@ -1116,7 +1116,11 @@ const isReviewerComplete = (index) => {
                 {currentSubmission.metadata?.subtitle && (
                   <p className="text-gray-600 mb-3">{currentSubmission.metadata.subtitle}</p>
                 )}
-                <p className="text-sm text-gray-700 mb-4">{currentSubmission.metadata?.abstract}</p>
+               <div
+  className="text-sm text-gray-700 mb-4"
+  dangerouslySetInnerHTML={{ __html: currentSubmission.metadata?.abstract }}
+></div>
+
                 {currentSubmission.metadata?.keywords && currentSubmission.metadata.keywords.length > 0 && (
                   <div className="flex flex-wrap gap-2 mb-4">
                     {currentSubmission.metadata.keywords.map((keyword, idx) => (

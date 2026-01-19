@@ -80,6 +80,14 @@ passwordResetExpires: Date,
     type: Boolean,
     default: true,
   },
+  orcid:{
+    type:String,
+    required:true
+  },
+  reviewerRole:{
+    type:String,
+    enum:['Associate','Assistant','Editorial']
+  }
 }, {
   timestamps: true,
 });

@@ -385,7 +385,7 @@ submission.addTimelineEvent({
 // @access  Private (Editor)
 exports.createReviewer = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, affiliation, specialization } = req.body;
+    const { firstName, lastName, email, password, affiliation, specialization,orcid,reviewerRole, } = req.body;
 
     // Validate required fields
     if (!firstName || !lastName || !email || !password) {
@@ -414,7 +414,9 @@ exports.createReviewer = async (req, res) => {
       specialization: specialization || [],
       role: 'reviewer',
       isActive: true,
-      isVerified:true
+      isVerified:true,
+      orcid, // Add this
+  reviewerRole,
     });
 
     // Send credentials email to reviewer
@@ -521,7 +523,8 @@ console.log(reviewers)
 // @access  Private (Editor)
 exports.updateReviewer = async (req, res) => {
   try {
-    const { firstName, lastName, affiliation, specialization, isActive } = req.body;
+    const { firstName, lastName, affiliation, specialization, isActive,orcid, // Add this
+  reviewerRole, } = req.body;
 
     const reviewer = await User.findById(req.params.id);
 
@@ -538,7 +541,8 @@ exports.updateReviewer = async (req, res) => {
     if (affiliation) reviewer.affiliation = affiliation;
     if (specialization) reviewer.specialization = specialization;
     if (typeof isActive === 'boolean') reviewer.isActive = isActive;
-
+    if (orcid) reviewer.orcid=orcid;
+    if (reviewerRole) reviewer.reviewerRole=reviewerRole
     await reviewer.save();
 
     res.status(200).json({
@@ -653,6 +657,116 @@ exports.moveToReviewer = async (req, res) => {
       success: false,
       message: 'Error assigning submission to reviewer',
       error: error.message
+    });
+  }
+};
+
+exports.getAllAuthors = async (req, res) => {
+  try {
+    const authors = await User.find({
+      role: 'author',
+      isVerified: true
+    })
+    .select('-password -verificationToken -passwordResetToken')
+    .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        authors,
+        count: authors.length
+      }
+    });
+  } catch (error) {
+    console.error('Get authors error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch authors'
+    });
+  }
+};
+
+// @desc    Toggle author active status
+// @route   PUT /api/editor/authors/:authorId/toggle-status
+// @access  Private/Editor
+exports.toggleAuthorStatus = async (req, res) => {
+  try {
+    const { authorId } = req.params;
+    const { isActive, note } = req.body;
+
+    const author = await User.findById(authorId);
+
+    if (!author) {
+      return res.status(404).json({
+        success: false,
+        message: 'Author not found'
+      });
+    }
+
+    if (author.role !== 'author') {
+      return res.status(400).json({
+        success: false,
+        message: 'User is not an author'
+      });
+    }
+
+    author.isActive = isActive;
+    await author.save();
+
+    // Send email notification
+    if (!isActive && note) {
+      const emailSubject = 'Account Deactivation Notice';
+      const emailMessage = `
+        <p>Your author account has been deactivated by the editorial team.</p>
+        <p><strong>Reason:</strong></p>
+        <p>${note}</p>
+        <p>If you believe this is a mistake or would like to discuss this decision, please contact the editorial team.</p>
+      `;
+
+      await sendNotificationEmail(
+        author.email,
+        `${author.firstName} ${author.lastName}`,
+        emailSubject,
+        emailMessage
+      );
+    } else if (isActive) {
+      const emailSubject = 'Account Reactivation Notice';
+      const emailMessage = `
+        <p>Your author account has been reactivated by the editorial team.</p>
+        <p>You can now submit manuscripts and access all author features.</p>
+        <p>Welcome back!</p>
+      `;
+
+      await sendNotificationEmail(
+        author.email,
+        `${author.firstName} ${author.lastName}`,
+        emailSubject,
+        emailMessage
+      );
+    }
+
+    res.status(200).json({
+      success: true,
+      data: {
+        author: {
+          _id: author._id,
+          firstName: author.firstName,
+          lastName: author.lastName,
+          email: author.email,
+          isActive: author.isActive,
+          affiliation: author.affiliation,
+          prefix: author.prefix,
+          username: author.username,
+          createdAt: author.createdAt
+        }
+      },
+      message: `Author ${isActive ? 'activated' : 'deactivated'} successfully`
+    });
+  } catch (error) {
+    console.error('Toggle author status error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update author status'
     });
   }
 };
