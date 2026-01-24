@@ -47,6 +47,7 @@ const peerReview = () => {
       <div 
         ref={footerRef}
         className='w-full  bg-[#233B4E] relative px-4 sm:px-8 md:px-12 lg:px-16 xl:px-[101px] pt-12 sm:pt-16 lg:pt-[50px] pb-12 sm:pb-16 lg:pb-10 flex flex-col lg:flex-row justify-between gap-8 lg:gap-12'
+
       >
         {/* Background Pattern */}
         <div className='w-full max-w-[910px] h-full absolute top-0 bottom-0 left-1/2 -translate-x-1/2 opacity-30 lg:opacity-100 pointer-events-none'>
@@ -158,9 +159,9 @@ const peerReview = () => {
           © 2025 All Rights Reserved
         </p>
 
-        <p className='text-white text-[12px] sm:text-[13px] md:text-[14px] leading-[34px] text-center sm:text-right'>
-          Designed & Developed by Being Diplomatic
-        </p>
+        <a className='text-white text-[12px] sm:text-[13px] md:text-[14px] leading-[34px] text-center sm:text-right underline' onClick={()=>{window.open('https://beingdiplomatic.com/','_blank')}}>
+          Developed by Being Diplomatic
+        </a>
       </div>
     </>
   );

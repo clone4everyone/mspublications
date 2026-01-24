@@ -230,7 +230,7 @@ const fetchReviewers = async () => {
                       </div>
                       {reviewer.affiliation && (
                         <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] text-gray-700 mt-1'>
-                          {reviewer.affiliation}
+                         {reviewer.post},{reviewer.department}, {reviewer.affiliation}
                         </p>
                       )}
                       <p className='text-[12px] xs:text-[13px] sm:text-[14px] md:text-[15px] text-[#0461F0] mt-1 break-all'>
@@ -267,7 +267,7 @@ const fetchReviewers = async () => {
                       </div>
                       {reviewer.affiliation && (
                         <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] text-gray-700 mt-1'>
-                          {reviewer.affiliation}
+                         {reviewer.post},{reviewer.department}, {reviewer.affiliation}
                         </p>
                       )}
                       <p className='text-[12px] xs:text-[13px] sm:text-[14px] md:text-[15px] text-[#0461F0] mt-1 break-all'>
@@ -304,7 +304,7 @@ const fetchReviewers = async () => {
                       </div>
                       {reviewer.affiliation && (
                         <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] text-gray-700 mt-1'>
-                          {reviewer.affiliation}
+                         {reviewer.post},{reviewer.department}, {reviewer.affiliation}
                         </p>
                       )}
                       <p className='text-[12px] xs:text-[13px] sm:text-[14px] md:text-[15px] text-[#0461F0] mt-1 break-all'>

@@ -45,9 +45,9 @@ const allReviewers = async(req,res) => {
       isActive: true,
       isVerified: true
     })
-    .select('firstName lastName prefix email affiliation orcid reviewerRole')
+    .select('firstName lastName prefix email affiliation orcid reviewerRole post department')
     .sort({ reviewerRole: 1, lastName: 1 });
-
+console.log(reviewers)
     res.status(200).json({
       success: true,
       data: {

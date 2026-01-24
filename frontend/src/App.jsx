@@ -6,21 +6,33 @@ import { useSelector } from 'react-redux';
 // Pages
 import Login from './pages/Login';
 import Register from './pages/Register';
-import VerifyEmail from './pages/VerifyEmail'; // Add this import
+import VerifyEmail from './pages/VerifyEmail';
 import AuthorDashboard from './pages/AuthorDashboard';
 import EditorDashboard from './pages/EditorDashboard';
 import ReviewerDashboard from './pages/ReviewerDashboard';
 import NewSubmission from './pages/NewSubmission';
 import SubmissionDetail from './pages/SubmissionDetail';
 import JournalView from './pages/JournalView';
-import JournalHomepage from './pages/journalSubdomain/JournalHomepage';
-import JournalDetail from './pages/journalSubdomain/JournalDetail';
 import EditSubmission from './pages/EditSubmission';
 import NotFound from './pages/NotFound';
 import ReviewerManagementPage from './pages/ReviewerManagementPage';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import AuthorManagementPage from './pages/AuthorManagementPage';
+
+// Homepage Components
+import LandingPage from './pages/homepage/LandingPage';
+import { AboutPage } from './pages/homepage/AboutPage';
+import { CurrentIssuePage } from './pages/homepage/CurrentIssuePage';
+import { ArchivesPage } from './pages/homepage/ArchivesPage';
+import { InstructionsPage } from './pages/homepage/InstructionsPage';
+import { ContactPage } from './pages/homepage/ContactPage';
+import { EditorialBoardPage } from './pages/homepage/EditorialBoardPage';
+import Subscription from './pages/homepage/Subscription';
+import RolesAndResponsibility from './pages/homepage/RolesAndResponsibility';
+
+// Layout wrapper for homepage pages
+import HomeLayout from './pages/HomeLayout';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, allowedRoles }) => {
@@ -41,7 +53,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 const DashboardRedirect = () => {
   const { user } = useSelector((state) => state.auth);
 
-  if (!user) return <Navigate to="/IJPPIlogin" replace />;
+  if (!user) return <Navigate to="/IJPPI/login" replace />;
 
   switch (user.role) {
     case 'author':
@@ -60,14 +72,26 @@ function App() {
     <>
       <Router>
         <Routes>
-          {/* Public Routes */}
+          {/* Public Routes - Authentication */}
           <Route path="/IJPPI/login" element={<Login />} />
           <Route path="/IJPPI/register" element={<Register />} />
           <Route path="/IJPPI/forgot-password" element={<ForgotPassword />} />
-<Route path="/IJPPI/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/IJPPI/verify-email/:token" element={<VerifyEmail />} /> {/* Add this route */}
-          <Route path="/" element={<JournalHomepage />} /> 
-          <Route path="/IJPPI" element={<JournalDetail />} />
+          <Route path="/IJPPI/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/IJPPI/verify-email/:token" element={<VerifyEmail />} />
+
+          {/* Homepage Routes - All wrapped in HomeLayout */}
+          <Route path="/" element={<HomeLayout><LandingPage /></HomeLayout>} />
+          <Route path="/about" element={<HomeLayout><AboutPage /></HomeLayout>} />
+          <Route path="/current-issue" element={<HomeLayout><CurrentIssuePage /></HomeLayout>} />
+          <Route path="/archives" element={<HomeLayout><ArchivesPage /></HomeLayout>} />
+          <Route path="/instructions" element={<HomeLayout><InstructionsPage /></HomeLayout>} />
+          <Route path="/contact" element={<HomeLayout><ContactPage /></HomeLayout>} />
+          <Route path="/editorial-board" element={<HomeLayout><EditorialBoardPage /></HomeLayout>} />
+          <Route path="/subscription" element={<HomeLayout><Subscription /></HomeLayout>} />
+          <Route path="/roles-and-responsibility" element={<HomeLayout><RolesAndResponsibility /></HomeLayout>} />
+
+          {/* Legacy route - redirect to new home */}
+          <Route path="/IJPPI" element={<Navigate to="/" replace />} />
 
           {/* Author Routes */}
           <Route
@@ -112,7 +136,7 @@ function App() {
               </ProtectedRoute>
             } 
           />
-              <Route 
+          <Route 
             path="/IJPPI/editor/authors" 
             element={
               <ProtectedRoute allowedRoles={['editor']}>
@@ -138,6 +162,8 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* 404 Not Found */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
@@ -158,7 +184,6 @@ function App() {
 }
 
 export default App;
-
 
 
 

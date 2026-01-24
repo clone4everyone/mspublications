@@ -34,7 +34,7 @@ function JournalDetail() {
 
 
   useEffect(() => {
-    fetchJournalDetails();
+    // fetchJournalDetails();
     checkAuth();
 
     const handleScroll = () => setScrollY(window.scrollY);

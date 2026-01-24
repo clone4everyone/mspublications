@@ -385,7 +385,7 @@ submission.addTimelineEvent({
 // @access  Private (Editor)
 exports.createReviewer = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, affiliation, specialization,orcid,reviewerRole, } = req.body;
+    const { firstName, lastName, email, password, affiliation, specialization,orcid,reviewerRole,post,department,username } = req.body;
 
     // Validate required fields
     if (!firstName || !lastName || !email || !password) {
@@ -417,6 +417,9 @@ exports.createReviewer = async (req, res) => {
       isVerified:true,
       orcid, // Add this
   reviewerRole,
+  post,
+  department,
+  username
     });
 
     // Send credentials email to reviewer
@@ -524,7 +527,7 @@ console.log(reviewers)
 exports.updateReviewer = async (req, res) => {
   try {
     const { firstName, lastName, affiliation, specialization, isActive,orcid, // Add this
-  reviewerRole, } = req.body;
+  reviewerRole,post,department,username } = req.body;
 
     const reviewer = await User.findById(req.params.id);
 
@@ -542,7 +545,21 @@ exports.updateReviewer = async (req, res) => {
     if (specialization) reviewer.specialization = specialization;
     if (typeof isActive === 'boolean') reviewer.isActive = isActive;
     if (orcid) reviewer.orcid=orcid;
-    if (reviewerRole) reviewer.reviewerRole=reviewerRole
+    if (reviewerRole) reviewer.reviewerRole=reviewerRole;
+    if(post) reviewer.post=post;
+    if(department) reviewer.department=department;
+
+    if(username){
+        const existingUserByUsername = await User.findOne({ username });
+    if (existingUserByUsername) {
+      return res.status(400).json({
+        success: false,
+        message: 'This username is already taken. Please choose a different username.'
+      });
+    }else{
+      reviewer.username=username;
+    }
+    }
     await reviewer.save();
 
     res.status(200).json({

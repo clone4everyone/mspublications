@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Counter= require('./Counter')
 const submissionSchema = new mongoose.Schema({
   // ... all existing fields remain the same ...
   
@@ -14,7 +14,11 @@ const submissionSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
-  
+  serialNumber:{
+    type:Number,
+   unique: true
+
+  },
   section: {
     type: String,
     required: true,
@@ -251,5 +255,17 @@ submissionSchema.methods.addTimelineEvent = function(eventData) {
     timestamp: new Date()
   });
 };
+submissionSchema.pre("save", async function (next) {
+  if (!this.isNew) return next();
+
+  const counter = await Counter.findOneAndUpdate(
+    { name: "submissionSerial" },
+    { $inc: { seq: 1 } },
+    { new: true, upsert: true }
+  );
+
+  this.serialNumber = counter.seq;
+  next();
+});
 
 module.exports = mongoose.model('Submission', submissionSchema);
