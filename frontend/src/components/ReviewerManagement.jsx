@@ -653,7 +653,7 @@ function ReviewerManagement() {
                   >
                     {reviewerRoles.map((role) => (
                       <option key={role} value={role}>
-                        {role} Editor
+                        {role} {role==='Editorial'?'Member':'Editor'}
                       </option>
                     ))}
                   </select>

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +13,8 @@ import {
   Edit, Trash2, Download, MoreVertical,
   Bell, Settings, ChevronRight, Sparkles,
   BookOpen, Award, Target, Zap, Home,
-  Menu, X
+  Menu, X,
+  CheckCheck
 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -79,116 +79,96 @@ function AuthorDashboard() {
     }
   };
 
+  // Updated function to map internal statuses to author-visible statuses
+  const getAuthorVisibleStatus = (status) => {
+    // Editor rejected -> show as Rejected
+    if (status === 'rejected_by_editor') {
+      return 'rejected';
+    }
+ 
+    // All other statuses (pending, with_reviewer, approved_by_editor, 
+    // rejected_by_reviewer, approved_by_reviewer, scheduled, published) -> show as In Review
+    return 'in_review';
+  };
+
   const getStatusConfig = (status) => {
+    const authorStatus = getAuthorVisibleStatus(status);
+    
     const statusMap = {
-      draft: { 
-        gradient: 'from-gray-500 to-gray-600',
-        bg: 'bg-gray-50', 
-        text: 'text-gray-700',
-        border: 'border-gray-200',
-        icon: Edit,
-        label: 'Draft' 
-      },
-      pending: { 
+      in_review: { 
         gradient: 'from-[#FDB913] to-[#F5A800]',
         bg: 'bg-yellow-50', 
         text: 'text-yellow-700',
         border: 'border-yellow-200',
         icon: Clock,
-        label: 'with editor' 
+        label: 'In Review' 
       },
-      approved_by_editor: { 
-        gradient: 'from-[#1B7A9C] to-[#156680]',
-        bg: 'bg-blue-50', 
-        text: 'text-blue-700',
-        border: 'border-blue-200',
-        icon: CheckCircle,
-        label: 'Under Review' 
-      },
-      rejected_by_editor: { 
+      rejected: { 
         gradient: 'from-red-500 to-red-600',
         bg: 'bg-red-50', 
         text: 'text-red-700',
         border: 'border-red-200',
         icon: XCircle,
-        label: 'Rejected by Editor' 
+        label: 'Rejected' 
       },
-      with_reviewer: { 
-        gradient: 'from-purple-500 to-purple-600',
-        bg: 'bg-purple-50', 
-        text: 'text-purple-700',
-        border: 'border-purple-200',
-        icon: Eye,
-        label: 'Under Review' 
-      },
-      approved_by_reviewer: { 
-        gradient: 'from-emerald-500 to-emerald-600',
-        bg: 'bg-emerald-50', 
-        text: 'text-emerald-700',
-        border: 'border-emerald-200',
-        icon: CheckCircle,
-        label: 'Under Review' 
-      },
-      rejected_by_reviewer: { 
-        gradient: 'from-red-500 to-red-600',
-        bg: 'bg-red-50', 
-        text: 'text-red-700',
-        border: 'border-red-200',
-        icon: XCircle,
-        label: 'Under Review' 
-      },
-      scheduled: { 
-        gradient: 'from-indigo-500 to-indigo-600',
-        bg: 'bg-indigo-50', 
-        text: 'text-indigo-700',
-        border: 'border-indigo-200',
-        icon: Calendar,
-        label: 'Scheduled' 
-      },
-      published: { 
-        gradient: 'from-[#1B7A9C] to-teal-600',
-        bg: 'bg-teal-50', 
-        text: 'text-teal-700',
-        border: 'border-teal-200',
-        icon: Award,
-        label: 'Published' 
+            approved: { 
+        gradient: 'from-green-500 to-green-600',
+        bg: 'bg-green-50', 
+        text: 'text-green-700',
+        border: 'border-green-200',
+        icon: CheckCheck,
+        label: 'Approved' 
       },
     };
-    return statusMap[status] || statusMap.draft;
+    
+    return statusMap[authorStatus];
   };
 
-  const filteredSubmissions = submissions.filter(sub => {
-    const matchesSearch = sub.metadata?.title?.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = filterStatus === 'all' || sub.status === filterStatus;
-    return matchesSearch && matchesFilter;
-  }).filter(sub=> (sub.status !=='pending')).filter(sub =>  sub.status !== 'approved_by_editor' );
+  // Filter out drafts and approved_by_editor, then apply search and filter
+  const filteredSubmissions = submissions
+    .filter(sub => sub.status !== 'draft' && sub.status !== 'approved_by_editor')
+    .filter(sub => {
+      const matchesSearch = sub.metadata?.title?.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      // Map filter status to match author-visible statuses
+      let matchesFilter = true;
+      if (filterStatus !== 'all') {
+        const authorVisibleStatus = getAuthorVisibleStatus(sub.status);
+        matchesFilter = authorVisibleStatus === filterStatus;
+      }
+      
+      return matchesSearch && matchesFilter;
+    });
 
   const stats = [
     { 
       label: 'Total Submissions', 
-      value: submissions.length, 
+      value: submissions.filter(s => s.status !== 'draft' && s.status !== 'approved_by_editor').length, 
       icon: FileText,
       gradient: 'from-[#1B7A9C] to-[#156680]',
       change: '+3 this month'
     },
     { 
-      label: 'Under Review', 
-      value: submissions.filter(s => s.status === 'pending' || s.status === 'with_reviewer').length, 
+      label: 'In Review', 
+      value: submissions.filter(s => {
+        const authorStatus = getAuthorVisibleStatus(s.status);
+        return authorStatus === 'in_review' && s.status !== 'draft' && s.status !== 'approved_by_editor';
+      }).length, 
       icon: Clock,
       gradient: 'from-[#FDB913] to-[#F5A800]',
-      change: '2 pending'
+      change: 'Active'
     },
     { 
-      label: 'Published', 
-      value: submissions.filter(s => s.status === 'published').length, 
-      icon: Award,
-      gradient: 'from-emerald-500 to-emerald-600',
-      change: '+1 this month'
+      label: 'Rejected', 
+      value: submissions.filter(s => getAuthorVisibleStatus(s.status) === 'rejected').length, 
+      icon: XCircle,
+      gradient: 'from-red-500 to-red-600',
+      change: 'All time'
     },
     { 
       label: 'Acceptance Rate', 
-      value: submissions.length > 0 
-        ? `${Math.round((submissions.filter(s => s.status === 'published' || s.status === 'scheduled').length / submissions.length) * 100)}%`
+      value: submissions.filter(s => s.status !== 'draft').length > 0 
+        ? `${Math.round((submissions.filter(s => s.status === 'published' || s.status === 'scheduled').length / submissions.filter(s => s.status !== 'draft').length) * 100)}%`
         : '0%', 
       icon: TrendingUp,
       gradient: 'from-purple-500 to-purple-600',
@@ -197,17 +177,12 @@ function AuthorDashboard() {
   ];
 
   const navigationItems = [
-    // { icon: Home, label: 'Dashboard', active: true, onClick: () => {} },
-    { icon: FileText, label: 'My Submissions',active:true, count: submissions.length, onClick: () => {} },
-    // { icon: BookOpen, label: 'Browse Journals', onClick: () => navigate('/journals') },
+    { icon: FileText, label: 'My Submissions', active: true, count: submissions.filter(s => s.status !== 'draft' && s.status !== 'approved_by_editor').length, onClick: () => {} },
     { icon: Plus, label: 'New Submission', highlight: true, onClick: () => navigate('/IJPPI/author/new-submission') },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 flex">
-      {/* Animated Background */}
-     
-
       {/* Sidebar */}
       <aside className={`fixed left-0 top-0 h-full bg-white border-r border-gray-200 shadow-xl transition-all duration-300 z-50 ${sidebarOpen ? 'w-72' : 'w-20'}`}>
         {/* Logo Section */}
@@ -218,11 +193,10 @@ function AuthorDashboard() {
                 onClick={() => navigate('/IJPPI')}
                 className="flex items-center space-x-3 group flex-col"
               >
-                <div className=" bg-gradient-to-br rounded-xl flex items-center justify-center  transition-all">
+                <div className="bg-gradient-to-br rounded-xl flex items-center justify-center transition-all">
                   <img className="" src='https://res.cloudinary.com/duhadnqmh/image/upload/v1767786487/mslogo_gqwxzo.png' alt="Logo" />
                 </div>
                 <div>
-                 
                   <div className="text-md font-[500] text-black">Author Dashboard</div>
                 </div>
               </button>
@@ -245,7 +219,6 @@ function AuthorDashboard() {
             {sidebarOpen && (
               <div className="min-w-0 flex-1">
                 <div className="text-sm font-bold text-gray-900 truncate">
-                  {/* {user?.firstName} {user?.lastName} */}
                   {user?.username}
                 </div>
                 <div className="text-md text-gray-500 truncate">{user?.email}</div>
@@ -319,7 +292,7 @@ function AuthorDashboard() {
                 onClick={() => navigate('/IJPPI/author/new-submission')}
                 className="group flex items-center space-x-2 bg-[#0461F0] text-white px-5 py-3 rounded-xl font-bold hover:shadow-lg hover:scale-105 transition-all"
               >
-                <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform " />
+                <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
                 <span>New Submission</span>
               </button>
             </div>
@@ -328,40 +301,13 @@ function AuthorDashboard() {
 
         {/* Content Area */}
         <div className="p-8">
-          {/* Stats Grid */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="group relative animate-fade-in-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="relative bg-white rounded-2xl p-6 border-2 border-gray-200 hover:border-gray-300 transition-all duration-300 hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-xl">
-                  <div className={`w-12 h-12 bg-gradient-to-br ${stat.gradient} rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
-                    <stat.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="text-3xl font-black text-gray-900 mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-600 font-medium mb-2">{stat.label}</div>
-                  <div className="flex items-center space-x-1 text-emerald-600 text-xs font-bold">
-                    <TrendingUp className="w-3 h-3" />
-                    <span>{stat.change}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div> */}
-
           {/* Submissions Section */}
           <div className="bg-white rounded-2xl shadow-xl border-2 border-gray-200 overflow-hidden animate-fade-in-up" style={{ animationDelay: '400ms' }}>
             {/* Header */}
             <div className="bg-gradient-to-r from-[#4689ec] to-[#0c67ee] px-6 py-5">
               <div className="flex items-center justify-between mb-4">
-                {/* <div className="flex items-center space-x-3">
-                  <FileText className="w-[32px] h-[32px] text-white" />
-                  <h2 className="text-[32px] font-bold text-white">My Submissions</h2>
-                </div> */}
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-red-500" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/60" />
                   <input
                     type="text"
                     placeholder="Search submissions..."
@@ -375,12 +321,13 @@ function AuthorDashboard() {
               {/* Filter Tabs */}
               <div className="flex items-center space-x-4 overflow-x-auto pb-2">
                 {[
-                  { id: 'all', label: 'All', count: submissions.filter(sub=>sub.status!='pending').length },
-                  // { id: 'pending', label: 'Pending', count: submissions.filter(s => s.status === 'pending').length },
-                  { id: 'with_reviewer', label: 'In Review', count: submissions.filter(s => s.status === 'with_reviewer').length },
-                  { id: 'approved_by_editor', label: 'Approved', count:0 },
-                    { id: 'rejected_by_editor', label: 'Rejected', count: submissions.filter(s => s.status === 'rejected_by_edtior' || s.status === 'scheduled').length },
-                  // { id: 'published', label: 'Published', count: submissions.filter(s => s.status === 'published').length }
+                  { id: 'all', label: 'All', count: submissions.filter(sub => sub.status !== 'draft' && sub.status !== 'approved_by_editor').length },
+                  { id: 'in_review', label: 'In Review', count: submissions.filter(s => {
+                    const authorStatus = getAuthorVisibleStatus(s.status);
+                    return authorStatus === 'in_review' && s.status !== 'draft' && s.status !== 'approved_by_editor';
+                  }).length },
+                  { id: 'rejected', label: 'Rejected', count: submissions.filter(s => getAuthorVisibleStatus(s.status) === 'rejected').length },
+                  {id:'approved', label: 'Approved', count: 0}
                 ].map((filter) => (
                   <button
                     key={filter.id}
@@ -452,6 +399,7 @@ function AuthorDashboard() {
                               <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-xs font-[500] uppercase">
                                 {submission.journal}
                               </span>
+                              <p className='text-gray-400 font-semibold text-sm'>Serial No. : {submission?.serialNumber}</p>
                             </div>
                             
                             <h3 className="text-[30px] font-bold text-gray-900 mb-2 group-hover:text-[#0461F0] transition-colors line-clamp-2">
@@ -572,23 +520,6 @@ function AuthorDashboard() {
       )}
 
       <style jsx>{`
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-
-        @keyframes slide-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
         @keyframes fade-in-up {
           from {
             opacity: 0;
@@ -632,14 +563,6 @@ function AuthorDashboard() {
           50% { transform: translateY(-10px); }
         }
 
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-
-        .animate-slide-up {
-          animation: slide-up 0.6s ease-out forwards;
-        }
-
         .animate-fade-in-up {
           animation: fade-in-up 0.6s ease-out forwards;
         }
@@ -658,14 +581,6 @@ function AuthorDashboard() {
 
         .animate-float {
           animation: float 3s ease-in-out infinite;
-        }
-
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-
-        .animation-delay-4000 {
-          animation-delay: 4s;
         }
       `}</style>
     </div>

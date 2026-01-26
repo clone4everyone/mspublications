@@ -174,7 +174,7 @@ const fetchReviewers = async () => {
         </h1>
 
         {/* Editor-in-Chief Card */}
-        <div className='w-full max-w-[1400px] bg-white flex flex-col lg:flex-row p-4 sm:p-6 md:p-8 lg:p-12 xl:p-20 items-center justify-center lg:justify-between gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 card-shadow rounded-lg'>
+        <div className='w-full max-w-[1400px] bg-white flex flex-col lg:flex-row p-4 sm:p-6 md:p-8 lg:p-10 xl:p-18 items-center justify-center lg:justify-between gap-6 sm:gap-8 md:gap-10 lg:gap-12 xl:gap-16 card-shadow rounded-lg'>
           <div 
             ref={contentRef}
             className='lazy-element lazy-content w-full flex flex-col gap-3 sm:gap-4 md:gap-5'
@@ -188,7 +188,7 @@ const fetchReviewers = async () => {
                   Dr. Robindra Kumar Pandit
                 </a>
                 <p className='text-[14px] xs:text-[15px] sm:text-[16px] md:text-[18px] lg:text-[20px] text-gray-700 font-normal'>
-                  Lovely Professional University, Jalandhar, Punjab, India.
+                  PhD, Department of Chemistry, Lovely Professional University, Jalandhar, Punjab, India.
                 </p>
                 <p className='text-[13px] xs:text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px] text-[#0461F0] break-all font-normal'>
                   Email: editor.ijppi@mspublication.com

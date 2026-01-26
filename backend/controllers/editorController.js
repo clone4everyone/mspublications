@@ -1,14 +1,14 @@
 const Submission = require('../models/Submission');
 const User = require('../models/User');
 const { sendNotificationEmail } = require('../config/brevo');
-const Contact=require('../models/Contact')
+const Contact = require('../models/Contact')
 
-exports.getQueries=async(req,res)=>{
-  try{
-   const data=await Contact.find();
-   console.log(data)
-   res.status(200).json({data});
-  }catch(err){
+exports.getQueries = async (req, res) => {
+  try {
+    const data = await Contact.find();
+    console.log(data)
+    res.status(200).json({ data });
+  } catch (err) {
     console.log(err.message);
   }
 }
@@ -39,15 +39,15 @@ exports.approveSubmission = async (req, res) => {
     submission.status = 'approved_by_editor';
     submission.editorNotes = editorNotes;
     submission.editorReviewedAt = new Date();
-// Add timeline event
-submission.addTimelineEvent({
-  eventType: 'editor_approved',
-  title: 'Approved by Editor',
-  description: 'Submission has been approved by the editor',
-  notes: editorNotes,
-  performedBy: req.user.id,
-  performedByRole: 'editor'
-});
+    // Add timeline event
+    submission.addTimelineEvent({
+      eventType: 'editor_approved',
+      title: 'Approved by Editor',
+      description: 'Submission has been approved by the editor',
+      notes: editorNotes,
+      performedBy: req.user.id,
+      performedByRole: 'editor'
+    });
     await submission.save();
 
     // Send notification to author
@@ -96,7 +96,7 @@ exports.sendBackToAuthor = async (req, res) => {
     }
 
     // Can only send back if pending or approved_by_editor (before moving to reviewer)
-    if (!['pending', 'approved_by_editor','with_reviewer'].includes(submission.status)) {
+    if (!['pending', 'approved_by_editor', 'with_reviewer'].includes(submission.status)) {
       return res.status(400).json({
         success: false,
         message: 'Submission cannot be sent back at this stage'
@@ -107,7 +107,7 @@ exports.sendBackToAuthor = async (req, res) => {
     if (!submission.sendBackHistory) {
       submission.sendBackHistory = [];
     }
-    
+
     submission.sendBackHistory.push({
       sentBackAt: new Date(),
       editorNotes: editorNotes,
@@ -186,15 +186,15 @@ exports.rejectSubmission = async (req, res) => {
     submission.status = 'rejected_by_editor';
     submission.rejectionReason = rejectionReason;
     submission.editorReviewedAt = new Date();
-// Add timeline event
-submission.addTimelineEvent({
-  eventType: 'editor_rejected',
-  title: 'Rejected by Editor',
-  description: 'Submission has been rejected by the editor',
-  notes: rejectionReason,
-  performedBy: req.user.id,
-  performedByRole: 'editor'
-});
+    // Add timeline event
+    submission.addTimelineEvent({
+      eventType: 'editor_rejected',
+      title: 'Rejected by Editor',
+      description: 'Submission has been rejected by the editor',
+      notes: rejectionReason,
+      performedBy: req.user.id,
+      performedByRole: 'editor'
+    });
     await submission.save();
 
     // Send notification to author
@@ -227,7 +227,7 @@ submission.addTimelineEvent({
 // @access  Private (Editor)
 exports.moveToReviewer = async (req, res) => {
   try {
-    const {editorNotes}=req.body;
+    const { editorNotes } = req.body;
     const submission = await Submission.findById(req.params.id)
       .populate('author', 'firstName lastName email');
 
@@ -256,15 +256,15 @@ exports.moveToReviewer = async (req, res) => {
     submission.editorNotes = editorNotes;
     submission.status = 'with_reviewer';
     submission.reviewerAssigned = reviewer._id;
-// Add timeline event
-submission.addTimelineEvent({
-  eventType: 'forwarded_to_reviewer',
-  title: 'Forwarded to Reviewer',
-  description: 'Submission has been sent to reviewer for evaluation',
-  performedBy: req.user.id,
-  performedByRole: 'editor',
-  notes:editorNotes
-});
+    // Add timeline event
+    submission.addTimelineEvent({
+      eventType: 'forwarded_to_reviewer',
+      title: 'Forwarded to Reviewer',
+      description: 'Submission has been sent to reviewer for evaluation',
+      performedBy: req.user.id,
+      performedByRole: 'editor',
+      notes: editorNotes
+    });
     await submission.save();
 
     // Send notification to reviewer
@@ -335,7 +335,7 @@ exports.schedulePublication = async (req, res) => {
     }
 
     const pubDate = new Date(publicationDate);
-    
+
     if (pubDate <= new Date()) {
       return res.status(400).json({
         success: false,
@@ -345,15 +345,15 @@ exports.schedulePublication = async (req, res) => {
 
     submission.publicationDate = pubDate;
     submission.status = 'scheduled';
-// Add timeline event
-submission.addTimelineEvent({
-  eventType: 'scheduled',
-  title: 'Publication Scheduled',
-  description: 'Submission has been scheduled for publication',
-  performedBy: req.user.id,
-  performedByRole: 'editor',
-  metadata: { publicationDate }
-});
+    // Add timeline event
+    submission.addTimelineEvent({
+      eventType: 'scheduled',
+      title: 'Publication Scheduled',
+      description: 'Submission has been scheduled for publication',
+      performedBy: req.user.id,
+      performedByRole: 'editor',
+      metadata: { publicationDate }
+    });
     await submission.save();
 
     // Send notification to author
@@ -385,7 +385,7 @@ submission.addTimelineEvent({
 // @access  Private (Editor)
 exports.createReviewer = async (req, res) => {
   try {
-    const { firstName, lastName, email, password, affiliation, specialization,orcid,reviewerRole,post,department,username } = req.body;
+    const { firstName, lastName, email, password, affiliation, specialization, orcid, reviewerRole, post, department, username } = req.body;
 
     // Validate required fields
     if (!firstName || !lastName || !email || !password) {
@@ -414,12 +414,12 @@ exports.createReviewer = async (req, res) => {
       specialization: specialization || [],
       role: 'reviewer',
       isActive: true,
-      isVerified:true,
+      isVerified: true,
       orcid, // Add this
-  reviewerRole,
-  post,
-  department,
-  username
+      reviewerRole,
+      post,
+      department,
+      username
     });
 
     // Send credentials email to reviewer
@@ -471,7 +471,7 @@ exports.getAllReviewers = async (req, res) => {
     const reviewers = await User.find({ role: 'reviewer' })
       .select('-password')
       .sort({ createdAt: -1 });
-console.log(reviewers)
+    console.log(reviewers)
     res.status(200).json({
       success: true,
       count: reviewers.length,
@@ -503,9 +503,9 @@ exports.getAvailableReviewers = async (req, res) => {
         { specialization: { $size: 0 } }
       ]
     })
-    .select('firstName lastName email specialization activeReviews')
-    .sort({ activeReviews: 1 }); // Sort by workload (ascending)
-console.log(reviewers)
+      .select('firstName lastName email specialization activeReviews')
+      .sort({ activeReviews: 1 }); // Sort by workload (ascending)
+    console.log(reviewers)
     res.status(200).json({
       success: true,
       count: reviewers.length,
@@ -526,8 +526,8 @@ console.log(reviewers)
 // @access  Private (Editor)
 exports.updateReviewer = async (req, res) => {
   try {
-    const { firstName, lastName, affiliation, specialization, isActive,orcid, // Add this
-  reviewerRole,post,department,username } = req.body;
+    const { firstName, lastName, affiliation, specialization, isActive, orcid, // Add this
+      reviewerRole, post, department, username } = req.body;
 
     const reviewer = await User.findById(req.params.id);
 
@@ -544,21 +544,24 @@ exports.updateReviewer = async (req, res) => {
     if (affiliation) reviewer.affiliation = affiliation;
     if (specialization) reviewer.specialization = specialization;
     if (typeof isActive === 'boolean') reviewer.isActive = isActive;
-    if (orcid) reviewer.orcid=orcid;
-    if (reviewerRole) reviewer.reviewerRole=reviewerRole;
-    if(post) reviewer.post=post;
-    if(department) reviewer.department=department;
+    if (orcid) reviewer.orcid = orcid;
+    if (reviewerRole) reviewer.reviewerRole = reviewerRole;
+    if (post) reviewer.post = post;
+    if (department) reviewer.department = department;
 
-    if(username){
+    if (username) {
+      if (username !== reviewer.username) {
         const existingUserByUsername = await User.findOne({ username });
-    if (existingUserByUsername) {
-      return res.status(400).json({
-        success: false,
-        message: 'This username is already taken. Please choose a different username.'
-      });
-    }else{
-      reviewer.username=username;
-    }
+        if (existingUserByUsername) {
+          return res.status(400).json({
+            success: false,
+            message: 'This username is already taken. Please choose a different username.'
+          });
+        } else {
+          reviewer.username = username;
+        }
+      }
+
     }
     await reviewer.save();
 
@@ -684,8 +687,8 @@ exports.getAllAuthors = async (req, res) => {
       role: 'author',
       isVerified: true
     })
-    .select('-password -verificationToken -passwordResetToken')
-    .sort({ createdAt: -1 });
+      .select('-password -verificationToken -passwordResetToken')
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,

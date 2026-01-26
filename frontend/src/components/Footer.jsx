@@ -159,7 +159,7 @@ const peerReview = () => {
           © 2025 All Rights Reserved
         </p>
 
-        <a className='text-white text-[12px] sm:text-[13px] md:text-[14px] leading-[34px] text-center sm:text-right underline' onClick={()=>{window.open('https://beingdiplomatic.com/','_blank')}}>
+        <a className='text-white text-[12px] sm:text-[13px] md:text-[14px] leading-[34px] text-center sm:text-right underline hover:cursor-pointer' onClick={()=>{window.open('https://beingdiplomatic.com/','_blank')}}>
           Developed by Being Diplomatic
         </a>
       </div>

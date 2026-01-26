@@ -480,11 +480,12 @@ const getStatusCounts = () => {
                     >
                       <div className="flex items-start justify-between mb-3">
                         <h3 className="font-semibold text-xl text-gray-900 flex-1 pr-4 leading-tight tracking-tight">
-                          {submission.metadata?.title || 'Untitled Submission'}
+                          {submission.metadata?.title || 'Untitled Submission'}<p className='text-gray-400 font-semibold text-sm'>Serial No. : {submission?.serialNumber}</p>
                         </h3>
                         <span className={`inline-flex items-center space-x-1.5 text-sm font-semibold px-4 py-2 rounded-md whitespace-nowrap ${badge.class}`}>
                           <span>{badge.icon}</span>
                           <span>{badge.text}</span>
+                          
                         </span>
                       </div>
 
