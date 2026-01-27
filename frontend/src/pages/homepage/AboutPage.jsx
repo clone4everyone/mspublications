@@ -295,8 +295,10 @@ export  function AboutPage({onNavigate}) {
                 Publication Frequency
               </h3>
             </div>
+            <p className="mt-3 sm:mt-4 text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify"> Quarterly (4 issues per year)</p>
             <p className="mt-3 sm:mt-4 text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
-              IJPPI will be published quarterly (four issues per year: January-March, April-June, July-September, and October-December). Special issues may be announced for emerging themes or conference proceedings.
+            First Issue: Volume 1, Issue 1 (March 2026)
+The first issue of IJPPI is scheduled for publication in the last week of March 2026.
             </p>
           </div>
 
@@ -354,12 +356,36 @@ export  function AboutPage({onNavigate}) {
 </svg>}/>
               </div>
               <h3 className="text-base sm:text-lg md:text-xl lg:text-[20px] xl:text-[22px] font-semibold leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#0257EE]">
-                Copyright & Licensing
+                Copyright & Licensing Policy
               </h3>
             </div>
             <p className="mt-3 sm:mt-4 text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
               Authors retain copyright of their work. Articles are published under a Creative Commons Attribution License (CC BY), allowing sharing and reuse with proper citation.
             </p>
+             <button
+  className="
+    self-end w-full max-w-[180px] sm:max-w-[200px] h-10 sm:h-11 lg:h-12 rounded-full 
+    border-2 border-[#233B4E] 
+    flex items-center justify-between pl-4 sm:pl-5 lg:pl-6 pr-1 
+    text-[#233B4E] font-medium text-[13px] sm:text-[14px] lg:text-[15px]
+    hover:bg-[#233B4E] hover:text-white 
+    transition-all duration-300
+    group/btn
+  "
+  onClick={()=>{window.open('https://mspublication.com/copyrightpolicy.html','_blank')}}
+>
+  <span>Learn More</span>
+  
+  <div className="
+    w-7 h-7 sm:w-8 sm:h-8 rounded-full 
+    border border-[#233B4E] 
+    flex items-center justify-center
+    transition-colors duration-300
+    group-hover/btn:bg-white
+  ">
+    <ArrowIcon className="text-[#233B4E] group-hover/btn:text-[#233B4E]/90 bg-white" />
+  </div>
+</button>
           </div>
         </div>
 
@@ -385,7 +411,7 @@ export  function AboutPage({onNavigate}) {
 </svg>}/>
                 </div>
                 <h3 className="text-base sm:text-lg md:text-xl lg:text-[20px] xl:text-[22px] font-semibold leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#0257EE]">
-                  Peer Review Process
+                  Peer Review Process & Policy
                 </h3>
               </div>
               <p className="text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px] xl:text-[18px] font-normal leading-[150%] lg:leading-[176%] tracking-[-0.02em] text-[#233B4E] text-justify">
@@ -411,15 +437,45 @@ export  function AboutPage({onNavigate}) {
                   </li>
                 ))}
               </ul>
+             
+           
             </div>
-
-            <div className="w-full lg:w-[380px] xl:w-[410px] h-[280px] sm:h-[350px] md:h-[420px] lg:h-[560px] xl:h-[683px]">
+<div className=' h-full'>
+  <div className="w-full h-full lg:w-[380px] xl:w-[410px] gap-4 flex flex-col justify-between  ">
               <img
                 src="https://res.cloudinary.com/duhadnqmh/image/upload/v1768107093/f64b2fd9d26e53d876408dd1d0255ad6cff25119_sjwjih.jpg"
                 alt="Peer Review Process"
                 className="w-full h-full object-cover rounded-[16px] lg:rounded-[20px]"
               />
+               <div className=''>
+         <button
+  className="
+    self-end w-full max-w-[180px] sm:max-w-[200px] h-10 sm:h-11 lg:h-12 rounded-full 
+    border-2 border-[#233B4E] 
+    flex items-center justify-between pl-4 sm:pl-5 lg:pl-6 pr-1 
+    text-[#233B4E] font-medium text-[13px] sm:text-[14px] lg:text-[15px]
+    hover:bg-[#233B4E] hover:text-white 
+    transition-all duration-300
+    group/btn
+  "
+  onClick={()=>{window.open('https://mspublication.com/peerreviewpolicy.html','_blank')}}
+>
+  <span>Learn More</span>
+  
+  <div className="
+    w-7 h-7 sm:w-8 sm:h-8 rounded-full 
+    border border-[#233B4E] 
+    flex items-center justify-center
+    transition-colors duration-300
+    group-hover/btn:bg-white
+  ">
+    <ArrowIcon className="text-[#233B4E] group-hover/btn:text-[#233B4E]/90 bg-white" />
+  </div>
+</button>
+              </div>
             </div>
+</div>
+          
           </div>
 
           {/* Right Column - Acceptance Rate & Archival Policy */}
