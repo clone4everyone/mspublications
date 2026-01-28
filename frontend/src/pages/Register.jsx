@@ -49,7 +49,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [loading,setLoading]=useState(false);
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
@@ -400,7 +400,7 @@ try {
         password,
         affiliation: affiliation.trim(),
       };
-
+     setLoading(true)
       const response = await api.post('/api/auth/register', userData);
 
       if (response.data.success) {
@@ -411,6 +411,8 @@ try {
     } catch (error) {
       const message = error.response?.data?.message || 'Registration failed';
       toast.error(message);
+    }finally{
+      setLoading(false);
     }
 };
  const handleResendVerification = async () => {
@@ -905,7 +907,7 @@ const navItems=[
               disabled={isLoading || !isFormValid()}
               className="w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? (
+              {loading ? (
                 <>
                   <FaSpinner className="animate-spin h-5 w-5 mr-2" />
                   Creating account...
